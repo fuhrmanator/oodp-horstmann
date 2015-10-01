@@ -1,0 +1,807 @@
+<?xml version="1.0" encoding="iso-8859-1"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+<head>
+  <title>Horstmann Chapter 10</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+</head>
+<body>
+<h2>Object-Oriented Design &amp; Patterns</h2>
+<h4>Cay S. Horstmann</h4>
+<h3>Chapitre 10</h3>
+<h3>Plus de patrons de conception</h3>
+<img alt="" src="images/oodp2.jpg" height="500" width="404" >
+<h2>Mati&egrave;re du chapitre</h2>
+<ul>
+  <li>Le patron A<small>DAPTER</small></li>
+  <li>Actions et le patron C<small>OMMAND</small></li>
+  <li>Le patron F<small>ACTORY</small> M<small>ETHOD</small></li>
+  <li>Le patron P<small>ROXY</small></li>
+  <li>Le patron S<small>INGLETON</small></li>
+  <li>Le patron V<small>ISITOR</small></li>
+  <li>D'autres patrons de conception</li>
+</ul>
+<h2>Adaptateurs</h2>
+<ul>
+  <li>Adaptateur de cable&nbsp;: adapte une prise de cable &agrave; une prise murale</li>
+  <li>Programmation OO ; On veut adapter la classe au type interface &eacute;tranger</li>
+  <li>Exemple&nbsp;: Ajouter <tt>CarIcon</tt> &agrave; un container </li>
+  <li>Probl&egrave;me&nbsp;: Les containers prennent des composants, pas des ic&ocirc;nes</li>
+  <li>Solution&nbsp;: Cr&eacute;er un adaptateur qui adapte un <tt>Icon</tt> &agrave; un <tt>Component</tt>
+  </li>
+  <li><a href="code/adapter/IconAdapter.java.html">Ch10/adapter/IconAdapter.java</a>
+  </li>
+  <li><a href="code/adapter/IconAdapterTester.java.html">Ch10/adapter/IconAdapterTester.java</a><br >
+  </li>
+</ul>
+<h2>Le patron ADAPTER</h2>
+<h3>Contexte</h3>
+<ol>
+  <li>On veut utiliser la classe existante (adaptee) sans la modifier.<br >
+  </li>
+  <li>Le contexte dans lequel on veut utiliser la classe demande une interface 
+	cible diff&eacute;rente de &quot;adaptee&quot;.<br >
+  </li>
+  <li>L'interface cible et l'interface &quot;adaptee&quot; sont conceptuellement reli&eacute;es. </li>
+</ol>
+<h2>Le patron ADAPTER</h2>
+<h3>Solution</h3>
+<ol>
+  <li>D&eacute;finir une classe adaptateur qui impl&eacute;mente l'interface cible.<br >
+  </li>
+  <li>La classe adaptateur contient une r&eacute;f&eacute;rence vers &quot;adaptee&quot;. Elle traduit 
+	les m&eacute;thodes cibles vers les m&eacute;thodes de &quot;adaptee&quot;.<br >
+  </li>
+  <li>Le client place (&quot;wraps&quot;) l'objet adapt&eacute; dans un objet
+    de la classe adaptateur. </li>
+</ol>
+<h2>Le patron ADAPTER</h2>
+<img src="images/Ch10_un01.jpg" title="" alt="."
+ style="width: 782px; height: 461px;" ><br >
+<br >
+<h2>Le patron ADAPTER</h2>
+<table style="text-align: left; width: 100%;" border="1" cellpadding="2"
+ cellspacing="2">
+  <tbody>
+    <tr>
+      <td style="vertical-align: top; font-weight: bold;">Nom dans le patron de 
+		conception<br >
+      </td>
+      <td style="vertical-align: top; font-weight: bold;">Vrai nom 
+(Icon-&gt;Component)<br >
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top; font-family: monospace;"> Adaptee<br >
+      </td>
+      <td style="vertical-align: top; font-family: monospace;"> Icon<br >
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top; font-family: monospace;"> Target<br >
+      </td>
+      <td style="vertical-align: top; font-family: monospace;">
+JComponent<br >
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top; font-family: monospace;"> Adapter<br >
+      </td>
+      <td style="vertical-align: top; font-family: monospace;">
+IconAdapter<br >
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top; font-family: monospace;"> Client<br >
+      </td>
+      <td style="vertical-align: top;">La classe qui veut ajouter les ic&ocirc;nes au 
+		container<br >
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top; font-family: monospace;">
+targetMethod()<br >
+      </td>
+      <td style="vertical-align: top; font-family: monospace;">
+paintComponent(), getPreferredSize()<br >
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top; font-family: monospace;">
+adapteeMethod()<br >
+      </td>
+      <td style="vertical-align: top; font-family: monospace;">
+paintIcon(), getIconWidth(), getIconHeight()</td>
+    </tr>
+  </tbody>
+</table>
+<h2>Le patron ADAPTER</h2>
+<ul>
+  <li>Dans la biblioth&egrave;que stream</li>
+  <li>Input streams lit des octets</li>
+  <li>Readers lit des caract&egrave;res</li>
+  <li>Encodage Non-ASCII&nbsp;: plusieurs octets par caract&egrave;re</li>
+  <li>System.in est un stream </li>
+  <li>Et si on veut lire des caract&egrave;res ? </li>
+  <li>Adapter stream &agrave; reader </li>
+  <li><tt>InputStreamReader</tt> </li>
+</ul>
+<h2>Le patron ADAPTER</h2>
+<table style="text-align: left; width: 100%;" border="1" cellpadding="2"
+ cellspacing="2">
+  <tbody>
+    <tr>
+      <td style="vertical-align: top; font-weight: bold;">Nom dans le patron de 
+		conception<br >
+      </td>
+      <td style="vertical-align: top; font-weight: bold;">Vrai nom 
+(Stream-&gt;Reader)<br >
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top; font-family: monospace;"> Adaptee<br >
+      </td>
+      <td style="vertical-align: top; font-family: monospace;">
+InputStream</td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top; font-family: monospace;"> Target<br >
+      </td>
+      <td style="vertical-align: top; font-family: monospace;"> Reader</td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top; font-family: monospace;"> Adapter<br >
+      </td>
+      <td style="vertical-align: top; font-family: monospace;">
+InputStreamReader</td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top; font-family: monospace;"> Client<br >
+      </td>
+      <td style="vertical-align: top;">La classe qui veut lire du texte 
+		provenant d'un input stream<br >
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top; font-family: monospace;">
+targetMethod()<br >
+      </td>
+      <td style="vertical-align: top; font-family: monospace;">read
+(reading a character)<br >
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top; font-family: monospace;">
+adapteeMethod()<br >
+      </td>
+      <td style="vertical-align: top; font-family: monospace;">read
+(reading a byte)</td>
+    </tr>
+  </tbody>
+</table>
+<h2>Actions d'un interface usager</h2>
+<ul>
+  <li>Plusieurs routes pour le m&ecirc;me action</li>
+  <li>Exemple&nbsp;: Couper un bloc de texte<ul>
+      <li>Select Edit-&gt;Cut du menu</li>
+      <li>Clique sur le bouton de la barre d'outils</li>
+      <li>Appuyer Ctrl+X </li>
+    </ul>
+  </li>
+  <li>L'action peut &ecirc;tre non-permise (si rien n'est s&eacute;lectionn&eacute;) </li>
+  <li>L'action a un <i>&eacute;tat</i></li>
+  <li>L'action doit &ecirc;tre un <i>objet</i> </li>
+</ul>
+<h2>Actions d'un interface usager</h2>
+<img alt="" src="images/Ch10_01.png" height="242" width="442" ><br >
+<h2>Le type interface <tt>Action</tt></h2>
+<ul>
+  <li>&Eacute;tend <tt>ActionListener</tt> </li>
+  <li>Peut &ecirc;tre activ&eacute;e ou d&eacute;sactiv&eacute;e</li>
+  <li>&Eacute;tat additionnelle, incluant
+
+    <ul>
+      <li>Nom de l'action</li>
+    </ul>
+    <ul>
+      <li>Ic&ocirc;ne</li>
+    </ul>
+  </li>
+  <li><tt>helloAction.putValue(Action.NAME, &quot;Hello&quot;);</tt> </li>
+  <li><tt>menu.add(helloAction);</tt> </li>
+  <li>&Eacute;tend la classe de convenance <tt>AbstractAction</tt></li>
+</ul>
+<h2>Le type interface <tt>Action</tt></h2>
+<img src="images/Ch10_02.jpg" title="" alt="."
+ style="width: 166px; height: 497px;" ><br >
+<br >
+<h2>Exemple d'action</h2>
+<ul>
+  <li><a href="code/command/CommandTester.java.html">Ch10/command/CommandTester.java</a>
+  </li>
+  <li><a href="code/command/GreetingAction.java.html">Ch10/command/GreetingAction.java</a><br >
+  </li>
+</ul>
+<h2>Le patron COMMAND</h2>
+<h3>Contexte</h3>
+<ol>
+  <li>On veut impl&eacute;menter des commandes qui se comportent comme des objets<br >
+    <ul>
+      <li>parce qu'on a besoin de conserver de l'information additionnelle avec 
+		la commande.</li>
+      <li>parce qu'on veut collectionner les commandes.</li>
+    </ul>
+  </li>
+</ol>
+<h2>Le patron COMMAND</h2>
+<h3>Solution</h3>
+<ol>
+  <li>D&eacute;finir un type interface &quot;command&quot; avec une m&eacute;thode pour ex&eacute;cuter la 
+	commande.<br >
+  </li>
+  <li>Fournir les m&eacute;thodes dans le type interface &quot;command&quot; pour
+    manipuler l'&eacute;tat
+    des objets 
+	&quot;command&quot;.<br >
+  </li>
+  <li>Chaque classe concr&egrave;te qui repr&eacute;sente une commande impl&eacute;mente le type 
+	interface &quot;command&quot;.<br >
+  </li>
+  <li>Pour invoquer la commande, appeler la m&eacute;thode d'ex&eacute;cution. </li>
+</ol>
+<h2>Le patron COMMAND</h2>
+<img src="images/Ch10_un02.jpg" title="" alt="."
+ style="width: 510px; height: 397px;" ><br >
+<br >
+<h2>Le patron COMMAND</h2>
+<table style="text-align: left; width: 100%;" border="1" cellpadding="2"
+ cellspacing="2">
+  <tbody>
+    <tr>
+      <td style="vertical-align: top; font-weight: bold;">Nom dans le patron de 
+		conception<br >
+      </td>
+      <td style="vertical-align: top; font-weight: bold;">Vrai om 
+(Swing actions)<br >
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top; font-family: monospace;"> Command<br >
+      </td>
+      <td style="vertical-align: top;"><tt>Action</tt><br >
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top; font-family: monospace;">
+ConcreteCommand<br >
+      </td>
+      <td style="vertical-align: top;">sous-classe de <tt>AbstractAction</tt><br >
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top; font-family: monospace;">
+execute()<br >
+      </td>
+      <td style="vertical-align: top;"><tt>actionPerformed()</tt><br >
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top; font-family: monospace;"> state<br >
+      </td>
+      <td style="vertical-align: top;">nom et <tt>ic&ocirc;ne</tt><br >
+      </td>
+    </tr>
+  </tbody>
+</table>
+<h2>M&eacute;thodes de fabrique (Factory methods)</h2>
+<ul>
+  <li>Toute collection peut produire un it&eacute;rateur<br >
+    <tt>Iterator iter = list.iterator()</tt> </li>
+  <li>Pourquoi ne pas utiliser un constructeur ?<br >
+    <tt>Iterator iter = new LinkedListIterator(list);</tt> </li>
+  <li>Probl&egrave;me&nbsp;: pas g&eacute;n&eacute;rique<br >
+    <tt>Collection coll = ...;</tt><br style="font-family: monospace;" >
+    <tt>Iterator iter = new ???(coll);</tt> </li>
+  <li>Une m&eacute;thode de fabrique fonctionne pour toutes les collections<br >
+    <tt>Iterator iter = coll.iterator();</tt> </li>
+  <li>Polymorphisme ! </li>
+</ul>
+<h2>Le patron FACTORY METHOD</h2>
+<h3>Contexte</h3>
+<ol>
+  <li>Le type (le cr&eacute;ateur) cr&eacute;e les objets pour un autre type (le produit).<br >
+  </li>
+  <li>Les sous-classes du type cr&eacute;ateur ont besoin de cr&eacute;er diff&eacute;rents types 
+	d'objets produit.<br >
+  </li>
+  <li>Les clients n'ont pas &agrave; conna&icirc;tre le type exacte des objets produit. </li>
+</ol>
+<h2>Le patron FACTORY METHOD</h2>
+<h3>Solution</h3>
+<ol>
+  <li>D&eacute;finir un type cr&eacute;ateur qui exprime la ressemblance de tous les 
+	cr&eacute;ateurs.<br >
+  </li>
+  <li>D&eacute;finir un type produit qui exprime la ressemblance de tous les produits.<br >
+  </li>
+  <li>D&eacute;finir une m&eacute;thode, appel&eacute;e la m&eacute;thode fabrique (factory method), dans le 
+	type cr&eacute;ateur.<br >
+	La m&eacute;thode fabrique (factory method) permet d'obtenir un objet produit.<br >
+  </li>
+  <li>Chaque classe concr&egrave;te cr&eacute;ateur impl&eacute;mente la m&eacute;thode fabrique qui 
+	retourne un objet de la classe concr&egrave;te du produit. </li>
+</ol>
+<h2>Le patron FACTORY METHOD</h2>
+<img src="images/Ch10_un03.jpg" title="" alt="."
+ style="width: 593px; height: 380px;" ><br />
+<br >
+<h2>Le patron FACTORY METHOD</h2>
+<table style="text-align: left; width: 100%;" border="1" cellpadding="2"
+ cellspacing="2">
+  <tbody>
+    <tr>
+      <td style="vertical-align: top; font-weight: bold;">Nom dans le patron de 
+	conception</td>
+      <td style="vertical-align: top; font-weight: bold;">Vrai nom 
+(iterator)</td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top; font-family: monospace;"> Creator<br >
+      </td>
+      <td style="vertical-align: top; font-family: monospace;">
+Collection<br >
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top; font-family: monospace;">
+ConcreteCreator<br >
+      </td>
+      <td style="vertical-align: top;">Une sous-classe de <tt>Collection</tt><br >
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top; font-family: monospace;">
+factoryMethod()<br >
+      </td>
+      <td style="vertical-align: top; font-family: monospace;">
+iterator()<br >
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top; font-family: monospace;"> Product<br >
+      </td>
+      <td style="vertical-align: top; font-family: monospace;"> Iterator<br >
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top; font-family: monospace;">
+ConcreteProduct<br >
+      </td>
+      <td style="vertical-align: top;">Une sous-classe de <tt>Iterator</tt>
+(laquelle est souvent anonyme)<br >
+      </td>
+    </tr>
+  </tbody>
+</table>
+<h2>Pas une FACTORY METHOD</h2>
+<ul>
+  <li>Les m&eacute;thodes ressemblant &agrave; une m&eacute;thode fabrique ne sont pas toutes des 
+	instances de ce patron </li>
+  <li>Cr&eacute;er des instances de <tt>DateFormat</tt><br >
+    <tt>DateFormat formatter = DateFormat.getDateInstance();</tt><br
+ style="font-family: monospace;" >
+    <tt>Date now = new Date();</tt><br style="font-family: monospace;" >
+    <tt>String formattedDate = formatter.format(now);</tt> </li>
+  <li><tt>getDateInstance</tt> est une m&eacute;thode <i>statique</i></li>
+  <li>Pas de cr&eacute;ation polymorphique</li>
+</ul>
+<h2>Proxies</h2>
+<ul>
+  <li>Proxy&nbsp;: une personne qui est autoris&eacute;e &agrave; agir au nom d'une autre personne</li>
+  <li>Exemple&nbsp;: Instanciation retard&eacute;e d'un objet</li>
+  <li>Tr&egrave;s co&ucirc;teux de charger une image</li>
+  <li>Pas n&eacute;cessaire de charger une image que l'usager ne regarde pas</li>
+  <li>Le proxy diff&egrave;re le chargement jusqu'&agrave; ce qu'un usager clique sur l'onglet</li>
+</ul>
+<h2>Chargement diff&eacute;r&eacute; d'une image</h2>
+<img alt="" src="images/Ch10_03.png" height="302" width="502" ><br >
+<br >
+<h2>Chargement diff&eacute;r&eacute; d'une image</h2>
+<ul>
+  <li>Normalement, le programmeur utilise une &eacute;tiquette d'image&nbsp;:<br >
+    <tt>JLabel label = new JLabel(new ImageIcon(imageName));</tt> </li>
+  <li>Utiliser plut&ocirc;t un proxy&nbsp;:<br >
+    <tt>JLabel label = new JLabel(new ImageProxy(imageName));</tt> </li>
+  <li><tt>paintIcon</tt> charge l'image si elle n'est pas d&eacute;j&agrave; charg&eacute;e<br >
+    <tt>public void paintIcon(Component c, Graphics g, int x, int y)</tt><br
+ style="font-family: monospace;" >
+    <tt>{</tt><br style="font-family: monospace;" >
+    <tt>&nbsp;&nbsp; if (image == null) image = new ImageIcon(name);</tt><br
+ style="font-family: monospace;" >
+    <tt>&nbsp;&nbsp; image.paintIcon(c, g, x, y);</tt><br
+ style="font-family: monospace;" >
+    <tt>}</tt> </li>
+</ul>
+<h2>Proxies</h2>
+<ul>
+  <li><a href="code/proxy/ImageProxy.java.html">Ch10/proxy/ImageProxy.java</a>
+  </li>
+  <li><a href="code/proxy/ProxyTester.java.html">Ch10/proxy/ProxyTester.java</a>
+  </li>
+  <li>&quot;Tout probl&egrave;me en informatique peut &ecirc;tre r&eacute;solu
+    par un niveau 	suppl&eacute;mentaire d'indirection&quot;</li>
+  <li>Autre utilit&eacute; des &quot;proxies&quot;&nbsp;: invocation de m&eacute;thode distante</li>
+</ul>
+<h2>Le patron PROXY</h2>
+<h3>Contexte</h3>
+<ol>
+  <li>Une classe (le sujet r&eacute;el) fournit un service qui est sp&eacute;cifi&eacute; par un type 
+	interface (le type du sujet) </li>
+  <li>Il y a un besoin de modifier le service pour le rendre plus versatile.<br >
+  </li>
+  <li>Le client et le sujet r&eacute;el ne doivent pas &ecirc;tre affect&eacute;s par la 
+	modification. </li>
+</ol>
+<h2>Le patron PROXY</h2>
+<h3>Solution</h3>
+<ol>
+  <li>D&eacute;finir une classe proxy qui impl&eacute;mente le type interface sujet.<br >
+	Le proxy contient une r&eacute;f&eacute;rence sur le sujet r&eacute;el, ou il s'est comment le 
+	localiser.<br >
+  </li>
+  <li>Le client utilise l'objet proxy.<br >
+  </li>
+  <li>Chaque m&eacute;thode du proxy invoque la m&ecirc;me m&eacute;thode sur le sujet r&eacute;el et 
+	fournit les modifications n&eacute;cessaires. </li>
+</ol>
+<h2>Le patron PROXY</h2>
+<img src="images/Ch10_un04.jpg" title="" alt="."
+ style="width: 772px; height: 492px;" ><br >
+<br >
+<h2>Le patron PROXY</h2>
+<table style="text-align: left; width: 100%;" border="1" cellpadding="2"
+ cellspacing="2">
+  <tbody>
+    <tr>
+      <td style="vertical-align: top; font-weight: bold;">Nom dans le patron de 
+		conception<br >
+      </td>
+      <td style="vertical-align: top; font-weight: bold;">Vrai nom
+(image proxy)<br >
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top; font-family: monospace;"> Subject<br >
+      </td>
+      <td style="vertical-align: top; font-family: monospace;"> Icon<br >
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top; font-family: monospace;">
+RealSubject<br >
+      </td>
+      <td style="vertical-align: top; font-family: monospace;">
+ImageIcon<br >
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top; font-family: monospace;"> Proxy<br >
+      </td>
+      <td style="vertical-align: top; font-family: monospace;">
+ImageProxy<br >
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top; font-family: monospace;">
+request()<br >
+      </td>
+      <td style="vertical-align: top;">Les m&eacute;thodes du type interface <tt>Icon</tt><br >
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top; font-family: monospace;"> Client<br >
+      </td>
+      <td style="vertical-align: top; font-family: monospace;"> JLabel<br >
+      </td>
+    </tr>
+  </tbody>
+</table>
+<h2>Les singletons</h2>
+<ul>
+  <li>Un g&eacute;n&eacute;rateur de nombres al&eacute;atoires g&eacute;n&egrave;re un s&eacute;quence pr&eacute;dictible de 
+	nombres</li>
+  <li>Exemple&nbsp;: seed = (seed * 25214903917 + 11) % 2<sup>48</sup> </li>
+  <li>Convenable pour d&eacute;verminer&nbsp;: peut reproduire une s&eacute;quence de nombres</li>
+  <li>Seulement si tous les clients utilisent <i>le m&ecirc;me g&eacute;n&eacute;rateur de nombres</i></li>
+  <li>Classe singleton = classe avec une seule instance</li>
+</ul>
+<h2>G&eacute;n&eacute;rateur de nombres al&eacute;atoires singleton</h2>
+<tt>public class SingleRandom</tt><br style="font-family: monospace;" >
+<tt>{</tt><br style="font-family: monospace;" >
+<tt>&nbsp;&nbsp; private SingleRandom() { generator = new Random(); }</tt><br
+ style="font-family: monospace;" >
+<tt>&nbsp;&nbsp; public void setSeed(int seed) {
+generator.setSeed(seed); }</tt><br style="font-family: monospace;" >
+<tt>&nbsp;&nbsp; public int nextInt() { return generator.nextInt(); }</tt><br
+ style="font-family: monospace;" >
+<tt>&nbsp;&nbsp; public static SingleRandom getInstance() { return
+instance; }</tt><br style="font-family: monospace;" >
+<tt>&nbsp;&nbsp; private Random generator;</tt><br
+ style="font-family: monospace;" >
+<tt>&nbsp;&nbsp; private static SingleRandom instance = new
+SingleRandom();</tt><br style="font-family: monospace;" >
+<tt>}</tt><br >
+<h2>Le patron SINGLETON</h2>
+<h3>Contexte</h3>
+<ol>
+  <li>Tous les clients ont besoin d'acc&eacute;der la seule instance partag&eacute;e d'une 
+	classe.<br >
+  </li>
+  <li>On veut s'assurer qu'aucune autre instance ne peut &ecirc;tre cr&eacute;&eacute;e 
+	accidentellement. </li>
+</ol>
+<h2>Le patron SINGLETON</h2>
+<h3>Solution<br >
+</h3>
+<ol>
+  <li>D&eacute;finir une classe avec un constructeur priv&eacute;.<br >
+  </li>
+  <li>La classe construit une seule instance d'elle-m&ecirc;me.<br >
+  </li>
+  <li>Fournir une m&eacute;thode qui retourne une r&eacute;f&eacute;rence de la seule instance. </li>
+</ol>
+<h2>Pas un SINGLETON</h2>
+<ul>
+  <li>Une bo&icirc;te d'outils utilis&eacute;e pour d&eacute;terminer la taille de l'&eacute;cran et 
+	d'autres param&egrave;tres du syst&egrave;me de fen&ecirc;tres</li>
+  <li>La classe <tt>Toolkit</tt> retourne la bo&icirc;te d'outils par d&eacute;faut<br >
+    <tt>Toolkit kit = Toolkit.getDefaultToolkit();</tt><br >
+  </li>
+  <li>Ce n'est pas un singleton -- on peut obtenir d'autres instances de <tt>Toolkit</tt> </li>
+  <li>La classe <tt>Math</tt> n'est pas un exemple du patron singleton</li>
+  <li><i>Aucun</i> objet de la classe <tt>Math</tt> n'est cr&eacute;&eacute;</li>
+</ul>
+<h2>Les hi&eacute;rarchies inflexibles</h2>
+<ul>
+  <li>Comment peut-on ajouter des op&eacute;rations dans des hi&eacute;rarchies compos&eacute;es ? </li>
+  <li>Exemple&nbsp;: AWT <tt>Component,</tt> <tt>Container,</tt> etc. forme une 
+	hi&eacute;rarchie</li>
+  <li>Beaucoup d'op&eacute;rations&nbsp;: <tt>getPreferredSize</tt>,<tt> repaint</tt> </li>
+  <li>On ne peut pas ajouter de nouvelles m&eacute;thodes sans modifier la classe <tt>Component</tt></li>
+  <li>Le patron VISITOR r&eacute;soud ce probl&egrave;me</li>
+  <li>Chaque classe doit supporter une m&eacute;thode<br >
+    <tt>void accept(Visitor v)</tt> </li>
+</ul>
+<h2>Les hi&eacute;rarchies inflexibles</h2>
+<img src="images/Ch10_04.jpg" title="" alt="."
+ style="width: 752px; height: 380px;" ><br >
+<br >
+<h2>Les visiteurs</h2>
+<ul>
+  <li><tt>Visitor</tt> est un type interface</li>
+  <li>Fournir une classe s&eacute;par&eacute;e pour chaque nouvelle op&eacute;ration</li>
+  <li>La forme la plus simple de m&eacute;thode <tt>accept</tt>&nbsp;:<br >
+    <tt>public void accept(Visitor v) { v.visit(this); }</tt> </li>
+  <li>Le programmeur doit impl&eacute;menter <tt>visit</tt> </li>
+</ul>
+<h2>Les visiteurs</h2>
+<ul>
+  <li>Probl&egrave;me&nbsp;: Une op&eacute;ration peut &ecirc;tre diff&eacute;rente pour des types d'&eacute;l&eacute;ments 
+	diff&eacute;rents</li>
+  <li>On ne peut utiliser le polymorphisme </li>
+  <li>Le polymorphisme assume un ensemble fixe de m&eacute;thodes, d&eacute;fini dans les 
+	superclasses<br >
+  </li>
+  <li>Truc&nbsp;: On peut utiliser un ensemble variable de m&eacute;thodes <i>si l'ensemble 
+	des classes est fixe</i></li>
+  <li>Fournir des m&eacute;thodes de visiteur s&eacute;par&eacute;es&nbsp;:<br >
+    <tt>public interface Visitor</tt><br style="font-family: monospace;" >
+    <tt>{</tt><br style="font-family: monospace;" >
+    <tt>&nbsp;&nbsp; void visitElementType1(ElementType1 element);</tt><br
+ style="font-family: monospace;" >
+    <tt>&nbsp;&nbsp; void visitElementType2(ElementType2 element);</tt><br
+ style="font-family: monospace;" >
+    <tt>&nbsp;&nbsp; ...</tt><br style="font-family: monospace;" >
+    <tt>&nbsp;&nbsp; void visitElementTypen(ElementTypen element);</tt><br
+ style="font-family: monospace;" >
+    <tt>}</tt> </li>
+</ul>
+<h2>Les visiteurs</h2>
+<ul>
+  <li>Exemple&nbsp;: Arbre de r&eacute;pertoires</li>
+  <li>Deux genres d'&eacute;l&eacute;ment&nbsp;: <tt>DirectoryNode</tt>,<tt> FileNode</tt> </li>
+  <li>Deux m&eacute;thodes dans le type interface visiteur&nbsp;:<br >
+    <tt>void visitDirectoryNode(DirectoryNode node)</tt><br
+ style="font-family: monospace;" >
+    <tt>void visitFileNode(FileNode node)</tt> </li>
+</ul>
+<h2>R&eacute;partition double</h2>
+<ul>
+  <li>Chaque type d'&eacute;l&eacute;ment fournit des m&eacute;thodes&nbsp;:<br >
+    <tt>public class ElementType<sub>i</sub></tt><br
+ style="font-family: monospace;" >
+    <tt>{</tt><br style="font-family: monospace;" >
+    <tt>&nbsp;&nbsp; public void accept(Visitor v) { v.visitElementType<sub>i</sub>(this);
+}</tt><br style="font-family: monospace;" >
+    <tt>&nbsp;&nbsp; ...</tt><br style="font-family: monospace;" >
+    <tt>}</tt> </li>
+  <li>Compl&egrave;tement m&eacute;canique</li>
+  <li>Exemple&nbsp;:<br >
+    <tt>public class DirectoryNode</tt><br
+ style="font-family: monospace;" >
+    <tt>{</tt><br style="font-family: monospace;" >
+    <tt>&nbsp;&nbsp; public void accept(Visitor v) {
+v.visitDirectoryNode(this); }</tt><br style="font-family: monospace;" >
+    <tt>&nbsp;&nbsp; ...</tt><br style="font-family: monospace;" >
+    <tt>}</tt><br >
+  </li>
+</ul>
+<h2>Exemple de visiteur</h2>
+<ul>
+  <li>La classe standard <tt>File</tt> d&eacute;note les fichiers et les r&eacute;pertoires</li>
+  <li>Conception am&eacute;lior&eacute;&nbsp;: <tt>FileNode</tt>,<tt> DirectoryNode</tt> </li>
+  <li>Type interface commun&nbsp;: <tt>FileSystemNode</tt> </li>
+  <li>Accepte <tt>FileSystemVisitor</tt> </li>
+  <li>M&eacute;thodes du visiteur&nbsp;:<br >
+    <tt>visitFileNode</tt><br style="font-family: monospace;" >
+    <tt>visitDirectoryNode</tt> </li>
+</ul>
+<h2>Exemple de visiteur</h2>
+<img src="images/Ch10_05.jpg" title="" alt="."
+ style="width: 876px; height: 552px;" ><br >
+<br >
+<h2>Exemple de visiteur</h2>
+<ul>
+  <li>Visiteur actuel&nbsp;: <tt>PrintVisitor</tt> </li>
+  <li>Affiche le nom des fichiers (dans <tt>visitFileNode</tt>)<br >
+  </li>
+  <li>Liste le contenu des r&eacute;pertoires (dans <tt>visitDirectoryNode</tt>)<br >
+  </li>
+  <li>Maintient le niveau d'indentation<br style="font-family: monospace;" >
+    <tt>..</tt><br style="font-family: monospace;" >
+    <tt>&nbsp;&nbsp; command</tt><br style="font-family: monospace;" >
+    <tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;CommandTester.java</tt><br
+ style="font-family: monospace;" >
+    <tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;GreetingAction.java</tt><br
+ style="font-family: monospace;" >
+    <tt>&nbsp;&nbsp; visitor</tt><br style="font-family: monospace;" >
+    <tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;FileNode.java</tt><br
+ style="font-family: monospace;" >
+    <tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; DirectoryNode.java</tt> </li>
+</ul>
+<h2>Exemple de visiteur</h2>
+<ul>
+  <li><a href="code/visitor/FileSystemNode.java.html">ch10/visitor/FileSystemNode.java</a>
+  </li>
+  <li><a href="code/visitor/FileNode.java.html">ch10/visitor/FileNode.java</a>
+  </li>
+  <li><a href="code/visitor/DirectoryNode.java.html">ch10/visitor/DirectoryNode.java</a>
+  </li>
+  <li><a href="code/visitor/FileSystemVisitor.java.html">ch10/visitor/FileSystemVisitor.java</a>
+  </li>
+  <li><a href="code/visitor/PrintVisitor.java.html">ch10/visitor/PrintVisitor.java</a>
+  </li>
+  <li><a href="code/visitor/VisitorTester.java.html">ch10/visitor/VisitorTester.java</a>
+  </li>
+</ul>
+<h2>Exemple de r&eacute;partition double</h2>
+<ul>
+  <li><tt>DirectoryNode node = new DirectoryNode(new File(&quot;..&quot;));<br >
+node.accept(new PrintVisitor());<br >
+  </tt> </li>
+  <li><tt>node</tt> is a <tt>DirectoryNode</tt> </li>
+  <li>Polymorphisme&nbsp;: <tt>node.accept</tt> appelle <tt>DirectoryNode.accept</tt>
+  </li>
+  <li>Cette m&eacute;thode appelle <tt>v.visitDirectoryNode</tt> </li>
+  <li><tt>v</tt> est un <tt>PrintVisitor</tt> </li>
+  <li>Polymorphisme&nbsp;: appelle <tt>PrintVisitor.visitDirectoryNode</tt> </li>
+  <li>Deux appels polymorphiques d&eacute;terminent
+    <ul>
+      <li>le type de noeud</li>
+      <li>le type de visiteur</li>
+    </ul>
+  </li>
+</ul>
+<h2>Exemple de r&eacute;partition double </h2>
+<img src="images/Ch10_06.jpg" title="" alt="."
+ style="width: 709px; height: 416px;" ><br >
+<br >
+<h2>Le patron VISITOR</h2>
+<h3>Contexte</h3>
+<ol>
+  <li>Une structure d'objet contient des &eacute;l&eacute;ments de classe de plusieurs types, 
+	et on veut acc&eacute;der aux op&eacute;rations qui d&eacute;pendent du type des objets.<br >
+  </li>
+  <li>L'ensemble des op&eacute;rations doit &ecirc;tre extensible dans le temps.<br >
+  </li>
+  <li>L'ensemble des &eacute;l&eacute;ments de classe est fixe. </li>
+</ol>
+<h2>Le patron VISITOR</h2>
+<h3>Solution</h3>
+<ol>
+  <li>D&eacute;finir un type interface &quot;visitor&quot; qui a des m&eacute;thodes pour visiter les 
+	&eacute;l&eacute;ments de tous les types donn&eacute;s.<br >
+  </li>
+  <li>Chaque &eacute;l&eacute;ment de classe d&eacute;finit une m&eacute;thode &quot;accept&quot; qui invoque la bonne 
+	m&eacute;thode sur le param&egrave;tre du visiteur.<br >
+  </li>
+  <li>Pour impl&eacute;menter une op&eacute;ration, d&eacute;finir une classe qui impl&eacute;mente le type 
+	interface &quot;visitor&quot; et fournit les actions des op&eacute;rations pour chaque type 
+	d'&eacute;l&eacute;ment. </li>
+</ol>
+<h2>Le patron VISITOR</h2>
+<img src="images/Ch10_un05.jpg" title="" alt="."
+ style="width: 974px; height: 737px;" ><br >
+<br >
+<h2>Le patron VISITOR</h2>
+<table style="text-align: left; width: 100%;" border="1" cellpadding="2"
+ cellspacing="2">
+  <tbody>
+    <tr>
+      <td style="vertical-align: top; font-weight: bold;">Nom dans le patron de 
+	conception                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       </td>
+      <td style="vertical-align: top;"><b>Vrai nom  (file system
+visitor)</b></td>
+    </tr>
+    <tr style="font-family: monospace;">
+      <td style="vertical-align: top;">Element<br >
+      </td>
+      <td style="vertical-align: top;">FileSystemNode<br >
+      </td>
+    </tr>
+    <tr style="font-family: monospace;">
+      <td style="vertical-align: top;">ConcreteElement<br >
+      </td>
+      <td style="vertical-align: top;">FileNode, DirectoryNode<br >
+      </td>
+    </tr>
+    <tr style="font-family: monospace;">
+      <td style="vertical-align: top;">Visitor<br >
+      </td>
+      <td style="vertical-align: top;">FileSystemVisitor<br >
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top; font-family: monospace;">
+ConcreteVisitor<br >
+      </td>
+      <td style="vertical-align: top;"><tt>PrintVisitor</tt><br >
+      </td>
+    </tr>
+  </tbody>
+</table>
+<h2>D'autres patrons de conception</h2>
+<ul>
+  <li>Abstract Factory </li>
+  <li>Bridge </li>
+  <li>Builder </li>
+  <li>Chain of Responsibility </li>
+  <li>Flyweight </li>
+  <li>Interpreter </li>
+  <li>Mediator </li>
+  <li>Memento </li>
+  <li>State</li>
+</ul>
+<h2>Conclusion&nbsp;: Qu'avez-vous appris</h2>
+<ol>
+  <li>Conception orient&eacute;e object<br >
+	La m&eacute;thodologie de conception<br >
+	Cartes
+CRC et diagramme UML<br >
+	Patrons de conception<br >
+  </li>
+  <li>Java avanc&eacute;<br >
+	Types
+Interface, polymorphisme et h&eacute;ritage<br >
+	Classes&nbsp;imbriqu&eacute;es<br >
+Introspection&nbsp;&nbsp;<br >
+Multithreading&nbsp;&nbsp;<br >
+Collections<br >
+  </li>
+  <li>Programme d'interface usager<br >
+	Construire des applications Swing<br >
+	Gestion des &eacute;v&egrave;nements<br >
+	Programmation de graphiques<br >
+  </li>
+</ol>
+</body>
+</html>

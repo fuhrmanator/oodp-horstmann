@@ -1,0 +1,620 @@
+<html>
+<head>
+  <title>Horstmann Chapter 8</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+</head>
+<body>
+<h2>Object-Oriented Design &amp; Patterns</h2>
+<h4>Cay S. Horstmann</h4>
+<h3>Chapitre 8</h3>
+<h3>Frameworks (Cadres)</h3>
+<img alt="" src="images/oodp2.jpg" height="500" width="404">
+<h2>Mati&egrave;re du chapitre</h2>
+<ul>
+	<li>Frameworks (Cadres)</li>
+	<li>Les applets comme un simple framework </li>
+	<li>Le framework pour les collections</li>
+	<li>Le framework pour l'&eacute;diteur graphique</li>
+  <li>Am&eacute;liorer le framework pour l'&eacute;diteur graphique</li>
+</ul>
+<h2>Frameworks (Cadres)</h2>
+<ul>
+  <li>Ensemble de classes coop&eacute;rant</li>
+  <li>Am&eacute;nage les m&eacute;canismes essentiels pour un domaine d'int&eacute;r&ecirc;t</li>
+  <li>Exemple&nbsp;: Swing est un framework IUG (interface utilisateur graphique)</li>
+  <li>Framework != patron de conception</li>
+  <li>Un framework typique utilise plusieurs patrons de conception</li>
+</ul>
+<h2>Frameworks d'application</h2>
+<ul>
+  <li>Impl&eacute;mente les services communs d'un type d'application</li>
+  <li>Le programmeur forme les sous-classes des classes du framework</li>
+  <li>Le r&eacute;sultat est une application </li>
+  <li>Inversion du contr&ocirc;le : le framework contr&ocirc;le le flot d'ex&eacute;cution</li>
+</ul>
+<h2>Applets</h2>
+<ul>
+  <li>Applet : Un programme Java qui s'ex&eacute;cute dans un navigateur</li>
+  <li>Le programmeur cr&eacute;e une sous-classe de <tt>Applet</tt> ou <tt>JApplet</tt>
+  </li>
+  <li>R&eacute;&eacute;crit <br>
+    <tt>init/destroy<br>
+    start/stop<br>
+paint</tt></li>
+</ul>
+<h2>Applets</h2>
+<img src="images/Ch8_01.jpg" title="" alt="."
+ style="width: 987px; height: 661px;"><br>
+<br>
+<h2>Applets</h2>
+<ul>
+  <li>Interagit avec le navigateur ambiant<br>
+    <tt>getParameter<br>
+showDocument</tt> </li>
+  <li>Une page HTML contient une &eacute;tiquette et les param&egrave;tres pour l'applet<br>
+    <pre>&lt;applet code=&quot;BannerApplet.class&quot; width=&quot;300&quot; height=&quot;100&quot;&gt; <br>   &lt;param name=&quot;message&quot; value=&quot;Hello, World!&quot;/&gt; <br>   &lt;param name=&quot;fontname&quot; value=&quot;Serif&quot;/&gt; <br>   &lt;param name=&quot;fontsize&quot; value=&quot;64&quot;/&gt; <br>   &lt;param name=&quot;delay&quot; value=&quot;10&quot;/&gt; <br>&lt;/applet&gt; <br></pre>
+  </li>
+</ul>
+<h2>Exemple d'applet</h2>
+<ul>
+  <li>Montrer une bani&egrave;re de d&eacute;roulement</li>
+  <li><tt>init</tt> lit les param&egrave;tres</li>
+  <li><tt>start/stop</tt> d&eacute;marre et arr&ecirc;te le temporisateur</li>
+  <li><tt>paint</tt> dessine la surface de l'applet</li>
+  <li><a href="code/applet/BannerApplet.java.html">Ch8/applet/BannerApplet.java</a>
+  </li>
+</ul>
+<h2>Exemple d'applet</h2>
+<img alt="" src="images/Ch8_02.png" height="279" width="378"><br>
+<br>
+<h2>Applets comme un framework</h2>
+<ul>
+  <li>Le programmeur d'applet utilise l'h&eacute;ritage</li>
+  <li>La classe de l'applet s'occupe du comportement g&eacute;n&eacute;rique (interaction 
+	avec le navigateur)</li>
+  <li>Inversion du contr&ocirc;le : applet appelle <tt>init</tt>, <tt>start</tt>,<tt> stop</tt>,<tt> destroy</tt>
+  </li>
+</ul>
+<h2>Framework des collections</h2>
+<ul>
+	<li>La biblioth&egrave;que Java fournit des structures de donn&eacute;es traditionnelles</li>
+	<li>Fournit des services utiles (<tt>Collections.sort</tt>, <tt>Collections.shuffle</tt>)
+  	</li>
+	<li>Framework : les programmeurs peuvent fournir des structures de donn&eacute;es 
+	et des services additionnels </li>
+	<li>Les nouvelles structures fonctionnent automatiquement avec les services</li>
+	<li>Les nouveaux services fonctionnent automatiquement avec les structures de
+  donn&eacute;es</li>
+</ul>
+<h2>Framework des collections : Types interface</h2>
+<ul>
+  <li><tt>Collection </tt>: le type interface collection le plus g&eacute;n&eacute;ral</li>
+  <li><tt>Set </tt>: une collection non ordonn&eacute;e qui ne permet pas la 
+	duplication des &eacute;l&eacute;ments</li>
+  <li><tt>SortedSet </tt>: un ensemble dont les &eacute;l&eacute;ments sont parcourus dans
+    un	ordre tri&eacute;</li>
+  <li><tt>List </tt>: une collection ordonn&eacute;e</li>
+</ul>
+<h2>Framework des collections : Classes</h2>
+<ul>
+  <li><tt>HashSet </tt>:  impl&eacute;mentation d'un ensemble utilisant le hachage
+    	pour localiser les &eacute;l&eacute;ments<br>
+  </li>
+  <li><tt>TreeSet </tt>:  impl&eacute;mentation ordonn&eacute;e d'un ensemble gardant les 
+	&eacute;l&eacute;ments dans un arbre binaire &eacute;quilibr&eacute;<br>
+  </li>
+  <li><tt>LinkedList</tt> et <tt>ArrayList </tt>: deux impl&eacute;mentations du type
+    	interface List<br>
+  </li>
+</ul>
+<h2>Framework des collections</h2>
+<img src="images/Ch8_03.jpg" title="" alt="."
+ style="width: 783px; height: 431px;"><br>
+<br>
+<h2>Type interface<tt> Collection&lt;E&gt;</tt></h2>
+<ul>
+  <li>Une collection stocke les &eacute;l&eacute;ments d'une certaine fa&ccedil;on</li>
+  <li>Des structures de donn&eacute;es diff&eacute;rentes ont diff&eacute;rentes strat&eacute;gies de 
+	stockage</li>
+</ul>
+<pre>boolean add(E obj) <br>boolean addAll(Collection c) <br>void clear() <br>boolean contains(E obj) <br>boolean containsAll(Collection c) <br>boolean equals(E obj) <br>int hashCode() <br>boolean isEmpty() <br>Iterator iterator() <br>boolean remove(E obj) <br>boolean removeAll(Collection c) <br>boolean retainAll(Collection c) <br>int size() <br>E[] toArray() <br>E[] toArray(E[] a) <br></pre>
+<h2>Type interface<tt> Iterator&lt;E&gt;</tt></h2>
+<ul>
+  <li>Un it&eacute;rateur traverse les &eacute;l&eacute;ments d'une collection </li>
+</ul>
+<tt>boolean hasNext()<br>
+E next()<br>
+void remove()<br>
+</tt>
+<h2>Classe<tt> AbstractCollection</tt></h2>
+<ul>
+  <li><tt>Collection</tt> est une interface lourde</li>
+  <li>Convient aux clients, ne convient pas aux d&eacute;veloppeurs</li>
+  <li>Plusieurs m&eacute;thodes peuvent &ecirc;tre impl&eacute;ment&eacute;es &agrave; l'aide des autres (Template method !) </li>
+  <li>Exemple: <tt>toArray<br>
+    </tt> </li>
+</ul>
+<tt>public E[] toArray()<br>
+{<br>
+&nbsp;&nbsp; E[] result = new E[size()];<br>
+&nbsp;&nbsp; Iterator e = iterator();<br>
+&nbsp;&nbsp; for (int i = 0; e.hasNext(); i++)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; result[i] = e.next();<br>
+&nbsp;&nbsp; return result;<br>
+}</tt>
+<h2>Classe <tt>AbstractCollection</tt></h2>
+<ul>
+  <li>On ne peut  mettre les m&eacute;thodes &quot;template&quot; dans un type interface</li>
+  <li>On les met dans la classe <tt>AbstractCollection</tt></li>
+  <li><tt>AbstractCollection</tt> est une superclasse convenable pour les 
+	d&eacute;veloppeurs</li>
+  <li>Seulement deux m&eacute;thodes ne sont pas d&eacute;finies : <tt>size</tt>,<tt> iterator</tt><br>
+  </li>
+</ul>
+<h2>Ajouter une nouvelle classe au framework</h2>
+<ul>
+  <li>Utiliser la file du chapitre 3 </li>
+  <li>Fournir un it&eacute;rateur (avec une m&eacute;thode <tt>remove</tt> qui ne fait rien) </li>
+  <li>La m&eacute;thode <tt>add</tt> retourne toujours <tt>true</tt> </li>
+  <li><a href="code/queue/BoundedQueue.java.html">Ch8/queue/BoundedQueue.java</a> </li>
+  <li><a href="code/queue/QueueTester.java.html">Ch8/queue/QueueTester.java</a>
+  </li>
+</ul>
+<h2>Ajouter une nouvelle classe au framework</h2>
+<img src="images/Ch8_04.jpg" title="" alt="."
+ style="width: 147px; height: 525px;"><br>
+<br>
+<h2>Ensembles</h2>
+<ul>
+  <li>Le type interface <tt>Set</tt> n'ajoute aucune m&eacute;thode &agrave; <tt>Collection </tt>! </li>
+  <li>Conceptuellement, les ensembles sont des sous types des collections</li>
+  <li>Les ensembles ne stockent pas les doublons d'un m&ecirc;me &eacute;l&eacute;ment</li>
+  <li>Les ensembles ne sont <i>pas ordonn&eacute;s</i></li>
+  <li>Interface s&eacute;par&eacute;e : un algorithme peut requ&eacute;rir un <tt>Set</tt> </li>
+</ul>
+<h2>Listes</h2>
+<ul>
+  <li>Les listes sont <i>ordonn&eacute;es</i></li>
+  <li>Chaque position dans la liste peut &ecirc;tre acc&eacute;d&eacute;e avec un index entier</li>
+  <li>Les m&eacute;thodes du sous type : </li>
+</ul>
+<tt>boolean add(int index, E obj)<br>
+boolean addAll(int index, Collection&lt;? extends E&gt; c)<br>
+E get(int index)<br>
+int indexOf(E obj)<br>
+int lastIndexOf(Object obj)<br>
+ListIterator&lt;E&gt; listIterator()<br>
+ListIterator&lt;E&gt; listIterator(int index)<br>
+E remove(int index)<br>
+E set(int index, E element)<br>
+List&lt;E&gt; subList(int fromIndex, int toIndex)<br>
+</tt>
+<h2>It&eacute;rateurs de liste</h2>
+<ul>
+  <li>Acc&egrave;s par indice</li>
+  <li>Comportement bidirectionnel</li>
+  <li>Les m&eacute;thodes du sous type :<br>
+  </li>
+</ul>
+<tt>int nextIndex()<br>
+int previousIndex()<br>
+boolean hasPrevious()<br>
+E previous()<br>
+void add(E obj)
+<br>
+void set(E obj)</tt><br>
+<h2>Classes pour les listes</h2>
+<ul>
+  <li><tt>ArrayList</tt> </li>
+  <li><tt>LinkedList</tt> </li>
+  <li>Acc&egrave;s index&eacute; est possible pour les listes cha&icirc;n&eacute;es, mais c'est lent</li>
+  <li>Faiblesse dans la conception</li>
+  <li>R&eacute;solution partielle dans Java 1.4 :  type interface <tt>RandomAccess</tt></li>
+</ul>
+<h2>Classes pour les listes</h2>
+<img src="images/Ch8_05.jpg" title="" alt="."
+ style="width: 741px; height: 481px;"><br>
+<br>
+<h2>Op&eacute;rations optionnelles</h2>
+<ul>
+  <li>Plusieurs op&eacute;rations sont &eacute;tiquett&eacute;es comme &quot;optionnelle&quot; </li>
+  <li>Exemple: <tt>Collection.add</tt>, <tt>Collection.remove</tt> </li>
+  <li>L'impl&eacute;mentation de base (AbstractCollection) l&egrave;ve une exception </li>
+  <li>Pourquoi avoir des op&eacute;rations optionnelles ?</li>
+</ul>
+<h2>Vues</h2>
+<ul>
+  <li>Vue&nbsp; = collection qui montre des objets stock&eacute;s ailleurs</li>
+  <li>Exemple: <tt>Arrays.asList</tt> </li>
+  <li><tt>String[] strings = { &quot;Kenya&quot;, &quot;Thailand&quot;, &quot;Portugal&quot; };<br>
+List view = Arrays.asList(strings)</tt> </li>
+  <li>Ne copie pas les &eacute;l&eacute;ments ! </li>
+  <li>On peut utiliser une vue pour les services communs<br>
+    <tt>otherList.addAll(view);</tt> </li>
+</ul>
+<h2>Vues</h2>
+<ul>
+  <li><tt>get/set</tt> sont d&eacute;finis pour acc&eacute;der au tableau sous-jacent</li>
+  <li>La vue<tt> Arrays.asList</tt> n'a pas les op&eacute;rations <tt>add/remove</tt></li>
+  <li>On ne peut  agrandir/r&eacute;tr&eacute;cir le tableau sous-jacent</li>
+  <li>Plusieurs genres de vues :<br>
+	lecture seulement<br>
+	modifiable<br>
+	redimensionnable<br>
+. . .<br>
+  </li>
+  <li>Les op&eacute;rations optionnelles &eacute;vitent l'&eacute;largissement des interfaces</li>
+  <li>Une d&eacute;cision de conception controvers&eacute;e</li>
+</ul>
+<h2>Framework pour l'&eacute;diteur graphique</h2>
+<ul>
+  <li>Domaine d'application&nbsp;: &eacute;dition interactive des diagrammes</li>
+  <li>Un graphe est compos&eacute; de sommets (nodes) et d'ar&ecirc;tes (edges)</li>
+  <li>Le diagramme de classe :<br>
+	les sommets repr&eacute;sent&eacute;s par des rectangles<br>
+	les ar&ecirc;tes repr&eacute;sent&eacute;es par des fl&egrave;ches </li>
+  <li>Diagramme d'un circuit &eacute;lectronique :<br>
+	les sommets sont des transistors, des r&eacute;sistances<br>
+	les ar&ecirc;tes sont des fils</li>
+</ul>
+<h2>Un framework pour l'&eacute;diteur graphique</h2>
+<ul>
+  <li>Approche traditionnelle : le programmeur repart du d&eacute;but pour chaque type 
+	d'&eacute;diteur</li>
+  <li>Approche avec framework : le programme &eacute;tend les classes graph, node, edge</li>
+  <li>Le framework prend en charge UI, load/save, ... </li>
+  <li>Notre framework est simple</li>
+  <li>Violet utilise une extension de ce framework </li>
+</ul>
+<h2>Interface usager</h2>
+<ul>
+  <li>La barre d'outils en haut</li>
+  <li>Bouton de s&eacute;lection pour s&eacute;lectionner les sommets et les ar&ecirc;tes</li>
+  <li>Boutons pour sp&eacute;cifier le type de sommet et d'ar&ecirc;te courant</li>
+  <li>Menu </li>
+  <li>Aire pour composer le graphe</li>
+</ul>
+<h2>Interface usager</h2>
+<img alt="" src="images/Ch8_06.png" height="402" width="602"><br>
+<h2>Op&eacute;rations de la souris</h2>
+<ul>
+  <li>Cliquer sur un espace vide : le sommet courant est ins&eacute;r&eacute;</li>
+  <li>Cliquer sur un sommet ou un ar&ecirc;te : il est s&eacute;lectionn&eacute;</li>
+  <li>Faire glisser un sommet quand un ar&ecirc;te est s&eacute;lectionn&eacute; : connecte
+    les sommets</li>
+  <li>Faire glisser un sommet quand un ar&ecirc;te n'est pas s&eacute;lectionn&eacute; : d&eacute;place
+    le sommet</li>
+</ul>
+<h2>S&eacute;parer des responsabilit&eacute;s</h2>
+<ul>
+  <li>Diviser le code entre
+    <ul>
+      <li>framework </li>
+    </ul>
+    <ul>
+      <li>application sp&eacute;cifique </li>
+    </ul>
+  </li>
+  <li>Affichage d&eacute;pend de l'application (p.ex. transistor) </li>
+  <li>Localisation de clique d&eacute;pend de l'application (forme de sommet
+  varie) </li>
+  <li>Framework dessine la barre d'outils</li>
+  <li>Framework fait l'observateur de la souris</li>
+</ul>
+<h2>Ajouter des sommets et des ar&ecirc;tes</h2>
+<ul>
+  <li>Framework dessine la barre d'outils</li>
+  <li>Comment sait-il quels sommets/arr&ecirc;tes dessiner ? </li>
+  <li>L'application donne une liste de sommets et d'ar&ecirc;tes au framework lors du 
+	d&eacute;marrage</li>
+  <li>Comment l'application sp&eacute;cifie-t-elle les sommets et les ar&ecirc;tes
+    ?
+    <ul>
+      <li>Le nom de la classe ? (<tt>&quot;Transistor&quot;</tt>) </li>
+      <li>Objets<tt> Class</tt> ? (<tt>Transistor.class</tt>) </li>
+      <li>Objets<tt> Node</tt>, <tt>Edge </tt>? (<tt>new Transistor()</tt>)</li>
+    </ul>
+  </li>
+</ul>
+<h2>Ajouter des sommets et des ar&ecirc;tes</h2>
+<ul>
+  <li>Les objets sont plus flexibles que les classes</li>
+  <li><tt>new CircleNode(Color.BLACK)<br>
+new CircleNode(Color.WHITE)</tt> </li>
+  <li>Lorsque l'usager ins&egrave;re un nouveau sommet, celui choisi dans la
+    barre d'outils est <i>clon&eacute;<br>
+    </i> <tt>Node prototype = <i>node of currently selected toolbar
+button</i>;<br>
+Node newNode = (Node) prototype.clone();<br>
+Point2D mousePoint = <i>current mouse position</i>;<br>
+graph.add(newNode, mousePoint);</tt> </li>
+  <li>Exemple du patron PROTOTYPE<br>
+  </li>
+</ul>
+<h2>Patron PROTOTYPE</h2>
+<h3>Contexte</h3>
+<ol>
+  <li>Un syst&egrave;me instancie les objets des classes qui ne sont pas connues 
+lorsque le syst                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       &egrave;me est construit.</li>
+  <li>On ne veut pas avoir une classe s&eacute;par&eacute;e pour chaque genre d'objet.</li>
+  <li>On veut &eacute;viter une hi&eacute;rarchie de classes s&eacute;par&eacute;e dont la responsabilit&eacute; 
+	est de cr&eacute;er des objets. </li>
+</ol>
+<h3>Solution</h3>
+<ol>
+  <li>D&eacute;finir un prototype de type interface qui est commun &agrave; tous les objets 
+cr&eacute;&eacute;s.</li>
+  <li>Fournir un objet prototype pour chaque genre d'objet cr&eacute;&eacute; par le syst&egrave;me.</li>
+  <li>Cloner l'objet prototype chaque fois qu'un nouvel objet de ce genre est
+    	requis.&nbsp;<br>
+  </li>
+</ol>
+<h2>Patron PROTOTYPE</h2>
+<img src="images/Ch8_unf01.jpg" title="" alt="."
+ style="width: 822px; height: 342px;"><br>
+<br>
+<h2>Patron PROTOTYPE</h2>
+<table style="text-align: left; width: 100%;" border="1" cellpadding="2"
+ cellspacing="2">
+  <tbody>
+    <tr>
+      <td style="vertical-align: top; font-weight: bold;">Nom dans le patron de 
+		conception<br>
+      </td>
+      <td style="vertical-align: top; font-weight: bold;">Vrai nom  (&eacute;diteur
+        de graphe)<br>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top; font-family: monospace;">
+Prototype<br>
+      </td>
+      <td style="vertical-align: top; font-family: monospace;"> Node<br>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top; font-family: monospace;">
+ConcretePrototype1<br>
+      </td>
+      <td style="vertical-align: top; font-family: monospace;">
+CircleNode<br>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top; font-family: monospace;"> Creator<br>
+      </td>
+      <td style="vertical-align: top;">Le <tt>GraphPanel</tt> qui s'occupe de 
+		l'op&eacute;ration de la souris pour ajouter de nouveaux sommets<br>
+      </td>
+    </tr>
+  </tbody>
+</table>
+<br>
+<br>
+<h2>Classes du framework</h2>
+<ul>
+  <li>Le programmeur du framework impl&eacute;mente les types interface <tt>Node</tt>/<tt>Edge</tt></li>
+  <li><tt>draw</tt> dessine le sommet/l'ar&ecirc;te</li>
+  <li><tt>getBounds</tt> retourne le rectangle d&eacute;limitant le graphe (pour 
+	calculer la taille totale du graphe pour le d&eacute;filement) </li>
+  <li><tt>Edge.getStart</tt>, <tt>getEnd</tt> pour obtenir les sommets de d&eacute;but
+    et de fin</li>
+  <li><tt>Node.getConnectionPoint</tt> calcule les points d'attache sur la 
+	fronti&egrave;re de la forme</li>
+  <li><tt>Edge.getConnectionPoints</tt> pour obtenir les coordonn&eacute;es de d&eacute;but
+    	et de fin (pour s&eacute;lectionner la forme) </li>
+  <li><tt>clone</tt> red&eacute;finie pour &ecirc;tre publique </li>
+</ul>
+<h2>Points de connexion d'un sommet</h2>
+<img src="images/Ch8_07.jpg" title="" alt="."
+ style="width: 674px; height: 427px;"><br>
+<br>
+<h2>Classes du framework</h2>
+<ul>
+  <li>La classe <tt>AbstractEdge</tt> pour la convenance</li>
+  <li>Le programmeur impl&eacute;mente les types <tt>Node</tt>/<tt>Edge</tt> ou &eacute;tend
+  <tt>AbstractEdge</tt></li>
+  <li><a href="code/graphed/Node.java.html">Ch8/graphed/Node.java</a> </li>
+  <li><a href="code/graphed/Edge.java.html">Ch8/graphed/Edge.java</a> </li>
+  <li><a href="code/graphed/AbstractEdge.java.html">Ch8/graphed/AbstractEdge.java</a>
+  </li>
+</ul>
+<h2>Classes du framework</h2>
+<ul>
+  <li><tt>Graph</tt> agr&egrave;ge les sommets et les ar&ecirc;tes</li>
+  <li>Les sous classes red&eacute;finissent les m&eacute;thodes <br>
+    <tt>public abstract Node[] getNodePrototypes()</tt><br
+ style="font-family: monospace;">
+  <tt>public abstract Edge[] getEdgePrototypes()</tt></li>
+  <li><a href="code/graphed/Graph.java.html">Ch8/graphed/Graph.java</a>
+  </li>
+</ul>
+<h2>Classes IU du framework</h2>
+<ul>
+  <li><tt>GraphFrame </tt>: un cadre qui g&egrave;re la barre d'outils, la barre menu
+    
+et le panneau du graphe.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       &nbsp;</li>
+  <li><tt>ToolBar </tt>: un panneau contenant les boutons &agrave; bascule 
+r&eacute;pr&eacute;sentant
+les ic&ocirc;nes pour le sommet et l'ar&ecirc;te.&nbsp;&nbsp;</li>
+  <li><tt>GraphPanel </tt>: un panneau qui affiche le graphe et qui s'occupe
+    des 
+cliques et des glissements de la souris pour les commandes d'&eacute;dition.</li>
+  <li>Les programmeurs d'application n'ont pas besoin d'&eacute;tendre ces classes.<br>
+  </li>
+</ul>
+<h2>Une instance du framework</h2>
+<ul>
+  <li>Application simple</li>
+  <li>Dessiner des sommets blancs et noirs</li>
+  <li>Joindre les sommets avec une ligne droite</li>
+</ul>
+<h2>Responsabilit&eacute;s du programmeur</h2>
+<ul>
+  <li>Pour chaque type de sommet et d'ar&ecirc;te, d&eacute;finir une classe qui impl&eacute;mente le 
+	type interface <tt>Node</tt>
+	ou <tt>Edge.</tt></li>
+  <li>Fournir toutes les m&eacute;thodes requises, telles que pour afficher et pour
+    tester l'inclusion.</li>
+  <li>D&eacute;finir une sous classe pour la classe <tt>Graph</tt> et fournir <tt>getNodePrototypes,</tt>
+  <tt>getEdgePrototypes</tt></li>
+  <li>Fournir une classe avec une m&eacute;thode <tt>main</tt></li>
+</ul>
+<h2>Une instance du framework</h2>
+<img src="images/Ch8_08.jpg" title="" alt="."
+ style="width: 954px; height: 586px;"><br>
+<h2>Une instance du framework</h2>
+<ul>
+  <li><a href="code/graphed/SimpleGraph.java.html">Ch8/graphed/SimpleGraph.java</a>
+  </li>
+  <li><a href="code/graphed/SimpleGraphEditor.java.html">Ch8/graphed/SimpleGraphEditor.java</a>
+  </li>
+  <li><a href="code/graphed/CircleNode.java.html">Ch8/graphed/CircleNode.java</a>
+  </li>
+  <li><a href="code/graphed/LineEdge.java.html">Ch8/graphed/LineEdge.java</a>
+  </li>
+</ul>
+<h2>Code g&eacute;n&eacute;rique pour le framework</h2>
+<ul>
+  <li>Un framework lib&egrave;re le programmeur d'application de la programmation fastidieuse</li>
+  <li>Un framework peut r&eacute;aliser beaucoup de t&acirc;ches sans conna&icirc;tre
+    les types des	sommets et des ar&ecirc;tes</li>
+  <li>Analyser deux sc&eacute;narios
+    <ul>
+      <li>Ajouter un nouveau sommet</li>
+    </ul>
+    <ul>
+      <li>Ajouter un nouvel ar&ecirc;te</li>
+    </ul>
+  </li>
+</ul>
+<h2>Ajouter un nouveau sommet</h2>
+<pre>public void mousePressed(MouseEvent event)<br>{<br>   Point2D mousePoint = event.getPoint();<br>   Object tool = toolBar.getSelectedTool();<br>   ...<br>   if (tool instanceof Node)<br>   {<br>      Node prototype = (Node) tool;<br>      Node newNode = (Node)prototype.clone();<br>      graph.add(newNode, mousePoint);<br>   }<br>   ...<br>   repaint();<br>}<br></pre>
+<h2>Ajouter un nouveau sommet</h2>
+<img src="images/Ch8_09.jpg" title="" alt="."
+ style="width: 992px; height: 521px;">
+<h2>Ajouter un nouvel ar&ecirc;te</h2>
+<ul>
+  <li>Premi&egrave;rement, v&eacute;rifier si la souris a &eacute;t&eacute; enfonc&eacute;e &agrave; l'int&eacute;rieur d'un 
+	sommet existant<br>
+    <tt>public Node findNode(Point2D p)</tt><br
+ style="font-family: monospace;">
+    <tt>{</tt><br style="font-family: monospace;">
+    <tt>&nbsp;&nbsp; for (int i = 0; i &lt; nodes.size(); i++)</tt><br
+ style="font-family: monospace;">
+    <tt>&nbsp;&nbsp; {</tt><br style="font-family: monospace;">
+    <tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Node n = (Node) nodes.get(i);</tt><br
+ style="font-family: monospace;">
+    <tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if (n.contains(p)) return n;</tt><br
+ style="font-family: monospace;">
+    <tt>&nbsp;&nbsp; }</tt><br style="font-family: monospace;">
+    <tt>&nbsp;&nbsp; return null;</tt><br
+ style="font-family: monospace;">
+    <tt>}</tt><br style="font-family: monospace;">
+  </li>
+</ul>
+<h2>Ajouter un nouvel ar&ecirc;te</h2>
+<ul>
+  <li><tt>mousePressed:</tt>
+    <ul>
+      <li>V&eacute;rifier si le point de la souris est &agrave; l'int&eacute;rieur du sommet</li>
+    </ul>
+    <ul>
+      <li>V&eacute;rifier si un ar&ecirc;te est s&eacute;lectionn&eacute;</li>
+    </ul>
+    <ul>
+      <li>Le point de la souris est le d&eacute;part d'une bande &eacute;lastique</li>
+    </ul>
+  </li>
+  <li><tt>mouseDragged:</tt>
+    <ul>
+      <li>Le point de la souris est la fin d'une bande &eacute;lastique; redessiner</li>
+    </ul>
+  </li>
+  <li><tt>mouseReleased:</tt>
+    <ul>
+      <li>Ajouter l'ar&ecirc;te au graphe</li>
+    </ul>
+  </li>
+</ul>
+<h2>Ajouter un nouvel ar&ecirc;te</h2>
+<img src="images/Ch8_10.jpg" title="" alt="."
+ style="width: 1176px; height: 903px;"><br>
+<h2>Am&eacute;liorer le framework</h2>
+<ul>
+  <li>&Eacute;diter les propri&eacute;t&eacute;s pour un sommet et un ar&ecirc;te
+    <ul>
+      <li>Couleurs du sommet</li>
+      <li>Styles d'ar&ecirc;te (solide/pointill&eacute;)
+      </li>
+    </ul>
+  </li>
+  <li>Am&eacute;lioration du framework : Le menu Edit-&gt;Properties affiche un 
+	dialogue de propri&eacute;t&eacute;</li>
+</ul>
+<h2>Am&eacute;liorer le framework</h2>
+<img alt="" src="images/Ch8_11.gif" height="400" width="600"><br>
+<h2>Am&eacute;liorer le framework</h2>
+<ul>
+  <li>Comment impl&eacute;menter le dialogue ? </li>
+  <li>R&eacute;solu dans le chapitre 7-- propri&eacute;t&eacute;s d'un bean ! </li>
+  <li><tt>CircleNode</tt> expose la propri&eacute;t&eacute; <tt>color</tt> :<br>
+    <tt>Color getColor()<br>
+void setColor(Color newValue)</tt> </li>
+  <li>L'&eacute;diteur de propri&eacute;t&eacute; modifie automatiquement la couleur ! </li>
+</ul>
+<h2>Utiliser les am&eacute;liorations du framework</h2>
+<ul>
+  <li>Ajouter une ligne pointill&eacute;e</li>
+  <li>D&eacute;finir le type &eacute;num&eacute;r&eacute; <tt>LineStyle</tt> </li>
+  <li>Deux instances <tt>LineStyle.SOLID, LineStyle.DOTTED</tt> </li>
+  <li>Ajouter la propri&eacute;t&eacute; <tt>lineStyle</tt> property &agrave; <tt>LineEdge</tt></li>
+  <li><tt>LineStyle</tt> a la m&eacute;thode <tt>getStroke()</tt> </li>
+  <li><tt>LineEdge.draw</tt> appelle<tt> getStroke()</tt> </li>
+  <li>Fournir l'&eacute;diteur de propri&eacute;t&eacute; pour le type <tt>LineStyle</tt></li>
+  <li>L'&eacute;diteur de propri&eacute;t&eacute; modifie maintenant le style de ligne !<br>
+  </li>
+</ul>
+<h2>Une autre instance du framework</h2>
+<ul>
+  <li>&Eacute;diteur de diagramme de classes UML</li>
+  <li>&quot;Violet lite&quot; </li>
+</ul>
+<img alt="." src="images/Ch8_12.png" height="402" width="602"><br>
+<h2>Une autre instance du framework</h2>
+<ul>
+  <li><tt>RectangularNode</tt> </li>
+  <li><tt>SegmentedLineEdge</tt> </li>
+  <li><tt>GeneralPathEdge</tt> utilise le chemin g&eacute;n&eacute;ral pour tester l'inclusion</li>
+  <li><tt>ArrowHead</tt>, <tt>BentStyle</tt> &eacute;num&egrave;re les styles de ligne et de 
+	fl&egrave;che</li>
+  <li><tt>MultiLineString</tt> est la propri&eacute;t&eacute; pour les compartiments de classe</li>
+  <li><tt>ClassNode</tt>, <tt>ClassRelationshipEdge</tt>, <tt>ClassDiagramGraph</tt>
+  </li>
+  <li>Pas de changement pour le framework de base ! </li>
+</ul>
+<h2>Propri&eacute;t&eacute;s pour l'ar&ecirc;te</h2>
+<img alt="" src="images/Ch8_13.gif" height="400" width="600">
+
+<h2>Am&eacute;liorer le framework II</h2>
+<ul>
+  <li>Violet est bas&eacute;e sur une am&eacute;lioration du framework du livre</li>
+  <li>Elle ajoute plusieurs options
+    <ul>
+      <li>exportation des graphiques</li>
+    </ul>
+    <ul>
+      <li>grille</li>
+    </ul>
+    <ul>
+      <li>plusieurs fen&ecirc;tres</li>
+    </ul>
+  </li>
+  <li>On peut ajouter 3 classes d'&eacute;diteur de graphes simples au framework </li>
+  <li>L'application suit l'&eacute;volution du framework sans co&ucirc;t pour le programmeur
+    de l'application</li>
+</ul>
+<h2>Am&eacute;liorer le framework II</h2>
+  <img alt="" src="images/Ch8_15.png" height="664" width="940">
+</body>
+</html>

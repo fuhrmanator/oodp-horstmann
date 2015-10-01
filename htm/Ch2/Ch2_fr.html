@@ -1,0 +1,678 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+  <meta name="generator"
+ content="HTML Tidy for Linux/x86 (vers 12 April 2005), see www.w3.org" />
+  <title>Horstmann Chapitre 2</title>
+</head>
+<body>
+<h2>Object-Oriented Design &amp; Patterns</h2>
+<h4>Cay S. Horstmann</h4>
+<h3>Chapitre 2</h3>
+<h3>Le processus de conception orient&eacute;e objet<br />
+</h3>
+<img alt="" src="images/oodp2.jpg" height="500" width="404" />
+<h2>Mati&egrave;re du chapitre</h2>
+<ul>
+  <li>Du probl&egrave;me jusqu'au code</li>
+  <li>Les concepts de classe et d'objet</li>
+  <li>Proposer des classes</li>
+  <li>Proposer des responsabilit&eacute;s</li>
+  <li>Relations entre classes<br />
+  </li>
+  <li>Cas d'utilisation<br />
+  </li>
+  <li>Fiches CRC</li>
+  <li>Diagrammes de classes UML</li>
+  <li>Diagrammes de s&eacute;quence</li>
+  <li>Diagrammes d'&eacute;tat<br />
+  </li>
+  <li>Utiliser <tt>javadoc</tt> pour la documentation de conception<br />
+  </li>
+  <li>Cas d'&eacute;tude: Un syst&egrave;me de messagerie vocale</li>
+</ul>
+<h2>Du probl&egrave;me jusqu'au code</h2>
+Trois phases:<br />
+<ul>
+  <li>Analyse</li>
+  <li>Conception</li>
+  <li>Impl&eacute;mentation </li>
+</ul>
+Cas d'&eacute;tude: Un syst&egrave;me de messagerie vocale<br />
+<h2> Phase analyse</h2>
+Sp&eacute;cification fonctionnelle<br />
+<ul>
+  <li>D&eacute;finit compl&egrave;tement les t&acirc;ches &agrave; r&eacute;aliser</li>
+  <li>Libre de contradictions internes</li>
+  <li>Lisible par les experts du domaine et par les d&eacute;veloppeurs logiciels</li>
+  <li>Peut &ecirc;tre examin&eacute;e attentivement par toutes les parties prenantes</li>
+  <li>Peut &ecirc;tre compar&eacute;e &agrave; la r&eacute;alit&eacute;</li>
+</ul>
+<h2> Phase conception</h2>
+Buts<br />
+<ul>
+  <li>Proposer des classes</li>
+  <li>Proposer le comportement des classes</li>
+  <li>Proposer les relations entre classes</li>
+</ul>
+Artefacts<br />
+<ul>
+  <li>Description textuelle des classes et des m&eacute;thodes importantes</li>
+  <li>Diagrammes des relations de classes</li>
+  <li>Diagrammes des sc&eacute;narios d'usage importants</li>
+  <li>Diagrammes d'&eacute;tat pour les objets ayant des &eacute;tats notables</li>
+</ul>
+<h2>Phase impl&eacute;mentation</h2>
+<ul>
+  <li>Impl&eacute;menter et tester les classes </li>
+  <li>Combiner des classes pour former un programme</li>
+  <li>&Eacute;viter l'int&eacute;gration "big bang"</li>
+  <li>Des prototypes peuvent &ecirc;tre tr&egrave;s utiles</li>
+</ul>
+<h2>Concepts de classe et d'objet</h2>
+<ul>
+  <li>Objet: trois concepts caract&eacute;ristiques
+    <ul>
+      <li>&Eacute;tat</li>
+      <li>Comportement</li>
+      <li>Identit&eacute;</li>
+    </ul>
+  </li>
+  <li>Classe: une collection d'objets similaires</li>
+</ul>
+<h2>Proposer des classes</h2>
+M&eacute;thode empirique: chercher les <i>noms</i> dans la description du probl&egrave;me<br />
+<ul>
+  <li><tt>Mailbox</tt> </li>
+  <li><tt>Message</tt> </li>
+  <li><tt>User</tt> </li>
+  <li><tt>Passcode</tt> </li>
+  <li><tt>Extension</tt> </li>
+  <li><tt>Menu</tt> </li>
+</ul>
+<h2>Proposer des classes</h2>
+Se focaliser sur les<i> concepts</i> et non l'impl&eacute;mentation<br />
+<ul>
+  <li><tt>MessageQueue</tt> stocke des messages </li>
+  <li>Ne pas se soucier de comment la queue sera impl&eacute;ment&eacute;e<br />
+  </li>
+</ul>
+<h2>Cat&eacute;gories de classes</h2>
+<ul>
+  <li>Choses tangibles</li>
+  <li>Agents </li>
+  <li>&Eacute;v&egrave;nements et transactions</li>
+  <li>Usagers et r&ocirc;les</li>
+  <li>Syst&egrave;mes </li>
+  <li>Interfaces de syst&egrave;me et des dispositifs</li>
+  <li>Classes de fondation</li>
+</ul>
+<h2>Proposer des responsabilit&eacute;s</h2>
+M&eacute;thode empirique: Chercher les <i>verbes</i> dans la description du
+probl&egrave;me<br />
+<br />
+Comportement de la <tt>MessageQueue</tt>:
+<ul>
+  <li>Ajouter message &agrave; la fin</li>
+  <li>Supprimer message du d&eacute;but</li>
+  <li>D&eacute;terminer si la queue est vide</li>
+</ul>
+<h2>Responsabilit&eacute;s</h2>
+<ul>
+  <li>Principe OO: Toute op&eacute;ration est la responsabilit&eacute; d'une classe unique</li>
+  <li>Exemple: Ajouter un message &agrave; la bo&icirc;te vocale </li>
+  <li>Qui en est responsable : <tt>Message</tt> ou <tt>Mailbox</tt>? </li>
+</ul>
+<h2>Relations entre classes</h2>
+<ul>
+  <li>D&eacute;pendance (&quot;utilise&quot;)</li>
+  <li>Agr&eacute;gation ("a, poss&egrave;de") </li>
+  <li>H&eacute;ritage ("est") </li>
+</ul>
+<h2>Relation de d&eacute;pendance</h2>
+<ul>
+  <li><tt>C</tt>&nbsp; d&eacute;pend de <tt>D</tt>: une m&eacute;thode de <tt>C</tt>
+manipule des objets de <tt>D</tt> </li>
+  <li>Exemple: <tt>Mailbox</tt> d&eacute;pend de <tt>Message</tt> </li>
+  <li>Si <tt>C</tt> <i>n'utilise pas</i> <tt>D</tt>, alors <tt>C</tt>
+peut &ecirc;tre d&eacute;velopp&eacute; sans conna&icirc;tre <tt>D</tt> </li>
+</ul>
+<h2>Couplage</h2>
+<ul>
+  <li>Minimiser la d&eacute;pendance: r&eacute;duire le <i>couplage</i> </li>
+  <li>Exemple: Remplacer<br />
+    <pre>void print() // prints to System.out<br /></pre>
+avec<br />
+    <pre>String getText() // can print anywhere<br /></pre>
+  </li>
+  <li>Enl&egrave;ve la  d&eacute;pendance sur <tt>System</tt>, <tt>PrintStream</tt> </li>
+</ul>
+<h2>Agr&eacute;gation</h2>
+<ul>
+  <li>Objet d'une classe contient des objets d'une autre classe</li>
+  <li>Exemple: <tt>MessageQueue</tt> agr&egrave;ge <tt>Messages</tt> </li>
+  <li>Exemple: <tt>Mailbox</tt> agr&egrave;ge <tt>MessageQueue</tt> </li>
+  <li>Impl&eacute;ment&eacute; dans les variables d'instances</li>
+</ul>
+<h2>Multiplicit&eacute;s</h2>
+<ul>
+  <li>1 : 1 ou 1 : 0...1 relation:<br />
+    <pre>public class Mailbox<br />{<br />   . . .<br />   private Greeting myGreeting;<br />}<br /></pre>
+  </li>
+  <li>1 : <i>n</i> relation:<br />
+    <pre>public class MessageQueue<br />{<br />   . . .<br />   private ArrayList&lt;Message&gt; elements;<br />}<br /></pre>
+  </li>
+</ul>
+<h2>H&eacute;ritage</h2>
+<ul>
+  <li>Classe plus g&eacute;n&eacute;rale = super-classe </li>
+  <li>Classe plus sp&eacute;cialis&eacute;e = sous-classe </li>
+  <li>Sous-classe supporte toutes les d&eacute;finitions de m&eacute;thodes de la super-classe
+  (mais leur impl&eacute;mentation peuvent &ecirc;tre diff&eacute;rentes)</li>
+  <li>Sous-classe peut avoir des m&eacute;thodes rajout&eacute;es, des &eacute;tats
+    rajout&eacute;s</li>
+  <li>Sous-classe h&eacute;rite de la super-classe</li>
+  <li>Exemple: <tt>ForwardedMessage</tt> h&eacute;rite de <tt>Message</tt>
+  </li>
+  <li>Exemple: <tt>Greeting</tt> <i>n'h&eacute;rite pas </i>de <tt>Message</tt>
+(ne peut stocker un message d'accueil dans une bo&icirc;te vocale) </li>
+</ul>
+<h2>Cas d'utilisation</h2>
+<ul>
+  <li>Analyse technique</li>
+  <li>Chaque <em>cas d'utilisation</em> se focalise sur un sc&eacute;nario sp&eacute;cifique</li>
+  <li>Cas d'utilisation = s&eacute;quence d'<i>actions</i> </li>
+  <li>Action = interaction entre <i>acteur</i> et un syst&egrave;me informatique<br />
+  </li>
+  <li>Chaque action produit un <i>r&eacute;sultat</i></li>
+  <li>Chaque r&eacute;sultat a une <em>valeur</em> pour l'un des acteurs</li>
+  <li>Utilise des <i>variations</i> pour les situations exceptionnelles</li>
+</ul>
+<h2>Exemple de cas d'utilisation</h2>
+<h3>Laisser un message</h3>
+<ol>
+  <li>L'appelant compose le num&eacute;ro principal du syst&egrave;me de messagerie
+    vocale</li>
+  <li>Le syst&egrave;me dit le message de guidage<br />
+    <pre>Enter mailbox number followed by #<br /></pre>
+  </li>
+  <li>L'usager tape le num&eacute;ro d'extension</li>
+  <li>Le syst&egrave;me dit<br />
+    <pre>You have reached mailbox xxxx. Please leave a message now<br />
+    </pre>
+  </li>
+  <li>L'appelant dit son message </li>
+  <li>L'appelant raccroche</li>
+  <li>Le syst&egrave;me met le message dans la bo&icirc;te vocale </li>
+</ol>
+<h2>Exemple de cas d'utilisation -- Variations</h2>
+<h3>Variation num&eacute;ro 1<br />
+</h3>
+1.1. &Agrave; l'&eacute;tape 3, l'usager rentre un num&eacute;ro d'extension invalide<br />
+1.2. Le syst&egrave;me de messagerie vocale dit<br />
+<pre>     You have typed an invalid mailbox number.<br /></pre>
+1.3. Continuer avec l'&eacute;tape 2<br />
+<h3>Variation num&eacute;ro 2</h3>
+2.1. Apr&egrave;s l'&eacute;tape 4, l'appelant raccroche au lieu de dire un message<br />
+2.3. Le syst&egrave;me de messagerie vocale jette le message vide<br />
+<br />
+<h2>Fiches CRC</h2>
+<ul>
+  <li>CRC = Classes, Responsabilit&eacute;s, Collaborateurs<br />
+  </li>
+  <li>D&eacute;velopp&eacute; par Beck et Cunningham </li>
+  <li>Utilise une fiche pour chaque classe</li>
+  <li>Nom de la classe en haut de la fiche</li>
+  <li>Responsabilit&eacute;s &agrave; gauche</li>
+  <li>Collaborateurs &agrave; droite</li>
+</ul>
+<h2>Fiches CRC</h2>
+<img src="images/Ch2_02.jpg" title="" alt=""
+ style="width: 563px; height: 338px;" /><br />
+<h2>Fiches CRC</h2>
+<ul>
+  <li>Responsibiliti&eacute; devrait &ecirc;tre de <em>haut niveau</em></li>
+  <li>1 - 3 responsabilit&eacute;s par fiche</li>
+  <li>Collaborateurs sont pour la classe, non pas pour chaque responsabilit&eacute;</li>
+</ul>
+<h2>R&eacute;visions structur&eacute;es (Walkthroughs)<br />
+</h2>
+<ul>
+  <li>Cas d'utilisation: "Laisser un message" </li>
+  <li>Appelant se connecte au syst&egrave;me de messagerie vocale</li>
+  <li>Appelant compose le num&eacute;ro d'extension</li>
+  <li>"Quelqu'un" doit rep&eacute;rer la bo&icirc;te vocale </li>
+  <li>Ni <tt>Mailbox</tt> ni <tt>Message</tt> ne peuvent le faire</li>
+  <li>Nouvelle classe: <tt>MailSystem</tt> </li>
+  <li>Responsibilit&eacute;: g&egrave;re les bo&icirc;tes vocales </li>
+</ul>
+<h2>R&eacute;visions structur&eacute;es (Walkthroughs)</h2>
+<img src="images/Ch2_03.jpg" title="" alt="."
+ style="width: 563px; height: 338px;" /><br />
+<br />
+<br />
+<h2>Diagrammes UML </h2>
+<ul>
+  <li>UML = Unified Modeling Language </li>
+  <li>Unifie les notations d&eacute;velopp&eacute;es par les "3 Amigos" Booch,
+    Rumbaugh,
+Jacobson<br />
+  </li>
+  <li>Plusieurs types de diagrammes</li>
+  <li>Nous utiliserons trois types: 
+
+    <ul>
+      <li>Diagrammes de classes</li>
+      <li>Diagrammes de s&eacute;quence</li>
+      <li>Diagrammes d'&eacute;tats</li>
+    </ul>
+  </li>
+</ul>
+<h2>Diagrammes de classes</h2>
+<ul>
+  <li>Rectangle avec nom de classe</li>
+  <li>Zones optionnelles
+    <ul>
+      <li>Attributs </li>
+      <li>M&eacute;thodes </li>
+    </ul>
+  </li>
+  <li>Inclure seuls les attributs et m&eacute;thodes importants</li>
+</ul>
+<h2>Diagrammes de classes<br />
+</h2>
+<img src="images/Ch2_04.jpg" title="" alt="."
+ style="width: 681px; height: 217px;" /><br />
+<h2> Relations entre classes</h2>
+<img src="images/Ch2_05.jpg" title="" alt="."
+ style="width: 401px; height: 502px;" /><br />
+<h2>Multiplicit&eacute;s</h2>
+<ul>
+  <li>tout num&eacute;ro (0 ou plus): <tt>*</tt> </li>
+  <li>un ou plusieurs: <tt>1..*</tt> </li>
+  <li>z&eacute;ro ou un: <tt>0..1</tt> </li>
+  <li>exactement un: <tt>1</tt> </li>
+</ul>
+<img src="images/Ch2_06.jpg" title="" alt="."
+ style="width: 544px; height: 100px;" /><br />
+<h2>Composition</h2>
+<ul>
+  <li>Forme sp&eacute;ciale d'agr&eacute;gation </li>
+  <li>Objets agr&eacute;g&eacute;s n'&eacute;xiste pas en dehors du conteneur</li>
+  <li>Exemple: des queues de messages sont contenues de mani&egrave;re permanente dans
+    une bo&icirc;te vocale </li>
+</ul>
+<img src="images/Ch2_07.jpg" title="" alt="."
+ style="width: 544px; height: 100px;" /><br />
+<br />
+<h2>Association</h2>
+<ul>
+  <li>Certains concepteurs n'aiment pas l'agr&eacute;gation</li>
+  <li>Association et une relation plus g&eacute;n&eacute;rale</li>
+  <li>Association peut avoir des r&ocirc;les</li>
+</ul>
+<img src="images/Ch2_08.jpg" title="" alt="."
+ style="width: 641px; height: 100px;" /><br />
+<h2>Association</h2>
+<ul>
+  <li>Certaines associations sont bidirectionnelles<br />
+Peut naviguer d'une classe &agrave; l'autre</li>
+  <li>Exemple: Course poss&egrave;de un ensemble de Students, Student a un ensemble
+    de Courses<br />
+  </li>
+  <li>Certaines associations sont dirig&eacute;es<br />
+Navigation est unidirectionnelle</li>
+  <li>Exemple: Message ignore la message queue le contenant<br />
+  </li>
+</ul>
+<img src="images/Ch2_09.jpg" title="" alt="."
+ style="width: 544px; height: 100px;" /><br />
+<br />
+<h2> Types interface</h2>
+<ul>
+  <li>Type interface d&eacute;crit un ensemble de m&eacute;thodes</li>
+  <li>Aucune impl&eacute;mentation, aucun &eacute;tat</li>
+  <li>Classe impl&eacute;mente l'interface si elle impl&eacute;mente ses m&eacute;thodes<br />
+  </li>
+  <li>En UML, utiliser le st&eacute;r&eacute;otype &laquo;interface&raquo; </li>
+</ul>
+<img src="images/Ch2_10.jpg" title="" alt="."
+ style="width: 577px; height: 100px;" /><br />
+<br />
+<h2>Conseils</h2>
+<ul>
+  <li>Utilise UML pour informer, non pour impressionner<br />
+  </li>
+  <li>Ne pas dessiner un seul diagramme monstrueux</li>
+  <li>Chaque diagramme doit avoir un but sp&eacute;cifique</li>
+  <li>Omettre les d&eacute;tails insignifiants<br />
+  </li>
+</ul>
+<h2>Diagrammes de s&eacute;quence<br />
+</h2>
+<ul>
+  <li>Chaque diagramme montre la dynamique d'un sc&eacute;nario</li>
+  <li>Diagramme d'objet : nom de classe <u>soulign&eacute;</u> </li>
+</ul>
+<img src="images/Ch2_11.jpg" title="" alt=","
+ style="width: 461px; height: 272px;" /><br />
+<h2><br />
+Auto-appel</h2>
+<br />
+<p><img src="images/Ch2_12.jpg" title="" alt="."
+ style="width: 263px; height: 272px;" /></p>
+<h2> Construction d'objet<br />
+</h2>
+<img src="images/Ch2_13.jpg" title="" alt="."
+ style="width: 531px; height: 272px;" />
+<h2>Diagramme d'&eacute;tat</h2>
+<ul>
+  <li>Utiliser pour les classes poss&eacute;dant des &eacute;tats int&eacute;ressants</li>
+</ul>
+<img src="images/Ch2_14.jpg" title="" alt="."
+ style="width: 261px; height: 466px;" /><br />
+<h2> Documentation de conception</h2>
+<ul>
+  <li>Recommendation: utiliser les commentaires Javadoc</li>
+  <li>Laisser les  m&eacute;thodes vides<br />
+    <pre>/**<br />   Adds a message to the end of the new messages.<br />   @param aMessage a message<br />*/<br />public void addMessage(Message aMessage)<br />{<br />}<br /></pre>
+  </li>
+  <li>Ne pas compiler le fichier, ex&eacute;cuter la commande javadoc </li>
+  <li>Donne un bon point de d&eacute;part pour le code plus tard<br />
+  </li>
+</ul>
+<h2>Cas d'&eacute;tude: Syst&egrave;me de messagerie vocale</h2>
+<ul>
+  <li>Utiliser du texte pour la voix, des touches, raccrochage<br />
+  </li>
+  <li><tt>1 2 ... 0 </tt> num&eacute;ros sur une ligne seule indique des touches<br />
+  </li>
+  <li><tt>H</tt> sur une ligne seule signifie raccrochage ("hang
+    up")</li>
+  <li>Toute autre entr&eacute;e signifie la voix</li>
+  <li>Dans le programme avec l'interface utilisateur, utilise des boutons pour
+    les touches (voir le chapitre 4)</li>
+</ul>
+<h2>Cas d'utilisation: Atteindre une extension</h2>
+<ol>
+  <li>Utilisateur compose le num&eacute;ro principal du syst&egrave;me</li>
+  <li>Syst&egrave;me dit le message de guidage<br />
+    <pre>Enter mailbox number followed by #<br /></pre>
+  </li>
+  <li>Utilisateur compose le num&eacute;ro de l'extension</li>
+  <li>Syst&egrave;me dit<br />
+    <pre>You have reached mailbox xxxx. Please leave a message now<br /></pre>
+  </li>
+</ol>
+<h2>Cas d'utilisation: Laisser un message</h2>
+<ol>
+  <li>Appelant effectue <strong>Atteindre une extension</strong></li>
+  <li>Appelant dit message</li>
+  <li>Appelant raccroche</li>
+  <li>Syst&egrave;me place le message dans la bo&icirc;te vocale <br />
+  </li>
+</ol>
+<h2>Cas d'utilisation: S'authentifier</h2>
+<ol>
+  <li>Propri&eacute;taire de la bo&icirc;te vocale effectue <strong>Atteindre
+      une extension</strong></li>
+  <li>Propri&eacute;taire de la bo&icirc;te vocale  tape son mot de passe suivi
+    par <tt>#<br />
+    </tt> (mot de passe par d&eacute;faut = num&eacute;ro de bo&icirc;te vocale  .
+    Pour changer, voir <b>Changer mot de passe</b>) </li>
+  <li>Syst&egrave;me dit le menu pour la bo&icirc;te vocale:<br />
+    <pre>Enter 1 to retrieve your messages.<br />Enter 2 to change your passcode.<br />Enter 3 to change your greeting.<br /></pre>
+  </li>
+</ol>
+<h2>Cas d'utilisation: R&eacute;cup&eacute;rer messages</h2>
+<ol>
+  <li>Propri&eacute;taire de la bo&icirc;te vocale effectue <b>S'authentifier</b></li>
+  <li>Propri&eacute;taire de la bo&icirc;te vocale choisit l'article "retrieve
+    messages"</li>
+  <li>Syst&egrave;me dit le menu pour les messages:<br />
+    <pre>Press 1 to listen to the current message<br />Press 2 to delete the current message<br />Press 3 to save the current message<br />Press 4 to return to the mailbox menu<br /></pre>
+  </li>
+  <li>Propri&eacute;taire de la bo&icirc;te vocale choisit "listen to current message"<br />
+  </li>
+  <li>Syst&egrave;me dit nouveau message courant, ou, si plus aucun nouveau message,
+    ancien message courant.<br />
+Note: Message est pr&eacute;sent&eacute;, non pas supprim&eacute; de la queue</li>
+  <li>Syst&egrave;me dit le menu message</li>
+  <li>Utilisateur choisit "delete current message". Message est effac&eacute;. </li>
+  <li>Continue &agrave; l'&eacute;tape 3. </li>
+</ol>
+<h2>Cas d'utilisation: R&eacute;cup&eacute;rer messages</h2>
+<h3>Variation num&eacute;ro 1</h3>
+1.1. Commencer &agrave; l'&eacute;tape 6<br />
+1.2. Utilisateur choisit "save current message".<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Message est enlev&eacute; de la queue nouvelle
+et ajout&eacute; &agrave; la fin de la queue ancienne<br />
+1.3. Continuer &agrave; l'&eacute;tape 3.<br />
+<h2>Cas d'utilisation: Changer message d'accueil</h2>
+<ol>
+  <li>Propri&eacute;taire de la bo&icirc;te vocale effectue <strong>S'authentifier</strong> </li>
+  <li>Propri&eacute;taire de la bo&icirc;te vocale choisit "change greeting" menu option </li>
+  <li>Propri&eacute;taire de la bo&icirc;te vocale dit le nouveau message d'accueil</li>
+  <li>Propri&eacute;taire de la bo&icirc;te vocale appuie sur la touche <tt>#</tt> </li>
+  <li>Syst&egrave;me r&eacute;alise le nouveau message d'accueil</li>
+</ol>
+<h2>Cas d'utilisation: Changer message d'accueil</h2>
+<h3>Variation num&eacute;ro 1: Raccrochage avant confirmation</h3>
+1.1. Commencer &agrave; l'&eacute;tape 3.<br />
+1.2. Propri&eacute;taire de la bo&icirc;te vocale raccroche.<br />
+1.3. Syst&egrave;me garde ancien message d'accueil.<br />
+<h2>Cas d'utilisation: Changer mot de passe</h2>
+<ol>
+  <li>Propri&eacute;taire de la bo&icirc;te vocale effectue <b>S'authentifier</b> </li>
+  <li>Propri&eacute;taire de la bo&icirc;te vocale choisit l'article "change
+    passcode" du menu</li>
+  <li>Propri&eacute;taire de la bo&icirc;te vocale compose le nouveau mot de
+    passe</li>
+  <li>Propri&eacute;taire de la bo&icirc;te vocale appuie sur la touche <tt>#</tt> </li>
+  <li>Syst&egrave;me r&eacute;alise le nouveau mot de passe</li>
+</ol>
+<h2>Cas d'utilisation: Changer mot de passe</h2>
+<h3>Variation num&eacute;ro 1: Raccrochage avant confirmation</h3>
+1.1. Commencer &agrave; l'&eacute;tape 3.<br />
+1.2. Propri&eacute;taire de la bo&icirc;te vocale raccroche.<br />
+1.3. Syst&egrave;me garde ancien mot de passe.<br />
+<h2>Fiches CRC pour le syst&egrave;me de messagerie vocale</h2>
+Quelques cas &eacute;vidents<br />
+<ul>
+  <li><tt>Mailbox</tt> </li>
+  <li><tt>Message</tt> </li>
+  <li><tt>MailSystem</tt> </li>
+</ul>
+<h2> Fiches CRC initiales: Mailbox<br />
+</h2>
+<img src="images/2_un01.jpg" title="" alt="."
+ style="width: 563px; height: 338px;" /><br />
+<br />
+<h2> Fiches CRC initiales: MessageQueue</h2>
+<img src="images/2_un02.jpg" title="" alt="."
+ style="width: 563px; height: 338px;" /><br />
+<br />
+<h2> Fiches CRC initiales : MailSystem<br />
+</h2>
+<img src="images/2_un03.jpg" title="" alt="."
+ style="width: 563px; height: 338px;" /><br />
+<br />
+<h2>Telephone</h2>
+<ul>
+  <li>Qui interagit avec l'utilisateur?<br />
+  </li>
+  <li>Telephone accepte les touches, les entr&eacute;es vocales</li>
+  <li>Telephone fournit &agrave; l'utilisateur les sorties</li>
+</ul>
+<h2>Telephone<br />
+</h2>
+<img src="images/2_un04.jpg" title="" alt="."
+ style="width: 563px; height: 338px;" /><br />
+<h2>Connection</h2>
+<ul>
+  <li>Avec qui Telephone communique-t-il ?</li>
+  <li>Avec MailSystem? </li>
+  <li>S'il y avait plusieurs t&eacute;l&eacute;phones?</li>
+  <li>Chaque connexion peut &ecirc;tre dans un &eacute;tat diff&eacute;rent <br />
+(composition, enregistrement, r&eacute;cup&eacute;ration de messages,...)<br />
+  </li>
+  <li>Est-ce que MailSystem devrait conna&icirc;tre l'&eacute;tat de toutes les connexions?</li>
+  <li>Il vaut mieux donner cette responsabilit&eacute; &agrave; une nouvelle classe</li>
+</ul>
+<h2>Connection</h2>
+<img src="images/2_un05.jpg" title="" alt="."
+ style="width: 563px; height: 338px;" /><br />
+<br />
+<h2>Analyse de cas d'utilisation: Laisser un message</h2>
+<ol>
+  <li>Utilisateur compose le num&eacute;ro de l'extension. <tt>Telephone</tt> envoie
+    ce num&eacute;ro &agrave; <tt>Connection</tt><br />
+(Ajouter collaborateur <tt>Telephone</tt> &agrave; <tt>Connection</tt>) </li>
+  <li><tt>Connection</tt> demande &agrave; <tt>MailSystem</tt> de trouver la <tt>Mailbox</tt>
+correspondante  </li>
+  <li><tt>Connection</tt> demande &agrave; <tt>Mailbox</tt> le message d'accueil<br />
+(Ajouter responsabilit&eacute; "manage greeting" &agrave; <tt>Mailbox</tt>,<br />
+ajouter collaborateur <tt>Mailbox</tt> &agrave; <tt>Connection</tt>) </li>
+  <li><tt>Connection</tt> demande &agrave; <tt>Telephone</tt> de donner le message
+    d'accueil par le haut-parleur</li>
+  <li>Utilisateur dit le message. <tt>Telephone</tt> demande &agrave; <tt>Connection</tt>
+de l'enregistrer.<br />
+(Ajoute responsabilit&eacute;"record voice input" &agrave; <tt>Connection</tt>) </li>
+  <li>Utilisateur raccroche. <tt>Telephone</tt> notifie <tt>Connection.</tt>
+  </li>
+  <li><tt>Connection</tt> construit <tt>Message<br />
+    </tt> (Ajouter fiche pour la classe <tt>Message</tt>,<br />
+ajouter collaborateur&nbsp; <tt>Message</tt> &agrave; <tt>Connection</tt>) </li>
+  <li><tt>Connection</tt> ajoute <tt>Message</tt> &agrave; <tt>Mailbox</tt><br />
+  </li>
+</ol>
+<h2>Resultat de l'analyse</h2>
+<img src="images/2_un06.jpg" title="" alt="."
+ style="width: 563px; height: 338px;" /><br />
+<h2>Resultat de l'analyse<br />
+</h2>
+<p><img src="images/2_un07.jpg" title="" alt="."
+ style="width: 563px; height: 338px;" /></p>
+<h2>Resultat de l'analyse<br />
+</h2>
+<p><img src="images/2_un07a.jpg" title="" alt="."
+ style="width: 563px; height: 338px;" /></p>
+<h2>Resultat de l'analyse<br />
+</h2>
+<p><img src="images/2_un08.jpg" title="" alt="."
+ style="width: 606px; height: 338px;" /><br />
+</p>
+<h2>Analyse du cas d'utilisation: R&eacute;cup&eacute;rer messages</h2>
+<ol>
+  <li>Utilisateur tape le mot de passe. <tt>Telephone</tt> notifie <tt>Connection</tt>
+  </li>
+  <li><tt>Connection</tt> demande &agrave; <tt>Mailbox</tt> de v&eacute;rifier le mot
+    de passe.<br />
+(Ajouter responsabilit&eacute; "manage passcode" &agrave; <tt>Mailbox</tt>) </li>
+  <li><tt>Connection</tt> r&eacute;alise la bo&icirc;te vocale actuelle et demande &agrave; <tt>Telephone</tt>
+de passer le menu message par le haut-parleur</li>
+  <li>Utilisateur choisit "retrieve messages". <tt>Telephone</tt> transf&egrave;re la
+    touche &agrave; <tt>Connection</tt> </li>
+  <li><tt>Connection</tt> demande &agrave;<tt> Telephone</tt> de passer le menu
+  message par le haut-parleur</li>
+  <li>Utilisateur choisit "listen to current message". <tt>Telephone</tt>
+transf&egrave;re la touche &agrave; <tt></tt><tt>Connection</tt> </li>
+  <li><tt>Connection</tt> r&eacute;cup&egrave;re le premier message de la bo&icirc;te vocale courante.<br />
+(Ajouter responsabilit&eacute; "retrieve messages" &agrave; <tt>Mailbox</tt>).<br />
+    <tt>Connection</tt> demande &agrave; <tt>Telephone</tt> de passer le message
+    par le haut-parleur</li>
+  <li><tt>Connection</tt> demande &agrave; <tt>Telephone</tt> de passer le menu
+    de message par le haut-parleur</li>
+  <li>Utilisateur choisit "save current message". <tt>Telephone</tt> transf&egrave;re
+  la touche &agrave; <tt>Connection</tt> </li>
+  <li><tt>Connection</tt> dit &agrave; <tt>Mailbox</tt> de sauvegarder le message<br />
+(Changer les responsabilit&eacute;s de <tt>Mailbox</tt> &agrave; "retrieve, save,
+delete
+messages") </li>
+  <li><tt>Connection</tt> demande &agrave; <tt>Telephone</tt> de passer le menu
+    de message par le haut-parleur</li>
+</ol>
+<h2>Resultat de l'analyse</h2>
+<img src="images/2_un09.jpg" title="" alt="."
+ style="width: 563px; height: 338px;" /><br />
+<br />
+<h2>R&eacute;sum&eacute; Fiche CRC</h2>
+<ul>
+  <li>Une fiche par classe</li>
+  <li>Responsabilit&eacute;s de haut niveau</li>
+  <li>Faire des r&eacute;visions structur&eacute;es pour &eacute;laborer les fiches</li>
+  <li>D'habitude, la premi&egrave;re conception n'est pas parfaite.<br />
+(Vous venez de voir la troisi&egrave;me it&eacute;ration de la conception faite par l'auteur
+  pour le syst&egrave;me de messagerie vocale)</li>
+</ul>
+<h2>Diagramme de classe UML pour le syst&egrave;me</h2>
+<ul>
+  <li>Collaborateurs CRC donnent des d&eacute;pendances</li>
+  <li><tt>Mailbox</tt> d&eacute;pend de <tt>MessageQueue</tt> </li>
+  <li><tt>Message</tt> ne d&eacute;pend pas de <tt>Mailbox</tt> </li>
+  <li><tt>Connection</tt> d&eacute;pend de <tt>Telephone, MailSystem,
+Message, Mailbox</tt> </li>
+  <li><tt>Telephone</tt> d&eacute;pend de <tt>Connection</tt><br />
+  </li>
+</ul>
+<h2>Relations de d&eacute;pendance</h2>
+<img src="images/Ch2_15.jpg" title="" alt="."
+ style="width: 715px; height: 359px;" /><br />
+<h2>Relations d'agr&eacute;gation<br />
+</h2>
+<ul>
+  <li>Un syst&egrave;me de messagerie a des bo&icirc;tes vocales</li>
+  <li>Une bo&icirc;te vocale a deux queues de messages distinctes</li>
+  <li>Une queue de message a un certain nombre de messages</li>
+  <li>Une connexion a une bo&icirc;te vocale courante<br />
+  </li>
+  <li>Une connexion a des r&eacute;f&eacute;rences &agrave; un MailSystem et un Telephone</li>
+</ul>
+<h2>Diagramme de classe UML pour le syst&egrave;me<br />
+</h2>
+<img src="images/Ch2_16.jpg" title="" alt="."
+ style="width: 719px; height: 359px;" /><br />
+<h2>Diagramme de s&eacute;quence pour le cas d'utilisation : Laisser un message</h2>
+<img src="images/Ch2_17.jpg" title="" alt="."
+ style="width: 596px; height: 359px;" /><br />
+<br />
+<h2>Interpr&eacute;ter un diagramme de s&eacute;quence</h2>
+<ul>
+  <li>Chaque appui sur une touche effectue un appel individuel de <tt>dial</tt>,
+    mais un seul appel est montr&eacute;<br />
+  </li>
+  <li>Connection veut faire en sorte que le message d'accueil (greeting) passe
+    au haut-parleur</li>
+  <li>Chaque bo&icirc;te vocale conna&icirc;t son message d'accueil<br />
+  </li>
+  <li>Connection doit trouver l'objet Mailbox:<br />
+Appeler <tt>findMailbox</tt> sur l'objet <tt>MailSystem</tt></li>
+  <li>Param&egrave;tres ne sont pas affich&eacute;s (p.ex. num&eacute;ro de bo&icirc;te vocale) </li>
+  <li>Valeurs de retour ne sont pas affich&eacute;es (p.ex. bo&icirc;te vocale trouv&eacute;e) </li>
+  <li>Noter que Connection conserve la bo&icirc;te vocale pour plusieurs appels<br />
+  </li>
+</ul>
+<h2>Diagramme de s&eacute;quence : R&eacute;cup&eacute;rer messages</h2>
+<img src="images/Ch2_18.jpg" title="" alt="."
+ style="width: 432px; height: 359px;" /><br />
+<h2>Diagramme d'&eacute;tat pour Connection<br />
+</h2>
+<img src="images/Ch2_19.jpg" title="" alt="." /><br />
+<br />
+<h2>Impl&eacute;mentation en Java</h2>
+<ul>
+  <li><a href="code/mail/Message.java.html">Ch2/mail/Message.java</a> </li>
+  <li><a href="code/mail/MessageQueue.java.html">Ch2/mail/MessageQueue.java</a>
+  </li>
+  <li><a href="code/mail/Mailbox.java.html">Ch2/mail/Mailbox.java</a> </li>
+  <li><a href="code/mail/Connection.java.html">Ch2/mail/Connection.java</a>
+  </li>
+  <li><a href="code/mail/MailSystem.java.html">Ch2/mail/MailSystem.java</a>
+  </li>
+  <li><a href="code/mail/Telephone.java.html">Ch2/mail/Telephone.java</a>
+  </li>
+  <li><a href="code/mail/MailSystemTester.java.html">Ch2/mail/MailSystemTester.java</a><br />
+  </li>
+</ul>
+</body>
+</html>

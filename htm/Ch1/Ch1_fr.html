@@ -1,0 +1,698 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+  <meta name="generator"
+ content="HTML Tidy for Linux/x86 (vers 12 April 2005), see www.w3.org" />
+  <title>Horstmann Chapter 1</title>
+</head>
+<body>
+<h2>Object-Oriented Design
+&amp; Patterns</h2>
+<h4>Cay S. Horstmann</h4>
+<h3>Chapitre 1</h3>
+<h3>Un cours acc&eacute;l&eacute;r&eacute; sur Java</h3>
+<img alt="" src="images/oodp2.jpg" height="500"
+ width="404" />
+<h2>Mati&egrave;re du chapitre</h2>
+<ul>
+  <li>Hello, World dans
+Java<br />
+  </li>
+  <li>Commentaires de documentation</li>
+  <li>Types primitifs</li>
+  <li>Instructions de flux de commande</li>
+  <li>R&eacute;f&eacute;rences d'objet</li>
+  <li>Transmission de param&egrave;tres</li>
+  <li>Paquetages (packages)</li>
+  <li>Traitement d'exception fondamental</li>
+  <li>Cha&icirc;nes de caract&egrave;res</li>
+  <li>Lecture d'entr&eacute;e</li>
+  <li>Array Lists et Listes cha&icirc;n&eacute;es</li>
+  <li>Tableaux (arrays)<br />
+  </li>
+  <li>Attributs et m&eacute;thodes statiques</li>
+  <li>Style de programmation</li>
+</ul>
+<h2>"Hello, World" dans Java</h2>
+<ul>
+  <li>Classe typique et simple<br />
+    <h4><a href="code/helloworld/Greeter.java.html">Ch1/helloworld/Greeter.java</a></h4>
+  </li>
+  <li>D&eacute;montre:<br />
+    <ul>
+      <li>Constructeur <tt>Greeter(String
+aName)</tt> </li>
+      <li>M&eacute;thode <tt>sayHello()</tt>
+      </li>
+      <li>Attribut membre <tt>name</tt><br />
+      </li>
+    </ul>
+  </li>
+  <li>Chaque &eacute;l&eacute;ment comporte l'&eacute;tiquette <tt>public</tt>
+ou <tt>private</tt>
+  </li>
+</ul>
+<h2>"Hello, World" dans Java</h2>
+<ul>
+  <li>Construit de nouveaux objets avec l'instruction <tt>new</tt><br />
+    <pre>new Greeter("World")<br /></pre>
+  </li>
+  <li>Peut appeler une m&eacute;thode d'un objet r&eacute;cemment cr&eacute;&eacute;<br />
+    <pre>new Greeter("World").sayHello()<br /></pre>
+  </li>
+  <li>Plus fr&eacute;quent: stocker la r&eacute;f&eacute;rence de l'objet dans une variable d'objet<br />
+    <pre>Greeter worldGreeter = new Greeter("World");<br /></pre>
+  </li>
+  <li>Ensuite, appeler la m&eacute;thode de la variable<br />
+    <pre>String greeting = worldGreeter.sayHello();<br /></pre>
+  </li>
+</ul>
+<h2>"Hello, World" dans Java</h2>
+<ul>
+  <li>Construisez une classe &agrave; part pour tester votre classe<br />
+    <h4><a href="code/helloworld/GreeterTester.java.html">Ch1/helloworld/GreeterTester.java</a></h4>
+  </li>
+  <li>m&eacute;thode<tt> main</tt>
+est appel&eacute;e lorsque le programme d&eacute;marre</li>
+  <li><tt>main</tt>
+est <tt>static</tt>:
+elle n'est pas associ&eacute;e &agrave; aucun objet</li>
+  <li>Il n'existe aucun objet quand <tt>main</tt> d&eacute;marre</li>
+  <li>Dans un programme OO, <tt>main</tt>
+construit des objets et appelle les m&eacute;thodes<br />
+  </li>
+</ul>
+<h2>Utiliser le SDK (Software Development Kit)</h2>
+<ul>
+  <li>Cr&eacute;ez un nouveau r&eacute;pertoire pour stocker vos fichiers</li>
+  <li>Utilisez un &eacute;diteur de texte pour pr&eacute;parer les fichiers (Greeter.java,
+GreeterTest.java) </li>
+  <li>Ouvrez une fen&ecirc;tre d'interpr&eacute;teur de ligne de commande</li>
+  <li>Faites <tt>cd</tt>
+pour changer de r&eacute;pertoire &agrave; celui contenant vos fichiers</li>
+  <li>Compilez et faites ex&eacute;cuter<br />
+    <pre>javac GreeterTest.java<br />java GreeterTest<br /></pre>
+Notez que le fichier Greeter.java et compil&eacute; automatiquement<br />
+  </li>
+  <li>Les sorties s'affichent dans la fen&ecirc;tre de ligne de commande<br />
+  </li>
+</ul>
+<h2>Utiliser le SDK (Software Development Kit)</h2>
+<img alt="" src="images/Ch1_01.jpg" height="386" width="676" /><br />
+<h2>Utiliser BlueJ</h2>
+<ul>
+  <li>T&eacute;l&eacute;chargez BlueJ &agrave; partir de <a href="http://www.bluej.org">http://www.bluej.org</a><br />
+  </li>
+  <li>Aucun programme de test n&eacute;cessaire</li>
+  <li>Choisissez Project-&gt;New
+et donnez un nom de r&eacute;pertoire</li>
+  <li>Cliquez New Class... et tapez le texte pour la classe Greeter</li>
+  <li>Compilez la classe</li>
+  <li>Cliquez &agrave; droite sur la classe pour construire un objet</li>
+  <li>Cliquez &agrave; droite sur l'objet pour appeler une m&eacute;thode</li>
+</ul>
+<h2>Utiliser BlueJ</h2>
+<img alt="" src="images/Ch1_02.jpg" height="510" width="576" /><br />
+<h2>Commentaires de documentation</h2>
+<ul>
+  <li>D&eacute;limit&eacute;s par <tt>/**
+... */</tt> </li>
+  <li>Premi&egrave;re phrase  = r&eacute;sum&eacute;</li>
+  <li><tt>@param
+    <i>param&egrave;tre</i></tt>
+    <i>explication</i>
+  </li>
+  <li><tt>@return</tt>
+    <i>explication</i></li>
+  <li>Utilitaire javadoc g&eacute;n&egrave;re
+un fichier HTML &agrave; partir du code source</li>
+</ul>
+<h2>Commentaires  de documentation -
+R&eacute;sum&eacute;<br />
+</h2>
+<img alt="" src="images/Ch1_03.png" height="645" width="745" /><br />
+<h2>Commentaires de documentation - D&eacute;tail</h2>
+<img alt="" src="images/Ch1_04.png" height="576" width="755" /><br />
+<h2>Commentaires de documentation</h2>
+<ul>
+  <li>Facile d'avoir la documentation synchronis&eacute;e avec le code</li>
+  <li>Vous devez documenter <em>toutes</em> les classes et les m&eacute;thodes</li>
+  <li>Les professionnels font ainsi - regardez la doc de l'API</li>
+  <li>Installez la documentation de l'API et cr&eacute;ez-en un favori (bookmark) <em>d&egrave;s
+    maintenant</em>!</li>
+</ul>
+<h2>Commentaires de documentation - Doc API</h2>
+<img alt="" src="images/Ch1_05.png" height="576" width="755" /><br />
+<h2>Types primitifs</h2>
+<ul>
+  <li>8 types primitifs</li>
+  <li><tt>int,
+long, short, byte</tt> </li>
+  <li><tt>double,
+float<br />
+    </tt> </li>
+  <li><tt>char</tt>
+  </li>
+  <li><tt>boolean</tt>
+  </li>
+  <li>suffixes L = long, F = float
+  </li>
+  <li>constantes de caract&egrave;re <tt>'a',
+'\n', '\x2122'</tt> </li>
+  <li>Transtypages (casts) <tt>(int)
+x</tt>, <tt>(float)</tt>
+    <tt>x</tt>
+  </li>
+  <li>Classe <tt>Math</tt> poss&egrave;de des m&eacute;thodes pour travailler avec les chiffres:<br />
+    <pre>y = Math.sqrt(x);<br /></pre>
+  </li>
+</ul>
+<h2>Flux de commande</h2>
+<ul>
+  <li><tt>if</tt>
+  </li>
+  <li><tt>while</tt>
+  </li>
+  <li><tt>do/while</tt>
+  </li>
+  <li><tt>for</tt>
+  </li>
+  <li>Variable peut &ecirc;tre d&eacute;clar&eacute;e dans une boucle <tt>for</tt>:<br />
+    <pre>for (int i = 1; i &lt;= n; i++)<br />{<br /> . . .<br />}<br />// i n'est plus valable ici<br /></pre>
+  </li>
+</ul>
+<h2>R&eacute;f&eacute;rences d'objet</h2>
+<ul>
+  <li>Variable d'objet contient une <i>r&eacute;f&eacute;rence</i><br />
+    <pre>Greeter worldGreeter = new Greeter("World");<br /><br /><img
+ src="images/Ch1_06.jpg" title="" alt="."
+ style="width: 563px; height: 135px;" /> <br /><br /></pre>
+  </li>
+  <li>Peut exister plusieurs r&eacute;f&eacute;rences sur le m&ecirc;me objet<br />
+    <pre>Greeter anotherGreeter = worldGreeter;<br /><br /><img
+ src="images/Ch1_07.jpg" title="" alt="."
+ style="width: 590px; height: 137px;" /><br /></pre>
+  </li>
+  <li>Apr&egrave;s l'ex&eacute;cution d'une m&eacute;thode qui modifie l'objet (mutator method), toutes
+    les r&eacute;f&eacute;rences acc&egrave;dent &agrave; l'objet modifi&eacute;.<br />
+    <pre>anotherGreeter.setName("Dave");<br />// maintenant worldGreeter.sayHello() retourne "Hello, Dave!"<br /></pre>
+  </li>
+</ul>
+<h2>La r&eacute;f&eacute;rence <tt>null</tt></h2>
+<ul>
+  <li><tt>null</tt>
+ne r&eacute;f&egrave;re &agrave; aucun objet </li>
+  <li>Peut effectuer <tt>null</tt>
+&agrave; une variable objet:<br />
+    <pre>worldGreeter = null;<br /></pre>
+  </li>
+  <li>Peut contr&ocirc;ler si une r&eacute;f&eacute;rence est <tt>null</tt><br />
+    <pre>if (worldGreeter == null) . . .<br /></pre>
+  </li>
+  <li>D&eacute;r&eacute;f&eacute;rencier <tt>null</tt>
+r&eacute;sulte d'une <tt>NullPointerException</tt>
+  </li>
+</ul>
+<h2>La r&eacute;f&eacute;rence <tt>this</tt><br />
+</h2>
+<ul>
+  <li>Fait r&eacute;f&eacute;rence &agrave; l'objet courant, comme un param&egrave;tre implicite dans un
+    appel de m&eacute;thode</li>
+  <li>Exemple : test d'&eacute;galit&eacute;<br />
+    <pre>public boolean equals(Greeter other)<br />{<br /> if (this == other) return true;<br /> return name.equals(other.name);<br />}<br /></pre>
+  </li>
+  <li>Exemple: Constructeur<br />
+    <pre>public Greeter(String name)<br />{<br /> this.name = name;<br />}<br /></pre>
+  </li>
+</ul>
+<h2>Transmission de param&egrave;tres</h2>
+<ul>
+  <li>Java emploie &quot;appel par valeur&quot; ("call by value"):<br />
+La m&eacute;thode re&ccedil;oit une copie de la valeur du param&egrave;tre</li>
+  <li>Une copie d'une r&eacute;f&eacute;rence d'objet permet de modifier l'objet<br />
+    <pre>public void copyNameTo(Greeter other)<br />{<br /> other.name = this.name;<br />}<br /></pre>
+  </li>
+  <li>
+    <pre>Greeter worldGreeter = new Greeter("World");<br />Greeter daveGreeter = new Greeter("Dave");<br />worldGreeter.copyNameTo(daveGreeter);<br /></pre>
+    <img src="images/Ch1_08.jpg" title="" alt="."
+ style="width: 550px; height: 137px;" />&nbsp;<br />
+  </li>
+</ul>
+<h2>Absence de param&egrave;tres de r&eacute;f&eacute;rence</h2>
+<ul>
+  <li>Java n'emploie pas &quot;appel par r&eacute;f&eacute;rence&quot; ("call
+    by
+reference" )</li>
+  <li>
+    <pre>public void copyLengthTo(int n)<br />{<br /> n = name.length(); <br />} <br />public void copyGreeterTo(Greeter other)<br />{<br /> other = new Greeter(name);<br />}<br /></pre>
+  </li>
+  <li>Tous ces appels n'ont aucun effet<br />
+    <pre>int length = 0;<br />worldGreeter.copyLengthTo(length); // length demeure 0<br />worldGreeter.copyGreeterTo(daveGreeter) // daveGreeter sans changement</pre>
+  </li>
+</ul>
+<h2>Paquetages (packages)</h2>
+<ul>
+  <li>Classes are grouped into
+packages </li>
+  <li>Package names are
+dot-separated identifier sequences<br />
+    <pre>java.util<br />javax.swing<br />com.sun.misc<br />edu.sjsu.cs.cs151.alice<br /></pre>
+  </li>
+  <li>Unique package names: start
+with reverse domain name </li>
+</ul>
+<h2>Paquetages (packages)</h2>
+<ul>
+  <li>Ajouter mot cl&eacute; <tt>package</tt>
+au d&eacute;but du fichier<br />
+    <pre>package edu.sjsu.cs.cs151.alice;<br />public class Greeter { . . . }<br /></pre>
+  </li>
+  <li>Classe sans nom de paquetage se trouve dans le "default package" </li>
+  <li>Nom complet d'une classe  = nom du paquetage + nom de classe<br />
+    <pre>java.util.ArrayList<br />javax.swing.JOptionPane<br /></pre>
+  </li>
+</ul>
+<h2>Importer des paquetages</h2>
+<ul>
+  <li>P&eacute;nible d'utiliser les noms de classes complets</li>
+  <li> <tt>import</tt>
+permet d'utiliser le nom de classe court <br />
+    <pre>import java.util.Scanner;<br />. . .<br />Scanner a; // p.ex. java.util.Scanner<br /></pre>
+  </li>
+  <li>Pour importer toutes les classes d'un paquetage:<br />
+    <pre>import java.util.*;<br /></pre>
+  </li>
+</ul>
+<h2>Importer des paquetages</h2>
+<ul>
+  <li>Impossible d'importer de plusieurs paquetages<br />
+    <pre>import java.*.*; // d&eacute;fendu<br /></pre>
+  </li>
+  <li>Si une classe existe dans deux paquetages import&eacute;s, <tt>import</tt>
+n'a pas d'utilit&eacute;<br />
+    <pre>import java.util.*;<br />import java.sql.*;<br />. . .<br />java.util.Date d; // Date existe &eacute;galement dans java.sql<br /></pre>
+  </li>
+  <li>Jamais n&eacute;cessaire d'importer <tt>java.lang</tt>.<br />
+  </li>
+</ul>
+<h2>Paquetages et r&eacute;pertoires</h2>
+<ul>
+  <li>Nom de paquetage doit correspondre au nom du r&eacute;pertoire.<br />
+    <pre>edu.sjsu.cs.sjsu.cs151.alice.Greeter<br /></pre>
+doit se trouver dans un sous r&eacute;pertoire<br />
+    <pre><i>basedirectory</i>/edu/sjsu/cs/sjsu/cs151/alice<br /></pre>
+    <img src="images/Ch1_09.png" alt="." />&nbsp;<br />
+  </li>
+  <li>Toujours compiler &agrave; partir du r&eacute;pertoire de base<br />
+    <pre>javac edu/sjsu/cs/sjsu/cs151/alice/Greeter.java<br /></pre>
+ou<br />
+    <pre>javac edu\sjsu\cs\sjsu\cs151\alice\Greeter.java<br /></pre>
+  </li>
+  <li>Toujours faire ex&eacute;cuter &agrave; partir du r&eacute;pertoire de base<br />
+    <pre>java edu.sjsu.cs.cs151.alice.GreeterTest<br /></pre>
+  </li>
+</ul>
+<h2>Traitement des exceptions</h2>
+<ul>
+  <li>Exemple: <tt>NullPointerException<br />
+    </tt>
+    <pre>String name = null;<br />int n = name.length(); // ERREUR<br /></pre>
+  </li>
+  <li>Impossible d'appeler une m&eacute;thode &agrave; partir de <tt>null</tt>
+  </li>
+  <li>Machine virtuelle lance (<i>throws)</i>
+une exception </li>
+  <li>En absence d'un intercepteur d'exception (handler),
+le programme programme se termine avec une <i>trace de pile (stack trace)<br />
+    </i>
+    <pre>Exception in thread "main" java.lang.NullPointerException <br /> at Greeter.sayHello(Greeter.java:25) <br /> at GreeterTest.main(GreeterTest.java:6)<br /></pre>
+  </li>
+</ul>
+<h2>Exceptions contr&ocirc;l&eacute;es et non contr&ocirc;l&eacute;es</h2>
+<ul>
+  <li>Le compilateur v&eacute;rifie seulement les exceptions <em>contr&ocirc;l&eacute;es
+      (ch</em><i>ecked)</i></li>
+  <li><tt>NullPointerException</tt>
+n'est pas contr&ocirc;l&eacute;e</li>
+  <li><tt>IOException</tt>
+est contr&ocirc;l&eacute;e</li>
+  <li>En g&eacute;n&eacute;ral, les exceptions contr&ocirc;l&eacute;es sont lanc&eacute;es pour des raisons ind&eacute;pendantes
+    de la volont&eacute; du programmeur</li>
+  <li>Deux approches pour traiter les exceptions contr&ocirc;l&eacute;es<br />
+    <ul>
+      <li>D&eacute;clarer l'exception dans la signature de la m&eacute;thode (approche pr&eacute;f&eacute;r&eacute;e)</li>
+        <li>Intercepter l'exception</li>
+    </ul>
+  </li>
+</ul>
+<h2>D&eacute;clarer des exceptions contr&ocirc;l&eacute;es</h2>
+<ul>
+  <li>Exemple: Ouvrir un fichier peut lancer une <tt>FileNotFoundException</tt>:<br />
+    <pre>public void read(String filename) <b>throws FileNotFoundException</b><br />{<br /> FileReader reader = new FileReader(filename);<br /> . . .<br />}<br /></pre>
+  </li>
+  <li>Pour d&eacute;clarer plusieurs exceptions<br />
+    <pre>public void read(String filename)<br /><b> throws IOException, ClassNotFoundException<br /></b>public static void main(String[] args)<br /><b> throws IOException, ClassNotFoundException</b>
+    </pre>
+  </li>
+</ul>
+<h2>Intercepter des exceptions<br />
+</h2>
+<ul>
+  <li>
+    <pre>try<br />{<br /> <i>code qui peut lancer (throw) une IOException</i><br />}<br />catch (IOException exception)<br />{<br /> <i>prendre des mesures correctives</i><br />}<br /></pre>
+  </li>
+  <li>Mesure corrective peut &ecirc;tre:<br />
+    <ul>
+      <li>Informer l'usager de l'erreur et lui proposer de sp&eacute;cifier un autre
+      fichier</li>
+      <li>Enregistrer l'erreur dans un journal d'erreur (log)</li>
+      <li>Dans un programme &eacute;crit par &eacute;tudiant: imprimer la trace de pile (stack
+        trace) et sortir<br />
+        <pre>exception.printStackTrace();<br />System.exit(1);<br /></pre>
+      </li>
+    </ul>
+  </li>
+</ul>
+<h2>Le bloc <tt>finally</tt></h2>
+<ul>
+  <li>Nettoyage se fait apr&egrave;s <em>et</em> un traitement normal <em>et</em> un
+    traitement exceptionnel</li>
+  <li>Exemple: Fermer un fichier<br />
+    <pre>FileReader reader = null;<br />try<br />{<br /> reader = new FileReader(name);<br /> ...<br />}<br />finally<br />{<br /> if (reader != null) reader.close();<br />} <br /> <br /></pre>
+  </li>
+</ul>
+<h2>Cha&icirc;nes de caract&egrave;res</h2>
+<ul>
+  <li>Sequence of Unicode
+characters </li>
+  <li>(Technically, code units in
+UTF-16 encoding)<br />
+  </li>
+  <li><tt>length</tt>
+method yields number of characters </li>
+  <li><tt>""</tt>
+is the empty string of length 0, different from <tt>null</tt>
+  </li>
+  <li><tt>charAt</tt>
+method yields characters:<br />
+    <tt>char c = s.charAt(i);</tt>
+  </li>
+</ul>
+<h2>Cha&icirc;nes de caract&egrave;res</h2>
+<ul>
+  <li><tt>substring</tt>
+method yields substrings:<br />
+    <tt>"Hello".substring(1, 3)</tt>
+is <tt>"el"<br />
+    <img src="images/Ch1_10.jpg" title="" alt="."
+ style="width: 196px; height: 77px;" /><br />
+    </tt> </li>
+  <li>Use <tt>equals</tt>
+to compare strings<br />
+    <tt>if
+(greeting.equals("Hello"))</tt> </li>
+  <li><tt>==</tt>
+only tests whether the object references are
+identical:<br />
+    <tt>if ("Hello".substring(1,
+3) == "el") ... // NO!</tt> </li>
+</ul>
+<h2>Concat&eacute;nation de cha&icirc;nes</h2>
+<ul>
+  <li> op&eacute;rateur <tt>+</tt>
+permet de concat&eacute;ner des cha&icirc;nes de caract&egrave;res:<br />
+    <pre>"Hello, " + name<br /></pre>
+  </li>
+  <li>Si l'un des arguments de <tt>+</tt>
+est une cha&icirc;ne, l'autre est converti en cha&icirc;ne:<br />
+    <pre>int n = 7;<br />String greeting = "Hello, " + n;<br /> // r&eacute;sultat est "Hello, 7"<br /></pre>
+  </li>
+  <li>m&eacute;thode <tt>toString</tt>
+ est appliqu&eacute;e aux objets<br />
+    <pre>Date now = new Date();<br />String greeting = "Hello, " + now; <br /> // concat&egrave;ne now.toString()<br /> // r&eacute;sultat est "Hello, Wed Jan 17 16:57:18 PST 2001"<br /></pre>
+  </li>
+</ul>
+<h2>Convertir de String en num&eacute;ros<br />
+</h2>
+<ul>
+  <li>Utiliser m&eacute;thodes statiques<br />
+    <tt>Integer.parseInt</tt><br />
+  <tt>Double.parseDouble</tt>  </li>
+  <li>Exemple:<br />
+    <pre>String input = "7";<br />int n = Integer.parseInt(input);<br /> // r&eacute;sultat est l'entier 7<br /></pre>
+  </li>
+  <li>Si une cha&icirc;ne de caract&egrave;res ne contient aucun num&eacute;ro, lance une <tt>NumberFormatException</tt> (non
+  contr&ocirc;l&eacute;e)</li>
+</ul>
+<h2>Lecture d'entr&eacute;e</h2>
+<ul>
+  <li>Contstruit <tt>Scanner</tt>
+&agrave; partir d'un flux de donn&eacute;es d'entr&eacute;e (p.ex. <tt>System.in</tt>)<br />
+    <tt>Scanner in = new
+Scanner(System.in)</tt><br />
+  </li>
+  <li><tt>nextInt</tt>,
+    <tt>nextDouble</tt>
+lisent le prochain <tt>int</tt>
+ou <tt>double<br />
+int n = in.nextInt();</tt><br />
+  </li>
+  <li><tt>hasNextInt</tt>,
+    <tt>hasNextDouble</tt>
+testent si la prochaine unit&eacute; lexicale (token) est un num&eacute;ro</li>
+  <li><tt>next</tt>
+lit la prochaine cha&icirc;ne de caract&egrave;res (s&eacute;par&eacute;e par des caract&egrave;res de l'espace
+  blanc) </li>
+  <li><tt>nextLine</tt>
+lit la prochaine ligne<br />
+  </li>
+</ul>
+<ul>
+  <li>
+    <h4><a href="code/input/InputTester.java.html">Ch1/input/InputTester.java</a></h4>
+  </li>
+</ul>
+<h2>La classe <tt>ArrayList&lt;E&gt;</tt></h2>
+<ul>
+  <li>Classe g&eacute;n&eacute;rique: <tt>ArrayList&lt;E&gt;</tt>
+stocke des objets de type <tt>E</tt>
+  </li>
+  <li><tt><tt>E</tt></tt>
+ne peut &ecirc;tre un type primitif<tt><br />
+    </tt> </li>
+  <li> <tt>add</tt>
+ajoute &agrave; la fin<br />
+    <pre>ArrayList&lt;String&gt; countries = new ArrayList&lt;String&gt;();<br />countries.add("Belgium");<br />countries.add("Italy");<br />countries.add("Thailand");<br /></pre>
+  </li>
+</ul>
+<h2>La classe <tt>ArrayList&lt;E&gt;</tt></h2>
+<ul>
+  <li><tt>get</tt>
+obtient un &eacute;l&eacute;ment; pas besoin de forcer le type<br />
+    <tt>String country =
+countries.get(i);</tt> </li>
+  <li><tt>set</tt>
+affecte un &eacute;l&eacute;ment<br />
+  <tt>countries.set(1, "France");</tt>  </li>
+  <li><tt>size</tt>
+retourne le nombre d'&eacute;l&eacute;ments<br />
+    <tt>for (int i = 0; i &lt;
+countries.size(); i++) . . .</tt> </li>
+  <li>Ou utiliser une boucle "for each"<br />
+    <pre>for (String country : countries) . . .<br /></pre>
+  </li>
+</ul>
+<h2>La classe <tt>ArrayList&lt;E&gt;</tt></h2>
+<ul>
+  <li>Ins&eacute;rer et enlever des &eacute;l&eacute;ments au milieu<tt><br />
+countries.add(1, "Germany");<br />
+countries.remove(0);</tt> </li>
+  <li>Peu efficace -- utiliser plut&ocirc;t des listes cha&icirc;n&eacute;es si ces op&eacute;rations sont
+    fr&eacute;quentes<br />
+    <tt><br />
+    <img src="images/Ch1_13.jpg" title="" alt="." /><br />
+  </tt> </li>
+</ul>
+<h2>Listes cha&icirc;n&eacute;es</h2>
+<ul>
+  <li>Insertion et suppression efficaces<br />
+    <img src="images/Ch1_14.jpg" title="" alt="."
+ style="width: 768px; height: 202px;" /><br />
+  </li>
+  <li> <tt>add</tt>
+ajoute &agrave; la fin<br />
+    <pre>LinkedList&lt;String&gt; countries = new LinkedList&lt;String&gt;();<br />countries.add("Belgium");<br />countries.add("Italy");<br />countries.add("Thailand");<br /></pre>
+  </li>
+  <li>Utiliser un it&eacute;rateur (iterator) pour faire des changements au milieu<br />
+  </li>
+</ul>
+<h2>It&eacute;rateurs de liste<br />
+</h2>
+<ul>
+  <li>Iterator navigue entre les &eacute;l&eacute;ments de liste<br />
+    <br />
+    <img src="images/Ch1_15.jpg" title="" alt="."
+ style="width: 475px; height: 172px;" /><br />
+  </li>
+</ul>
+<h2>It&eacute;rateurs de liste</h2>
+<ul>
+  <li><tt>next</tt>
+obtient l'&eacute;l&eacute;ment courant et fait avancer l'it&eacute;rateur<tt><br />
+ListIterator&lt;String&gt; iterator = countries.listIterator();<br />
+while (iterator.hasNext())<br />
+{<br />
+&nbsp;&nbsp; String country = iterator.next();<br />
+&nbsp;&nbsp; . . .<br />
+}</tt> </li>
+  <li>Ou utiliser une boucle "for each" :<br />
+    <tt>for (String country :
+countries)</tt><br />
+  </li>
+  <li><tt>add</tt>
+ajoute l'&eacute;l&eacute;ment avant la position de l'it&eacute;rateur</li>
+  <li><tt>remove</tt>
+supprime l'&eacute;l&eacute;ment retourn&eacute; par le dernier appel &agrave; <tt>next</tt><br />
+  </li>
+</ul>
+<h2>Tableaux (Arrays)</h2>
+<ul>
+  <li>Inconv&eacute;nient des Array Lists:
+on ne peut stocker des valeurs</li>
+  <li>Tableaux peuvent stocker des objets de tout type, mais leur taille est
+    fixe<br />
+    <tt>int[] numbers = new
+int[10];</tt> </li>
+  <li>Variable de tableau est une <em>r&eacute;f&eacute;rence</em><i><br />
+    </i> <img src="images/Ch1_16.jpg" title="" alt="."
+ style="width: 472px; height: 434px;" /><br />
+  </li>
+</ul>
+<h2>Tableaux (Arrays)</h2>
+<ul>
+  <li>Acc&eacute;der au tableau avec l'op&eacute;rateur <tt>[]</tt><br />
+  <tt>int n = numbers[i];</tt>  </li>
+  <li>membre <tt>length</tt>
+repr&eacute;sente le nombre d'&eacute;l&eacute;ments<br />
+    <pre>for (int i = 0; i &lt; numbers.length; i++)<br /></pre>
+  </li>
+  <li>Ou utiliser une boucle "for each"<br />
+    <tt>for (int n : numbers) . . .</tt>
+  </li>
+</ul>
+<h2>Tableaux (Arrays)<br />
+</h2>
+<ul>
+  <li>Peut avoir un tableau de taille 0; <em>pas </em>la m&ecirc;me chose que <tt>null</tt>:<br />
+    <pre>numbers = new int[0];<br /></pre>
+  </li>
+  <li>Tableau multidimensionnel<br />
+    <pre>int[][] table = new int[10][20];<br />int t = table[i][j];<br /></pre>
+  </li>
+</ul>
+<h2>Arguments de ligne de commande</h2>
+<ul>
+  <li><tt>void
+main(String[] args)</tt><br />
+  </li>
+  <li>param&egrave;tre <tt>args</tt>
+ de <tt>main</tt>
+est initialis&eacute; avec des arguments de la ligne de commande</li>
+  <li>Exemple:<br />
+    <tt>java GreeterTest Mars</tt><br />
+  </li>
+  <li><tt>args.length</tt>
+est 1<br />
+    <tt>args[0]</tt>
+est <tt>"Mars"</tt>
+  </li>
+</ul>
+<h2>Attributs et m&eacute;thodes statiques</h2>
+<ul>
+  <li>Partag&eacute;s par toutes les instances d'une classe</li>
+  <li>Exemple: g&eacute;n&eacute;rateur de nombres all&eacute;atoires partag&eacute;<br />
+    <pre>public class Greeter<br />{<br /> . . .<br /> private <b>static</b> Random generator;<br />}<br /></pre>
+  </li>
+  <li>Exemple: constantes partag&eacute;es<br />
+    <pre>public class Math<br />{<br /> . . .<br /> public static final double PI = 3.14159265358979323846;<br />}<br /></pre>
+  </li>
+</ul>
+<h2>M&eacute;thodes statiques</h2>
+<ul>
+  <li>N'agit pas sur des objets</li>
+  <li>Exemple: <tt>Math.sqrt</tt>
+  </li>
+  <li>Exemple: <i>m&eacute;thode fabrique (factory
+method)<br />
+    </i>
+    <pre>public static Greeter getRandomInstance()<br />{<br /> if (generator.nextBoolean()) // note: generator est attribut statique<br /> return new Greeter("Mars");<br /> else<br /> return new Greeter("Venus");<br />}<br /></pre>
+  </li>
+  <li>Appel&eacute;e &agrave; travers la classe:<br />
+    <pre>Greeter g = Greeter.getRandomInstance();<br /></pre>
+  </li>
+  <li>Attributs et m&eacute;thodes statiques devraient &ecirc;tre rares dans les programmes
+  OO</li>
+</ul>
+<h2>Style de programmation : convention de casse</h2>
+<ul>
+  <li>variables, attributs et
+m&eacute;thodes:<br />
+commencent avec minuscule, utilisent majuscules pour commencer de nouveaux mots:<br />
+    <pre>name<br />sayHello<br /></pre>
+  </li>
+  <li>Classes:<br />
+commencent avec majuscule, utilisent majuscules pour commencer de nouveaux mots:<br />
+    <pre>Greeter<br />ArrayList<br /></pre>
+  </li>
+  <li>Constantes:<br />
+emploient majuscule partout, avec soulignement pour s&eacute;parer des mots<br />
+    <pre>PI<br />MAX_VALUE<br /></pre>
+  </li>
+</ul>
+<h2>Style de programmation : acc&egrave;s aux propri&eacute;t&eacute;s</h2>
+<ul>
+  <li>Fr&eacute;quent d'utiliser des pr&eacute;fixes <tt>get/set</tt>
+:<br />
+    <pre>String getName()<br />void setName(String newValue)<br /></pre>
+  </li>
+  <li>Une propri&eacute;t&eacute; bool&eacute;enne a des pr&eacute;fixes <tt>is/set</tt>
+:<br />
+    <pre>public boolean isPolite()<br />public void setPolite(boolean newValue)<br /></pre>
+  </li>
+</ul>
+<h2>Style de programmation : accolades</h2>
+<ul>
+  <li>Style "Allman" pour les accolades: alignement vertical<br />
+    <pre>public String sayHello()<br />{<br /> return "Hello, " + name + "!";<br />}<br /></pre>
+  </li>
+  <li>Style "Kernighan et Ritchie"
+pour les accolades: &eacute;conomise une ligne
+  <pre>public String sayHello() {<br /> return "Hello, " + name + "!";<br />}<br /></pre>
+  </li>
+</ul>
+<h2>Style de programmation : attributs</h2>
+<ul>
+  <li>Certains programmeurs placent les attributs avant les m&eacute;thodes:<br />
+    <pre>public class Greeter<br />{<br /> private String name;<br /> public Greeter(String aName) { . . . }<br /> . . .<br />}<br /></pre>
+  </li>
+  <li>Du point de vue OO, il vaut mieux mettre l'interface <tt>public</tt> en premier</li>
+  <li>Tous les attributs devraient &ecirc;tre <tt>private</tt>
+  </li>
+  <li>Ne pas utiliser la visibilit&eacute; implicite (package)</li>
+</ul>
+<h2>Style de programmation :
+divers</h2>
+<ul>
+  <li>Espaces autour des op&eacute;rateurs,
+apr&egrave;s les mots-cl&eacute;s, mais pas apr&egrave;s les noms de m&eacute;thodes<br />
+    <pre>Bon: if (x &gt; Math.sqrt(y))<br />Mauvais: if(x&gt;Math.sqrt (y))<br /></pre>
+  </li>
+  <li>Ne pas utiliser la syntaxe C pour les tableaux :<br />
+    <pre>Bon: int[] numbers<br />Mauvais: int numbers[]<br /></pre>
+  </li>
+  <li>Pas de nombres magiques<br />
+    <pre>Bon: h = HASH_MULTIPLIER * h + val[off];<br />Mauvais: h = 31 * h + val[off];<br /></pre>
+  </li>
+</ul>
+</body>
+</html>

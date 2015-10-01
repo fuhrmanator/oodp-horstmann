@@ -1,0 +1,654 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+  <meta name="generator"
+ content="HTML Tidy for Linux/x86 (vers 12 April 2005), see www.w3.org" />
+  <title>Horstmann Chapter 3</title>
+</head>
+<body>
+<h2>Object-Oriented Design &amp; Patterns</h2>
+<h4>Cay S. Horstmann</h4>
+<h3>Chapitre 3</h3>
+<h3>Conseils pour la conception de classe<br />
+</h3>
+<img alt="" src="images/oodp2.jpg" height="500" width="404" />
+<h2>Mati&egrave;re du chapitre</h2>
+<ul>
+  <li>La classe Date de la biblioth&egrave;que Java </li>
+  <li>Concevoir une classe Day<br />
+  </li>
+  <li>Trois impl&eacute;mentations de la classe Day<br />
+  </li>
+  <li>L'importance de l'encapsulation</li>
+  <li>Analyser la qualit&eacute; d'une interface</li>
+  <li>Programmation par contrat</li>
+  <li>Test unitaire<br />
+  </li>
+</ul>
+<h2>La classe Date de la biblioth&egrave;que standard</h2>
+<ul>
+  <li>Plusieurs programmes manipulent les dates comme <br />
+&quot;Saturday, February 3, 2001&quot; </li>
+  <li> <tt>Classe Date </tt>:<br />
+    <pre>Date now = new Date();<br />   // constructs current date/time<br />System.out.println(now.toString());<br />   // prints date such as <br />   // Sat Feb 03 16:34:10 PST 2001<br /></pre>
+  </li>
+  <li>La classe <tt>Date</tt>  encapsule un point dans le temps</li>
+</ul>
+<h2>M&eacute;thodes de la classe <tt>Date</tt></h2>
+<table border="1" cellpadding="2" cellspacing="2" width="100%">
+  <tbody>
+    <tr>
+      <td valign="top"><tt>boolean after(Date other)</tt></td>
+      <td valign="top">Test si la date est apr&egrave;s une date donn&eacute;e</td>
+    </tr>
+    <tr>
+      <td valign="top"><tt>boolean before(Date other)</tt></td>
+      <td valign="top">Test si la date est avant une date donn&eacute;e</td>
+    </tr>
+    <tr>
+      <td valign="top"><tt>int compareTo(Date other)</tt></td>
+      <td valign="top">D&eacute;termine quelle date vient avant l'autre</td>
+    </tr>
+    <tr>
+      <td valign="top"><tt>long getTime()</tt></td>
+      <td valign="top">Retourne le nombre de millisecondes &eacute;coul&eacute;es
+        depuis 	l'&laquo;&nbsp;&eacute;poque&nbsp;&raquo; (1970-01-01 00:00:00 GMT)</td>
+    </tr>
+    <tr>
+      <td valign="top"><tt>void setTime(long n)</tt></td>
+      <td valign="top">&Eacute;tablit la date &agrave; un nombre de millisecondes &eacute;coul&eacute;es
+      depuis l'&laquo;&nbsp;&eacute;poque&nbsp;&raquo;</td>
+    </tr>
+  </tbody>
+</table>
+<h2>M&eacute;thodes de la classe <tt>Date</tt></h2>
+<ul>
+  <li>Les m&eacute;thodes d&eacute;pr&eacute;ci&eacute;es sont omises</li>
+  <li>Les m&eacute;thodes de la classe <tt>Date</tt> fournissent <em>un ordre total</em> sur
+    	les objets <tt>Date</tt></li>
+  <li>Convertir vers une mesure de temps scalaire</li>
+  <li>Notez que <tt>before/after</tt> ne sont pas absolument n&eacute;cessaires (probablement
+    ils sont l&agrave; pour faciliter des choses)</li>
+</ul>
+<h2>Les points dans le temps<br />
+</h2>
+<img src="images/Ch3_01.jpg" title="" alt="."
+ style="width: 1001px; height: 241px;" /><br />
+<h2>La classe <tt>GregorianCalendar</tt></h2>
+<ul>
+  <li>La classe <tt>Date</tt> ne tient pas compte des mois, des jours de la semaine,
+    etc. </li>
+  <li>C'est le travail d'un <i>calendrier</i></li>
+  <li>Un calendrier assigne un nom &agrave; un point dans le temps</li>
+  <li>Plusieurs calendriers sont utilis&eacute;s : 
+    <ul>
+      <li>Gr&eacute;gorien</li>
+      <li>Contemporain : H&eacute;breux, Arabe, Chinois</li>
+      <li>Historique&nbsp;: R&eacute;volution fran&ccedil;aise, &nbsp;Maya</li>
+    </ul>
+  </li>
+</ul>
+<h2>Traitement d'une date dans la biblioth&egrave;que Java</h2>
+<img src="images/Ch3_02.jpg" title="" alt="."
+ style="width: 430px; height: 348px;" /><br />
+<h2>Concevoir une classe <tt>Day</tt></h2>
+<ul>
+  <li>Classe personnalis&eacute;e, pour les fins p&eacute;dagogiques</li>
+  <li>Utiliser les classes de la biblioth&egrave;que standard, au lieu de cette
+    classe, dans vos	propres programmes </li>
+  <li><tt>Day</tt> encapsule un jour dans un endroit fixe</li>
+  <li>Pas d'heure, pas de fuseau horaire</li>
+  <li>Utiliser le calendrier Gr&eacute;gorien</li>
+</ul>
+<h2>Concevoir la classe <tt>Day</tt></h2>
+<ul>
+  <li>R&eacute;pondre aux questions comme 
+    <ul>
+      <li>Combien de jours pour arriver &agrave; la fin de l'ann&eacute;e ? </li>
+      <li>Dans 100 jours, quel jour sera-t-il ?<br />
+      </li>
+    </ul>
+  </li>
+</ul>
+<h2>Concevoir la classe <tt>Day</tt></h2>
+<img src="images/Ch3_unf03.jpg" title="" alt="."
+ style="width: 563px; height: 338px;" /><br />
+(faire le lien entre les jours d'un calendrier et  un nombre de jours)<br />
+<h2>Concevoir la classe <tt>Day</tt></h2>
+<ul>
+  <li> <tt>daysFrom</tt> calcule le nombre de jours entre deux jours :<br />
+    <pre>int n = today.daysFrom(birthday);<br /></pre>
+  </li>
+  <li> <tt>addDays</tt> calcule le jour &eacute;tant un nombre de jours du jour donn&eacute;
+    :<br />
+    <pre>Day later = today.addDays(999);<br /></pre>
+  </li>
+  <li>Relation math&eacute;matique :<br />
+    <pre>d.addDays(n).daysFrom(d) == n<br />d1.addDays(d2.daysFrom(d1)) == d2<br /></pre>
+  </li>
+  <li>Plus claire quand c'est &eacute;crit avec des &quot;op&eacute;rateurs surcharg&eacute;s&quot;:<br />
+    <pre>(d + n) - d == n<br />d1 + (d2 - d1) == d2<br /></pre>
+  </li>
+  <li>Constructeur&nbsp;: <tt>Date(int year, int month, int date)</tt><br />
+  </li>
+  <li>Les accesseurs&nbsp;: <tt>getYear</tt>, <tt>getMonth</tt>, <tt>getDate</tt><br />
+  </li>
+</ul>
+<h2>Impl&eacute;menter la classe <tt>Day</tt></h2>
+<ul>
+  <li>Impl&eacute;mentation simple :<br />
+    <pre>private int year<br />private int month<br />private int date<br /></pre>
+  </li>
+  <li><tt>addDays</tt>/<tt>daysBetween</tt> fastidieux &agrave; impl&eacute;menter 
+    <ul>
+      <li>Avril, juin, septembre, novembre ont 30 jours </li>
+      <li>F&eacute;vrier a 28 jours, sauf pour l'ann&eacute;e bissextile, il a 29 jours </li>
+      <li>Tous les autres mois ont 31 jours</li>
+      <li>Les ann&eacute;es bissextiles sont divisibles par 4, sauf apr&egrave;s 1582, les
+        	ann&eacute;es divisibles par 100 et non par 400 ne sont pas bissextiles </li>
+      <li>L'ann&eacute;e 0 n'existe pas, l'ann&eacute;e 1 est pr&eacute;c&eacute;d&eacute;e de l'ann&eacute;e -1</li>
+      <li>En passant au calendrier Gr&eacute;gorien, 10 jours ont &eacute;t&eacute; perdus : le 15 
+		octobre 1582 est pr&eacute;c&eacute;d&eacute; du 4 octobre </li>
+    </ul>
+  </li>
+</ul>
+<h2>Impl&eacute;menter la classe <tt>Day</tt></h2>
+<ul>
+  <li><a href="code/day1/Day.java.html">Ch3/code/day1/Day.java</a> </li>
+  <li><a href="code/day1/DayTester.java.html">Ch3/code/day1/DayTester.java</a>
+  </li>
+  <li>Notez les m&eacute;thodes utilitaires priv&eacute;es</li>
+  <li>Les calcules sont inefficaces : un jour &agrave; la fois</li>
+</ul>
+<h2>Deuxi&egrave;me impl&eacute;mentation</h2>
+<ul>
+  <li>Pour une meilleure efficacit&eacute;, utiliser les num&eacute;ros de jour
+    julien</li>
+  <li>Utilis&eacute; en astronomie</li>
+  <li>Nombre de jours depuis le 1 janvier 4713 av. J.-C.</li>
+  <li>le 23 mai 1968 = jour julien 2,440,000 </li>
+  <li>Simplifie &eacute;norm&eacute;ment l'arithm&eacute;tique sur les dates</li>
+  <li><a href="code/day2/Day.java.html">Ch3/code/day2/Day.java</a> </li>
+</ul>
+<h2>Troisi&egrave;me impl&eacute;mentation</h2>
+<ul>
+  <li>Maintenant le constructeur et les accesseurs sont inefficaces</li>
+  <li>Le meilleur des deux mondes : calculer au besoin les valeurs des
+    jours julien ou de a/m/j</li>
+  <li><a href="code/day3/Day.java.html">Ch3/code/day3/Day.java</a> </li>
+  <li>Quelle impl&eacute;mentation est la meilleure ? </li>
+</ul>
+<h2>L'importance de l'encapsulation</h2>
+<ul>
+  <li>M&ecirc;me les classes simples peuvent b&eacute;n&eacute;ficier de diff&eacute;rentes
+    impl&eacute;mentations </li>
+  <li>Les usagers ne connaissent pas l'impl&eacute;mentation</li>
+  <li>Les variables d'instance publiques auraient limit&eacute; les am&eacute;liorations 
+	possibles
+    <ul>
+      <li>Impossible d'utiliser un &eacute;diteur de texte pour tout remplacer<br />
+        <pre>d.year<br /></pre>
+		avec<br />
+        <pre>d.getYear()<br /></pre>
+      </li>
+      <li>Comment faire avec<br />
+        <pre>d.year++ ?<br /></pre>
+      </li>
+      <li><tt>d = new Day(d.getDay(), d.getMonth(), d.getYear() + 1)</tt><br />
+      </li>
+      <li>C'est vraiment inefficace dans la repr&eacute;sentation julienne </li>
+    </ul>
+  </li>
+  <li>Ne pas utiliser les attributs publics, m&ecirc;me pour les classes simples</li>
+</ul>
+<h2>Accesseurs et mutateurs</h2>
+<ul>
+  <li>Mutateur : change l'&eacute;tat de l'objet</li>
+  <li>Accesseur : lit l'&eacute;tat de l'objet sans le modifier</li>
+	<li>La classe <tt>Day</tt> n'a pas de mutateur ! </li>
+  <li>Les classes sans mutateur sont <i>immuables</i></li>
+  <li><tt>String</tt> est immuable</li>
+  <li><tt>Date</tt> et <tt>GregorianCalendar</tt> sont muables</li>
+</ul>
+<h2>Ne pas fournir un mutateur pour chaque accesseur</h2>
+<ul>
+  <li><tt>Day</tt> a les accesseurs <tt>getYear</tt>, <tt>getMonth</tt>, <tt>getDate</tt></li>
+  <li><tt>Day</tt> <i>n'as pas</i> les mutateurs <tt>setYear</tt>, <tt>setMonth</tt>, <tt>setDate</tt></li>
+  <li>Ces mutateurs ne fonctionneraient pas bien
+    <ul>
+      <li>Exemple:<br />
+        <pre>Day deadline = new Day(2001, 1, 31);<br />deadline.setMonth(2); // ERROR<br />deadline.setDate(28);<br /></pre>
+      </li>
+      <li>Peut-&ecirc;tre devrions-nous appeler <tt>setDate</tt> en premier ?
+        <pre>Day deadline = new Day(2001, 2, 28);<br />deadline.setDate(31); // ERROR<br />deadline.setMonth(3);<br /></pre>
+      </li>
+    </ul>
+  </li>
+  <li><tt>GregorianCalendar</tt> a une impl&eacute;mentation confuse du <i>rollover.&nbsp;</i>
+    <ul>
+      <li>Donne silencieusement un r&eacute;sultat erron&eacute; plut&ocirc;t qu'une erreur. </li>
+    </ul>
+  </li>
+  <li>Immuabilit&eacute; est utile<br />
+  </li>
+</ul>
+<h2>Partager les r&eacute;f&eacute;rences muables</h2>
+<ul>
+  <li>Les r&eacute;f&eacute;rences aux objets immuables peuvent &ecirc;tre partag&eacute;es</li>
+  <li>Ne pas partager les r&eacute;f&eacute;rences muables</li>
+  <li>Exemple<br />
+    <pre>class Employee<br />{<br />   . . .<br />   public String getName() { return name; }<br />   public double getSalary() { return salary; }<br />   public Date getHireDate() { return hireDate; }<br />   private String name;<br />   private double salary;<br />   private Date hireDate;<br />}<br /></pre>
+  </li>
+</ul>
+<h2>Partager les r&eacute;f&eacute;rences muables</h2>
+<ul>
+  <li>Pi&egrave;ge :<br />
+    <pre>Employee harry = . . .;<br />Date d = harry.getHireDate();<br />d.setTime(t); // changes Harry's state!!!<br /></pre>
+  </li>
+</ul>
+<ul>
+  <li>Rem&egrave;de : Utiliser un cl&ocirc;ne<br />
+    <pre>public Date getHireDate() <br />{ <br />   return (Date)hireDate.clone();<br />}<br /></pre>
+  </li>
+</ul>
+<h2>Partager les r&eacute;f&eacute;rences muables</h2>
+<img src="images/Ch3_03.jpg" title="" alt="."
+ style="width: 880px; height: 344px;" /><br />
+<h2>Variables d'instance d&eacute;finies comme final</h2>
+<ul>
+  <li>Bonne id&eacute;e de d&eacute;finir les variables d'instance immuables comme final<tt><br />
+private final int day;</tt> </li>
+  <li>une r&eacute;f&eacute;rence d'objet marqu&eacute;e <tt>final</tt> peut encore r&eacute;f&eacute;rer &agrave; un 
+	objet muable<br />
+    <tt>private final ArrayList elements;</tt> </li>
+  <li><tt>elements</tt> ne peut pas r&eacute;f&eacute;rer &agrave; une autre liste</li>
+  <li>Le contenu de la liste peut changer<br />
+  </li>
+</ul>
+<h2>S&eacute;parer les accesseurs et les mutateurs</h2>
+<ul>
+  <li>Si nous appelons une m&eacute;thode pour acc&eacute;der &agrave; un objet, l'objet ne mue pas<br />
+  </li>
+  <li>R&egrave;gle de base:<br />
+Un mutateur devrait retourner                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        <tt>void</tt> </li>
+  <li>Exemple de violation :<br />
+    <pre>Scanner in = . . .;<br />String s = in.next();<br /></pre>
+  </li>
+  <li>Obtient l'unit&eacute; lexicale (jeton) courante <i>et</i> avance dans
+    l'it&eacute;ration</li>
+  <li>Et si nous voulions &agrave; nouveau lire l'unit&eacute; lexicale courante ? </li>
+</ul>
+<h2>S&eacute;parer les accesseurs et les mutateurs</h2>
+<ul>
+  <li>Meilleure interface :<br />
+    <pre>String getCurrent();<br />void next();<br /></pre>
+  </li>
+  <li>Encore mieux :<br />
+    <pre>String getCurrent();<br />String next(); // returns current<br /></pre>
+  </li>
+  <li>R&egrave;gle de base raffin&eacute;e :<br />
+	Un mutateur peut retourner une valeur s'il y a un accesseur qui peut 
+	retourner la m&ecirc;me valeur</li>
+</ul>
+<h2>Effets secondaires</h2>
+<ul>
+  <li>Effets secondaires d'une m&eacute;thode : tout changement d'&eacute;tat observable<br />
+  </li>
+  <li>Mutateur : change le param&egrave;tre implicite<br />
+  </li>
+  <li>Autres effets secondaires&nbsp;: changements &agrave;
+    <ul>
+      <li>un param&egrave;tre explicite</li>
+      <li>un objet statique</li>
+    </ul>
+  </li>
+  <li>&Eacute;viter ces effets secondaires -- ils induisent les usagers dans l'erreur</li>
+  <li>Bon exemple, pas d'effet secondaire au-del&agrave; du param&egrave;tre implicite<br />
+    <pre>a.addAll(b)<br /></pre>
+	mue <tt>a</tt> mais pas <tt>b</tt><br />
+  </li>
+</ul>
+<h2>Effets secondaires</h2>
+<ul>
+  <li>Formater une date (de base)&nbsp;:<br />
+    <pre>SimpleDateFormat formatter = . . .;<br />String dateString = &quot;January 11, 2012&quot;;<br />Date d = formatter.parse(dateString);<br /></pre>
+  </li>
+  <li>Avanc&eacute; :
+    <pre>FieldPosition position = . . .;<br />Date d = formatter.parse(dateString, position);<br /></pre>
+  </li>
+  <li>Effet secondaire : met &agrave; jour le param&egrave;tre <tt>position</tt><br />
+  </li>
+  <li>La conception pourrait &ecirc;tre meilleure : ajouter position &agrave; l'&eacute;tat de <tt>formatter</tt></li>
+</ul>
+<h2>Effets secondaires</h2>
+<ul>
+  <li>&Eacute;viter de modifier les objets statiques</li>
+  <li>Exemple&nbsp;: <tt>System.out</tt> </li>
+  <li>Ne pas afficher les messages d'erreur avec <tt>System.out</tt>&nbsp;:<br />
+    <pre>if (newMessages.isFull())<br />   System.out.println(&quot;Sorry--no space&quot;);<br /></pre>
+  </li>
+  <li>Vos classes peuvent avoir &agrave; s'ex&eacute;cuter dans un environnement sans <tt>System.out</tt>
+  </li>
+  <li>R&egrave;gle de base : Limiter les effets secondaires au param&egrave;tre implicite<br />
+  </li>
+</ul>
+<h2>Loi de D&eacute;m&eacute;ter</h2>
+<ul>
+  <li>Exemple&nbsp;: Syst&egrave;me de bo&icirc;te vocale dans le chapitre 2<br />
+    <tt>Mailbox currentMailbox = mailSystem.findMailbox(...);</tt> </li>
+  <li>Ne respecte pas  l'encapsulation</li>
+  <li>Supposons qu'une version future de <tt>MailSystem</tt> utilise une base
+    de 	donn&eacute;es</li>
+  <li>Alors il n'a plus les objets <tt>MailBox</tt></li>
+  <li>Arrive souvent dans les gros syst&egrave;mes </li>
+  <li>Karl Lieberherr : Loi de D&eacute;m&eacute;ter </li>
+  <li>D&eacute;m&eacute;ter = la d&eacute;esse grec de l'agriculture, s&oelig;ur
+  de Zeus </li>
+</ul>
+<h2>Loi de D&eacute;m&eacute;ter</h2>
+<ul>
+  <li>La loi : une m&eacute;thode devrait utiliser seulement les objets qui sont&nbsp;
+    <ul>
+      <li>des variables d'instance de la classe</li>
+      <li>des param&egrave;tres</li>
+      <li>des objets qu'elle construit avec <tt>new</tt> </li>
+    </ul>
+  </li>
+  <li>Ne devrait pas utiliser un objet provenant d'un appel de m&eacute;thode</li>
+  <li>Rem&egrave;de dans le syst&egrave;me de bo&icirc;te vocale : d&eacute;l&eacute;guer
+    les m&eacute;thodes pour la <code>MailBox</code> au syst&egrave;me
+    	de bo&icirc;te vocal<br />
+    <tt>mailSystem.getCurrentMessage(int mailboxNumber);<br />
+mailSystem.addMessage(int mailboxNumber, Message msg);<br />
+. . .</tt> </li>
+  <li>M&eacute;thode empirique, pas une loi math&eacute;matique</li>
+</ul>
+<h2>Qualit&eacute; de l'interface d'une classe</h2>
+<ul>
+  <li>Clients&nbsp;: programmeurs utilisant la classe</li>
+  <li>Crit&egrave;res : 
+    <ul>
+      <li>Coh&eacute;sion </li>
+      <li>Compl&eacute;tude</li>
+      <li>Convenance </li>
+      <li>Clart&eacute;</li>
+      <li>Coh&eacute;rence</li>
+    </ul>
+  </li>
+  <li>Activit&eacute; d'ing&eacute;nieur : faire des compromis</li>
+</ul>
+<h2>Coh&eacute;sion</h2>
+<ul>
+  <li>Une classe d&eacute;crit une <i>simple</i> abstraction </li>
+  <li>Les m&eacute;thodes doivent &ecirc;tre reli&eacute;es &agrave; une seule abstraction </li>
+  <li>Mauvais exemple&nbsp;:<br />
+    <pre>public class Mailbox <br />{ <br />   public addMessage(Message aMessage) { ... } <br />   public Message getCurrentMessage() { ... } <br />   public Message removeCurrentMessage() { ... } <br />   public void processCommand(String command) { ... } <br />   ... <br />}<br /></pre>
+  </li>
+</ul>
+<h2>Compl&eacute;tude</h2>
+<ul>
+  <li>Supporte les op&eacute;rations qui sont bien d&eacute;finies pour l'abstraction </li>
+  <li>Mauvais exemple potentiel : <tt>Date</tt><br />
+    <pre>Date start = new Date();<br />// do some work<br />Date end = new Date();<br /></pre>
+  </li>
+  <li>Combien de millisecondes se sont &eacute;coul&eacute;es ? </li>
+  <li>Pas d'op&eacute;ration de ce genre dans la classe <tt>Date</tt></li>
+  <li>Est-ce sa responsabilit&eacute; ? </li>
+  <li>En fin de compte, il existe <tt>before</tt>, <tt>after</tt>, <tt>getTime</tt>
+  </li>
+</ul>
+<h2>Convenance</h2>
+<ul>
+  <li>Une bonne interface rend possibles toutes les t&acirc;ches .
+    . . et les t&acirc;ches communes
+    	simples </li>
+  <li>Mauvais exemple&nbsp;: Lire &agrave; partir de <tt>System.in</tt> avant Java 5.0<br />
+    <pre>BufferedReader in = new BufferedReader(new<br />   InputStreamReader(System.in));<br /></pre>
+  </li>
+  <li>Pourquoi <tt>System.in</tt> n'a pas de m&eacute;thode <tt>readLine</tt> ?
+  </li>
+  <li>En fin de compte, <tt>System.out</tt> a <tt>println</tt>. </li>
+  <li>La classe <tt>Scanner</tt> corrige cet inconv&eacute;nient<br />
+  </li>
+</ul>
+<h2>Clart&eacute;</h2>
+<ul>
+  <li>Les programmeurs confus &eacute;criront du code erron&eacute;</li>
+  <li>Mauvais exemple&nbsp;: Supprimer un &eacute;l&eacute;ment d'une <tt>LinkedList</tt><br />
+  </li>
+  <li>Rappel&nbsp;: la classe standard <code>LinkedList</code><br />
+    <pre>LinkedList countries = new LinkedList(); <br />countries.add(&quot;A&quot;); <br />countries.add(&quot;B&quot;); <br />countries.add(&quot;C&quot;); <br /></pre>
+  </li>
+  <li>It&eacute;rer sur une liste :<br />
+    <pre>ListIterator iterator = countries.listIterator(); <br />while (iterator.hasNext()) <br />   System.out.println(iterator.next()); <br /></pre>
+  </li>
+</ul>
+<h2>Clart&eacute;</h2>
+<ul>
+  <li>It&eacute;rateur se trouve <i>entre</i> les &eacute;l&eacute;ments</li>
+	<li>Comme la barre verticale indiquant la position du curseur dans un 
+	&eacute;diteur de texte</li>
+	<li><tt>add</tt> ajoute &agrave; la gauche de l'it&eacute;rateur (comme dans un &eacute;diteur de 
+	texte) : </li>
+	<li>Ajouter X avant B :<br />
+	<pre>ListIterator iterator = countries.listIterator(); // |ABC <br />iterator.next(); // A|BC <br />iterator.add(&quot;France&quot;); // AX|BC <br /></pre>
+	</li>
+	<li>Pour supprimer les deux premiers &eacute;l&eacute;ments, on ne peut pas
+	  juste utiliser &quot;espace arri&egrave;re&quot;</li>
+	<li><tt>remove</tt> <i>ne supprime pas </i>les &eacute;l&eacute;ments &agrave; la gauche de l'it&eacute;rateur</li>
+	<li>La documentation sur l'API :<br />Supprime de la liste le dernier 
+	&eacute;l&eacute;ment qui a &eacute;t&eacute; retourn&eacute; par next ou previous.&nbsp; Cet appel peut 
+	seulement &ecirc;tre fait une fois par appel &agrave; next ou previous.&nbsp; Il peut 
+	&ecirc;tre fait seulement si add n'a pas &eacute;t&eacute; appel&eacute; apr&egrave;s le dernier appel &agrave; next 
+	ou previous.&nbsp;</li>
+</ul>
+<h2>Coh&eacute;rence</h2>
+<ul>
+  <li>Les caract&eacute;ristiques reli&eacute;es d'une classe devraient avoir
+    une coh&eacute;rence de
+    <ul>
+		<li>noms</li>
+		<li>param&egrave;tres</li>
+		<li>valeurs de retour</li>
+		<li>comportement</li>
+	</ul> </li>
+  <li>Mauvais exemple :<br />
+    <pre>new GregorianCalendar(year, month - 1, day)<br /></pre>
+  </li>
+  <li>Pourquoi les mois sont-ils num&eacute;rot&eacute;s &agrave; partir de 0 ? </li>
+</ul>
+<h2>Coh&eacute;rence<br />
+</h2>
+<ul>
+  <li>Mauvais exemple&nbsp;: classe <tt>String</tt> <br />
+    <pre>s.equals(t) / s.equalsIgnoreCase(t)<br /></pre>
+  </li>
+  <li>Mais<br />
+    <pre>boolean regionMatches(int toffset, <br />   String other, int ooffset, int len) <br />boolean regionMatches(boolean ignoreCase, int toffset, <br />   String other, int ooffset, int len) <br /></pre>
+  </li>
+  <li>Pourquoi pas <tt>regionMatchesIgnoreCase</tt>? </li>
+  <li>Probl&egrave;me tr&egrave;s fr&eacute;quent dans le code des &eacute;tudiants</li>
+</ul>
+<h2>Programmation par contrat</h2>
+<ul>
+  <li>Sp&eacute;cifier les responsabilit&eacute;s
+    <ul>
+      <li>de celui qui appelle</li>
+      <li>de celui qui impl&eacute;mente</li>
+    </ul>
+  </li>
+  <li>Augmente la fiabilit&eacute;</li>
+  <li>Augmente la l'efficacit&eacute;<br />
+  </li>
+</ul>
+<h2>Pr&eacute;-conditions</h2>
+<ul>
+  <li>L'appelant tente de supprimer un message d'une <tt>MessageQueue</tt> vide</li>
+  <li>Que devrait-il arriver ? </li>
+  <li><tt>MessageQueue</tt> peut d&eacute;clarer cela comme une erreur </li>
+  <li><tt>MessageQueue</tt> peut tol&eacute;rer l'appel et retourner une valeur factice </li>
+  <li>Qu'est-ce qui est mieux ? </li>
+</ul>
+<h2>Pr&eacute;-conditions</h2>
+<ul>
+  <li>La v&eacute;rification excessive des erreurs est co&ucirc;teuse</li>
+  <li>Retourner une valeur factice peut compliquer les tests</li>
+  <li>Le contrat m&eacute;taphore<ul>
+      <li>Le fournisseur de service doit <i>sp&eacute;cifier</i> les pr&eacute;-conditions</li>
+      <li>Si les pr&eacute;-conditions sont respect&eacute;es, le fournisseur de service doit 
+		travailler correctement </li>
+      <li>Autrement, le fournisseur de service peut faire <i>n'importe quoi</i> </li>
+    </ul>
+  </li>
+  <li>Quand les pr&eacute;-conditions ne sont pas respect&eacute;es, fournisseur de service 
+	peut 
+    <ul>
+      <li>lever une exception </li>
+      <li>retourner une fausse r&eacute;ponse</li>
+      <li>corrompre la donn&eacute;e</li>
+    </ul>
+  </li>
+</ul>
+<h2>Pr&eacute;-conditions</h2>
+<pre>/**<br />   Remove message at head<br />   @return the message at the head<br />   @precondition size() &gt; 0<br />*/<br />Message remove()<br />{<br />   return elements.remove(0);<br />}<br /></pre>
+<ul>
+  <li>Qu'est-ce qui arrive si les pr&eacute;-conditions ne sont pas respect&eacute;es ? </li>
+  <li><tt>IndexOutOfBoundsException</tt> </li>
+  <li>Une autre impl&eacute;mentation peut avoir un comportement diff&eacute;rent</li>
+</ul>
+<h2>Impl&eacute;mentation circulaire d'un tableau</h2>
+<ul>
+  <li>Impl&eacute;mentation efficace d'une file born&eacute;e</li>
+  <li>&Eacute;viter le d&eacute;placement inefficace des &eacute;l&eacute;ments</li>
+  <li>Circulaire : l'index de queue pointe sur la t&ecirc;te</li>
+  <li><a href="code/queue/MessageQueue.java.html">Ch3/queue/MessageQueue.java</a><br />
+  </li>
+</ul>
+<h2>D&eacute;placement inefficace des &eacute;l&eacute;ments</h2>
+<img src="images/Ch3_04.jpg" title="" alt="."
+ style="width: 401px; height: 268px;" /><br />
+<br />
+<h2>Un tableau circulaire</h2>
+<img src="images/Ch3_05.jpg" title="" alt="."
+ style="width: 207px; height: 268px;" /><br />
+<br />
+<h2>Wrapping around the End</h2>
+<img src="images/Ch3_06.jpg" title="" alt="."
+ style="width: 207px; height: 268px;" /><br />
+<br />
+<h2>Pr&eacute;-conditions</h2>
+<ul>
+  <li>Dans l'impl&eacute;mentation d'un tabelau circulaire, si la pr&eacute;-condition pour la 
+	suppression &eacute;choue, la file est corrompue ! </li>
+  <li>Une file born&eacute;e a besion d'une pr&eacute;-condition pour <tt>add</tt></li>
+  <li>Approche na&iuml;ve :<br />
+    <tt>@precondition size() &lt; elements.length</tt> </li>
+  <li>La pr&eacute;-condition devrait &ecirc;tre v&eacute;rifiable par l'appelant</li>
+  <li>Meilleur :<br />
+    <tt>@precondition size() &lt; getCapacity()</tt> </li>
+</ul>
+<h2>Assertions</h2>
+<ul>
+  <li>M&eacute;canisme pour avertir les programmeurs</li>
+  <li>Peut &ecirc;tre d&eacute;sactiv&eacute; apr&egrave;s les tests</li>
+  <li>Utile pour avertir les programmeurs &agrave; propos de l'&eacute;chec d'une pr&eacute;-condition</li>
+  <li>Syntaxe :<br />
+    <pre>assert <i>condition</i>;<br />assert <i>condition</i> : <i>explication</i>;<br /></pre>
+  </li>
+  <li>Fait appara&icirc;tre <tt>AssertionError</tt> si la condition &eacute;choue
+    et la v&eacute;rification
+    est 	demand&eacute;e</li>
+</ul>
+<h2>Assertions</h2>
+<pre>public Message remove() <br />{ <br />   assert count &gt; 0 : &quot;violated precondition size() &gt; 0&quot;;<br />   Message r = elements[head]; <br />   . . .<br />} <br /></pre>
+<ul>
+  <li>Lorsque l'on fait des tests, ex&eacute;cuter avec <br />
+    <pre>java -enableassertions MyProg<br /></pre>
+  </li>
+  <li>Ou plus court, <tt>java -ea</tt><br />
+  </li>
+</ul>
+<h2>Exceptions dans le contrat</h2>
+<pre>/**<br />   . . .<br />   @throws NoSuchElementException if queue is empty<br />*/<br />public Message remove() <br />{ <br />   if (count == 0) <br />      throw new NoSuchElementException();<br />   Message r = elements[head]; <br />   . . .<br />} <br /></pre>
+<ul>
+  <li>L'exception lev&eacute;e fait partie du contrat</li>
+  <li>L'appelant peut <i>se fier</i> au comportement</li>
+  <li>L'exception lev&eacute;e <i>ne r&eacute;sulte pas de la violation d'une pr&eacute;-condition</i></li>
+  <li>Cette m&eacute;thode <i>n'a pas </i>de pr&eacute;-condition</li>
+</ul>
+<h2>Post-conditions</h2>
+<ul>
+  <li>Conditions que le fournisseur de service garantit</li>
+  <li>Toute m&eacute;thode promet la description, <tt>@return</tt> </li>
+  <li>Quelques fois, peut v&eacute;rifier d'autres conditions utiles</li>
+  <li>Exemple : la m&eacute;thode <tt>add</tt> <br />
+    <pre>@postcondition size() &gt; 0<br /></pre>
+  </li>
+  <li>Une post-condition d'un appel peut impliquer une pr&eacute;-condition d'un autre 
+	appel :<br />
+    <pre>q.add(m1);<br />m2 = q.remove(); <br /></pre>
+  </li>
+</ul>
+<h2>Invariants de classe</h2>
+<ul>
+  <li>Condition qui est 
+    <ul>
+      <li>vraie apr&egrave;s chaque constructeur</li>
+      <li>pr&eacute;serv&eacute;e par chaque m&eacute;thode<br />
+(si c'est vrai avant l'appel, c'est encore vrai apr&egrave;s) </li>
+    </ul>
+  </li>
+  <li>Utile pour v&eacute;rifier la validit&eacute; des op&eacute;rations</li>
+</ul>
+<h2>Invariants de classe</h2>
+<ul>
+  <li>Exemple: File circulaire avec tableau<br />
+    <pre>0 &lt;= head &amp;&amp; head &lt; elements.length<br /></pre>
+  </li>
+  <li>Premi&egrave;rement, v&eacute;rifier que c'est vrai pour le constructeur<ul>
+      <li>Initialise <tt>head = 0</tt> </li>
+      <li>N&eacute;cessite pr&eacute;condition <tt>size &gt; 0</tt>! </li>
+    </ul>
+  </li>
+  <li>V&eacute;rifier les mutateurs. Commencer avec <tt>add</tt>
+    <ul>
+      <li>&Eacute;tablir <tt>head<sub>new</sub> = (head<sub>old</sub> + 1) %
+elements.length</tt> </li>
+      <li>Nous savons que <tt>head<sub>old</sub></tt> &gt; 0 (Pourquoi ?) </li>
+      <li> Propri&eacute;t&eacute; de l'op&eacute;rateur <tt>%</tt>        :
+        <pre>0 &lt;= head<sub>new</sub> &amp;&amp; head<sub>new</sub> &lt; elements.length<br /></pre>
+      </li>
+    </ul>
+  </li>
+  <li>Quelle est l'utilit&eacute; ? Les acc&egrave;s au tableau sont justes !<br />
+    <pre>return elements[head];<br /></pre>
+  </li>
+</ul>
+<h2>Test unitaire</h2>
+<ul>
+  <li>Test unitaire = test d'une seule classe</li>
+  <li>Concevoir les cas de test pendant l'impl&eacute;mentation<br />
+  </li>
+  <li>Ex&eacute;cuter les tests apr&egrave;s chaque changement d'impl&eacute;mentation</li>
+  <li>Lorsque vous trouvez une erreur, ajoutez un cas de test qui d&eacute;tecte l'erreur<br />
+  </li>
+</ul>
+<h2>JUnit</h2>
+<img src="images/Ch3_07.jpg" title="" alt="."
+ style="width: 513px; height: 483px;" /><br />
+<br />
+<h2>JUnit</h2>
+<ul>
+  <li>Le nom de la classe test = le nom de la classe test&eacute;e + <tt>test</tt> </li>
+  <li>Les m&eacute;thodes de test commencent par <tt>test</tt> </li>
+</ul>
+<pre>import junit.framework.*;<br />public class DayTest extends TestCase<br />{<br />   public void testAdd() { ... }<br />   public void testDaysBetween() { ... }<br />   . . .<br />}<br /></pre>
+<h2>JUnit</h2>
+<ul>
+  <li>Chaque cas de test se termine pas une assertion</li>
+  <li>L'environnement de test d&eacute;tecte les assertions qui &eacute;chouent<br />
+  </li>
+</ul>
+<pre>public void testAdd()<br />{<br />   Day d1 = new Day(1970, 1, 1);<br />   int n = 1000;<br />   Day d2 = d1.addDays(n);<br />   assertTrue(d2.daysFrom(d1) == n);<br />}<br /></pre>
+</body>
+</html>

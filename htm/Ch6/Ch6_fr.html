@@ -1,0 +1,659 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+  <meta http-equiv="Content-Type" content="" />
+  <title>Horstmann Chapter 6</title>
+</head>
+<body>
+<h2>Object-Oriented Design &amp; Patterns<br />
+</h2>
+<h4>Cay S. Horstmann</h4>
+<h3>Chapitre 6</h3>
+<h3>Héritage et classes abstraites</h3>
+<img alt="" src="images/oodp2.jpg" height="500" width="404" />
+<h2>Matière du chapitre</h2>
+<ul>
+  <li>Le concept d'héritage<br />
+  </li>
+  <li>Programmation graphique avec l'héritage<br />
+  </li>
+  <li>Classes abstraites</li>
+  <li>Le patron TEMPLATE METHOD</li>
+  <li>Interfaces protégées<br />
+  </li>
+  <li>La hiérarchie des composants Swing</li>
+  <li>La hiérarchie des formes géométriques standards<br />
+  </li>
+  <li>La hiérarchie des classes d'exception</li>
+  <li>Quand ne pas utiliser l'héritage<br />
+  </li>
+</ul>
+<h2>Représenter la spécialisation</h2>
+<ul>
+  <li>Commencer avec la simple classe <tt>Employee</tt><br />
+    <tt>public class Employee<br />
+{<br />
+&nbsp; &nbsp;public Employee(String aName) { name = aName; }<br />
+&nbsp;&nbsp; public void setSalary(double aSalary) { salary = aSalary; }<br />
+&nbsp;&nbsp; public String getName() { return name; }<br />
+&nbsp;&nbsp; public double getSalary() { return salary; }<br />
+    <br />
+&nbsp;&nbsp; private String name;<br />
+&nbsp;&nbsp; private double salary;<br />
+}</tt></li>
+  <li><tt>Manager</tt> est une sous classe</li>
+</ul>
+<h2>Représenter la spécialisation</h2>
+<ul>
+  <li>La classe Manager ajoute une nouvelle méthode : <tt>setBonus</tt></li>
+  <li>La classe Manager <i>redéfinit</i> une méthode existante : <tt>getSalary</tt></li>
+  <li>Ajoute le salaire et le bonus<br />
+  </li>
+  <li><tt>public class Manager <b>extends</b> Employee<br />
+{<br />
+&nbsp;&nbsp; public Manager(String aName) { ... }<br />
+&nbsp;&nbsp; public void setBonus(double aBonus) { bonus = aBonus; } //
+new method<br />
+&nbsp;&nbsp; public double getSalary() { ... } // overrides Employee
+method<br />
+    <br />
+&nbsp;&nbsp; private double bonus; // new field<br />
+}</tt></li>
+</ul>
+<h2>Représenter la spécialisation</h2>
+<img src="images/Ch6_01.jpg" title="" alt="."
+ style="width: 471px; height: 518px;" /><br />
+<br />
+<h2>Méthodes et attributs de Manager</h2>
+<ul>
+  <li>méthodes<tt> setSalary</tt>, <tt>getname</tt> (héritées d'<tt>Employee</tt>)</li>
+  <li>méthodes <tt>getSalary</tt> (redéfinie dans <tt>Manager</tt>)</li>
+  <li>méthode <tt>setBonus</tt> (définie dans <tt>Manager</tt>)</li>
+  <li>attributs <tt>name</tt> et <tt>salary</tt> (définis dans <tt>Employee</tt>)</li>
+  <li>attribut <tt>bonus</tt> (défini dans <tt>Manager)</tt><br />
+  </li>
+</ul>
+<h2>La terminologie Super/Sous</h2>
+<ul>
+  <li>Pourquoi <tt>Manager</tt> est une <b>sous</b> classe?</li>
+  <li>Le <tt>Manager</tt> est supérieur, n'est-ce pas?</li>
+  <li>L'objet <tt>Manager</tt> a plus d'attributs, n'est-ce pas?</li>
+  <li>L'ensemble des managers est un <i>sous ensemble </i>de l'ensemble des 
+	employés</li>
+</ul>
+<h2>La terminologie Super/Sous</h2>
+<br />
+<img src="images/Ch6_02.jpg" title="" alt="."
+ style="width: 812px; height: 590px;" /><br />
+<h2>Hiérarchies d'héritage</h2>
+<ul>
+  <li>Monde réel : Les hiérarchies décrivent des relations générale/spécifique
+    <ul>
+      <li>Le concept général est la racine de l'arbre</li>
+      <li>Les concepts plus spécifiques sont les enfants</li>
+    </ul>
+  </li>
+  <li>En programmation: hiérarchie d'héritage
+    <ul>
+      <li>La superclasse générale est la racine de l'arbre</li>
+      <li>Les sous classes plus spécifiques sont les enfants</li>
+    </ul>
+  </li>
+</ul>
+<h2>Hiérarchies d'héritage</h2>
+<img src="images/Ch6_03.jpg" title="" alt="."
+ style="width: 930px; height: 508px;" /><br />
+<h2>Principe de substitution</h2>
+<ul>
+  <li>Formulé par Barbara Liskov</li>
+  <li>On peut utiliser une sous classe partout où une superclasse est attendue</li>
+  <li>Exemple:<br />
+    <tt>Employee e;<br />
+...<br />
+System.out.println("salary=" + e.getSalary());</tt></li>
+  <li>On peut établir <tt>e</tt> comme une référence à un <tt>Manager</tt></li>
+  <li>Polymorphisme : La bonne méthode <tt>getSalary</tt> est invoquée</li>
+</ul>
+<h2>Invoquer les méthodes d'une superclasse</h2>
+<ul>
+  <li>On ne peut pas accéder aux attributs privés d'une superclasse<br />
+    <tt>public class Manager extends Employee</tt><br
+ style="font-family: monospace;" />
+    <tt>{</tt><br style="font-family: monospace;" />
+    <tt>&nbsp;&nbsp; public double getSalary()<br />
+&nbsp;&nbsp; {<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; return salary + bonus;&nbsp; //
+ERROR--private field<br />
+&nbsp;&nbsp; }</tt><br style="font-family: monospace;" />
+    <tt>&nbsp;&nbsp; ...</tt><br style="font-family: monospace;" />
+    <tt>}</tt></li>
+  <li>Soyez prudent lorsque vous appelez une méthode d'une superclasse<br />
+    <tt>&nbsp;&nbsp; public double getSalary()<br />
+&nbsp;&nbsp; {<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; return getSalary() + bonus;&nbsp; //
+ERROR--recursive call<br />
+&nbsp;&nbsp; }</tt><br style="font-family: monospace;" />
+  </li>
+</ul>
+<h2>Invoquer les méthodes d'une superclasse</h2>
+<ul>
+  <li>Utiliser le mot réservé <tt>super</tt><br />
+    <tt>&nbsp;&nbsp; public double getSalary()<br />
+&nbsp;&nbsp; {<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; return <b>super.</b>getSalary() +
+bonus;&nbsp;<br />
+&nbsp;&nbsp; }</tt></li>
+  <li><tt>super</tt> <i>n'est pas </i>une référence</li>
+  <li><tt>super</tt> empêche l'appel polymorphique<br />
+  </li>
+</ul>
+<h2>Invoquer le construction d'une superclasse</h2>
+<ul>
+  <li>Utiliser le mot réservé <tt>super</tt> dans le constructeur de la 
+	sous classe :<br />
+    <tt>public Manager(String aName)<br />
+{<br />
+&nbsp;&nbsp; <b>super(aName);</b> // calls superclass constructor<br />
+&nbsp;&nbsp; bonus = 0;<br />
+}</tt><br />
+  </li>
+  <li>L'appel à <tt>super</tt> doit être la <i>première </i>instruction dans le 
+	constructeur de la sous classe</li>
+  <li>Si le constructeur de la sous classe n'appelle pas <tt>super</tt>, la 
+	superclasse doit avoir un constructeur sans paramètre</li>
+</ul>
+<h2>Pré-conditions</h2>
+<ul>
+  <li>Une pré-condition d'une méthode redéfinie est <i>aussi forte ou plus 
+	faible</i></li>
+  <li><pre>public class Employee<br />{<br />   /**<br />      Sets the employee salary to a given value. <br />      @param aSalary the new salary <br />      @precondition aSalary &gt; 0 <br />   */ <br />   public void setSalary(double aSalary) { ... }<br />}<br /></pre>
+  </li>
+  <li>Peut-on redéfinir <tt>Manager.setSalary</tt> avec une pré-condition<br />
+    <tt>salary &gt; 100000</tt>?</li>
+  <li>Non -- Elle pourrait être défaite :<br />
+    <pre>Manager m = new Manager();
+Employee e = m;
+e.setSalary(50000);</pre></li>
+</ul>
+<h2>Post-conditions, visibilité, exceptions</h2>
+<ul>
+  <li>La post-condition d'une méthode redéfinie est <i>aussi forte ou plus forte</i></li>
+  <li>Exemple: <tt>Employee.setSalary</tt> promet de ne pas diminuer le salaire</li>
+  <li>Alors Then <tt>Manager.setSalary</tt> doit respecter la post-condition<br />
+  </li>
+  <li>Une méthode redéfinie ne pas pas est plus <tt>private</tt>.<br />
+(Erreur commune : oublier <tt>public</tt> quand on redéfinie)</li>
+  <li>Une méthode redéfinie ne peut pas lever plus d'exceptions</li>
+</ul>
+<h2>Programmation graphique avec l'héritage</h2>
+<ul>
+  <li>Chapitre 4: Créer des dessins en implémentant le type interface <tt>Icon</tt></li>
+  <li>Maintenant : Cr&eacute;er une sous classe de <tt>JComponent</tt><br />
+    <tt>public class MyComponent extends JComponent<br />
+{<br />
+&nbsp;&nbsp; public void paintComponent(Graphics g)<br />
+&nbsp;&nbsp; {<br />
+    <i>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; drawing instructions go here</i><br
+ style="font-style: italic;" />
+&nbsp;&nbsp; }<br />
+&nbsp;&nbsp; ...<br />
+}</tt></li>
+  <li>Avantage : Hériter des comportements de <tt>JComponent</tt></li>
+  <li>Exemple: On peut attacher un observateur de souris  (&laquo;&nbsp;mouse listener&nbsp;&raquo;) à un <tt>JComponent</tt></li>
+</ul>
+<h2>Observateurs de souris (&laquo;&nbsp;Mouse Listeners&nbsp;&raquo;)</h2>
+<ul>
+  <li>Attacher un &laquo;&nbsp;mouse listener&nbsp;&raquo; à un composant</li>
+  <li>On peut capter les évènements provenant de la souris (clique, déplacement)<br />
+    <pre>public interface MouseListener <br />{ <br />   void mouseClicked(MouseEvent event); <br />   void mousePressed(MouseEvent event); <br />   void mouseReleased(MouseEvent event); <br />   void mouseEntered(MouseEvent event); <br />   void mouseExited(MouseEvent event); <br />}<br /> <br />public interface MouseMotionListener <br />{ <br />   void mouseMoved(MouseEvent event); <br />   void mouseDragged(MouseEvent event); <br />} <br /></pre>
+  </li>
+</ul>
+<h2>Adaptateurs de souris &laquo;&nbsp;Mouse Adapters &nbsp;&raquo;</h2>
+<ul>
+  <li>Et si vous vouliez seulement capter <tt>mousePressed?</tt></li>
+  <li>Étendre <tt>MouseAdapter<br />
+    </tt>
+    <pre>public class MouseAdapter implements MouseListener<br />{ <br />   public void mouseClicked(MouseEvent event) {} <br />   public void mousePressed(MouseEvent event) {}<br />   public void mouseReleased(MouseEvent event) {}<br />   public void mouseEntered(MouseEvent event) {} <br />   public void mouseExited(MouseEvent event) {} <br />}<br /></pre>
+  </li>
+  <li>Le constructeur du composant ajoute le &laquo; listener&nbsp;&raquo; :<br />
+    <pre>addMouseListener(new<br />   Mouse<b>Adapter</b>()<br />   {<br />      public void mousePressed(MouseEvent event) <br />      {<br />         <i>mouse action goes here</i>
+      }
+   });</pre>
+  </li>
+</ul>
+<h2>Programme déplaçant une voiture</h2>
+<ul>
+  <li>Utiliser la souris pour d&eacute;placer la forme d'une voiture</li>
+  <li>Le panneau de la voiture a un &laquo;&nbsp;mouse listener&nbsp;&raquo; et
+  un &laquo;&nbsp;mouse motion listener&nbsp;&raquo;</li>
+  <li><tt>mousePressed</tt> retient les coordonn&eacute;es où la souris a été enfoncée</li>
+  <li><tt>mouseDragged</tt> d&eacute;place la forme de la voiture</li>
+  <li><a href="code/car/CarComponent.java.html">Ch6/car/CarComponent.java</a></li>
+  <li><a href="code/car/CarMover.java.html">Ch6/car/CarMover.java</a></li>
+  <li><a href="code/car/CarShape.java.html">Ch6/car/CarShape.java</a></li>
+</ul>
+<h2>Programme déplaçant une voiture</h2>
+<img src="images/Ch6_05.jpg" title="" alt="."
+ style="width: 948px; height: 493px;" /><br />
+<br />
+<h2>Rédacteur de scène</h2>
+<ul>
+  <li>Dessine des formes variées</li>
+  <li>L'usager peut ajouter, supprimer et déplacer les formes</li>
+  <li>L'usager <i>sélectionne </i>la forme avec la souris</li>
+  <li>La forme sélectionnée est mise en surbrillance</li>
+</ul>
+<h2>Rédacteur de scène</h2>
+<br />
+<img alt="" src="images/Ch6_05.png" height="302" width="302" /><br />
+<h2>Le type interface <tt>SceneShape</tt></h2>
+<ul>
+  <li>Suivre l'état de la sélection</li>
+  <li>Dessine une nouvelle forme ou la forme sélectionnée</li>
+  <li>Déplace la forme</li>
+  <li><i>Crit&egrave;re pour s&eacute;lectionner </i>: est-ce qu'un point (position
+    de souris) est dedans ?</li>
+</ul>
+<h2>Type interface <tt>SceneShape</tt></h2>
+<img src="images/Ch6_07.jpg" title="" alt="."
+ style="width: 563px; height: 338px;" /><br />
+<h2>Type interface <tt>SceneShape</tt></h2>
+<tt>public interface SceneShape<br />
+{<br />
+&nbsp;&nbsp; void setSelected(boolean b);<br />
+&nbsp;&nbsp; boolean isSelected();<br />
+&nbsp;&nbsp; void draw(Graphics2D g2);<br />
+&nbsp;&nbsp; void drawSelection(Graphics2D g2);<br />
+&nbsp;&nbsp; void translate(int dx, int dy);<br />
+&nbsp;&nbsp; boolean contains(Point2D aPoint);<br />
+}</tt>
+<h2>Classes <tt>CarShape</tt> et <tt>HouseShape</tt></h2>
+<pre>public class CarShape implements SceneShape <br />{ <br />   ... <br />   public void setSelected(boolean b) { selected = b; } <br />   public boolean isSelected() { return selected; }<br />   private boolean selected; <br />} <br /><br />public class HouseShape implements SceneShape<br />{ <br />   ... <br />   public void setSelected(boolean b) { selected = b; } <br />   public boolean isSelected() { return selected; }<br />   private boolean selected; <br />}</pre>
+<h2>Classes abstraites</h2>
+<ul>
+  <li>Factorise les comportements communs<br />
+(<tt>setSelected</tt>, <tt>isSelected</tt>)</li>
+  <li>Les sous classes héritent du comportement commun</li>
+  <li>Quelques méthodes ne sont pas définies<br />
+(<tt>draw</tt>, <tt>drawSelection</tt>, <tt>translate</tt>, <tt>contains</tt>)</li>
+</ul>
+<pre>public class SelectableShape implements Item <br />{ <br />   public void setSelected(boolean b) { selected = b; } <br />   public boolean isSelected() { return selected; }<br />   private boolean selected; <br />}</pre>
+<h2>Classes abstraites</h2>
+<img src="images/Ch6_08.jpg" title="" alt="."
+ style="width: 493px; height: 777px;" /><br />
+<h2>Classes abstraites</h2>
+<ul>
+  <li><tt>SelectableShape</tt>&nbsp; ne définit pas toute les méthodes de<tt> SceneShape</tt></li>
+  <li>Elle est <i>abstraite</i></li>
+  <li><tt>public <b>abstract</b> class SelectableShape implements
+SceneShape</tt></li>
+  <li><tt>HouseShape</tt> et <tt>CarShape</tt> sont <i>concrètes</i></li>
+  <li>On ne peut pas instancier une classe abstraite :<br />
+    <pre>SelectableShape s = new SelectableShape(); // NO<br /></pre>
+  </li>
+  <li>On peut avoir des <i>variables</i> ayant comme type une classe abstraite :<br />
+    <pre>SelectableShape s = new HouseShape(); // OK</pre>
+  </li>
+</ul>
+<h2>Classes abstraites et type interface</h2>
+<ul>
+  <li>Les classes abstraites peuvent avoir des attributs</li>
+  <li>Les types interface peuvent avoir seulement des constantes (<tt>public static final</tt>)</li>
+  <li>Les classes abstraites peuvent définir des méthodes</li>
+  <li>Les types interface peuvent seulement déclarer des méthodes</li>
+  <li>Une classe implémente un nombre quelconque de types interface</li>
+  <li>Dans Java, une classe peut étendre une seule autre classe</li>
+</ul>
+<h2>Rédacteur de scène</h2>
+<ul>
+  <li>Le &laquo;&nbsp;mouse listener&nbsp;&raquo; sélectionne/relâche une forme </li>
+  <li>Le &laquo;&nbsp;mouse motion listener&nbsp;&raquo; d&eacute;place une forme</li>
+  <li>Le bouton-supprime supprime les formes sélectionnées</li>
+  <li><a href="code/scene1/SceneComponent.java.html">Ch6/scene1/SceneComponent.java</a></li>
+  <li><a href="code/scene1/SceneEditor.java.html">Ch6/scene1/SceneEditor.java</a></li>
+  <li><a href="code/scene1/HouseShape.java.html">Ch6/scene1/HouseShape.java</a></li>
+</ul>
+<h2>Technique de surbrillance uniforme</h2>
+<ul>
+  <li> Technique originale : chaque forme se dessine selon son &eacute;tat de
+    s&eacute;lection</li>
+  <li>Incommode</li>
+  <li>Meilleure technique : d&eacute;placer, dessiner, d&eacute;placer, dessiner,
+    placer &agrave; la
+    position originale<br />
+  </li>
+  <li>D&eacute;finir dans <tt>SelectableShape<br />
+    </tt> <tt>public void drawSelection(Graphics2D g2)<br />
+{<br />
+&nbsp;&nbsp; translate(1, 1);<br />
+&nbsp;&nbsp;&nbsp;draw(g2);<br />
+&nbsp;&nbsp;&nbsp;translate(1, 1);<br />
+&nbsp;&nbsp;&nbsp;draw(g2);<br />
+&nbsp;&nbsp;&nbsp;translate(-2, -2);<br />
+}</tt></li>
+</ul>
+<h2>Technique de surbrillance uniforme</h2>
+<img alt="" src="images/Ch6_08.png" height="302" width="302" /><br />
+<br />
+<h2>Méthode mod&egrave;le </h2>
+<ul>
+  <li><tt>drawSelection</tt> appelle <tt>draw</tt></li>
+  <li>On doit déclarer <tt>draw</tt> dans <tt>SelectableShape</tt></li>
+  <li>Pas d'implémentation à ce niveau !</li>
+  <li>Déclarer comme une méthode <i>abstraite</i><tt><br />
+public <b>abstract</b> void draw(Graphics2D g2)</tt></li>
+  <li>Définie dans <tt>CarShape</tt>, <tt>HouseShape</tt></li>
+  <li>La méthode <tt>drawSelection</tt> appelle <tt>draw</tt>, <tt>translate</tt></li>
+  <li><tt>drawSelection</tt> ne connaît pas <i>quelles </i>méthodes -- polymorphisme</li>
+  <li><tt>draw</tt><tt>Selection</tt> est une <i>méthode mod&egrave;le (template method) </i></li>
+  <li><a href="code/scene2/SelectableShape.java.html">Ch6/scene2/SelectableShape.java</a></li>
+  <li><a href="code/scene2/HouseShape.java.html">Ch6/scene2/HouseShape.java</a></li>
+</ul>
+<h2>Patron TEMPLATE METHOD</h2>
+<h3>Contexte</h3>
+<ol>
+  <li>Un algorithme est applicable pour plusieurs types.</li>
+  <li>L'algorithme peut être divis&eacute; en plusieurs <i>opérations primitives</i>.
+  Les opérations primitives peuvent être différentes pour chaque type</li>
+  <li>L'ordre des opérations primitives ne dépend pas du type</li>
+</ol>
+<h2>Patron TEMPLATE METHOD</h2>
+<h3>Solution</h3>
+<ol>
+  <li>Définir une superclasse qui a une méthode pour l'algorithme et des méthodes
+     abstraites pour les opérations primitives.</li>
+  <li>Implémenter l'algorithme en appelant les opérations primitives dans 
+	l'ordre approprié.</li>
+  <li>Ne pas définir les opérations primitives dans la superclasse ou bien, les
+     définir pour avoir un comportement par défaut approprié.</li>
+  <li>Chaque sous classe définit les opérations primitives mais pas l'algorithme.</li>
+</ol>
+<h2>Patron TEMPLATE METHOD</h2>
+<img src="images/Ch6_un02.jpg" title="" alt="."
+ style="width: 623px; height: 348px;" /><br />
+<br />
+<h2>Patron TEMPLATE METHOD</h2>
+<table style="text-align: left; width: 100%;" border="1" cellpadding="2"
+ cellspacing="2">
+  <tbody>
+    <tr>
+      <td style="vertical-align: top; font-weight: bold;">Nom dans le patron de 
+		conception</td>
+      <td style="vertical-align: top; font-weight: bold;">Vrai nom (Selectable shapes)</td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top; font-family: monospace;">AbstractClass<br />
+      </td>
+      <td style="vertical-align: top; font-family: monospace;">SelectableShape<br />
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top; font-family: monospace;">ConcreteClass<br />
+      </td>
+      <td style="vertical-align: top; font-family: monospace;">CarShape,
+HouseShape<br />
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top; font-family: monospace;">templateMethod()<br />
+      </td>
+      <td style="vertical-align: top; font-family: monospace;">drawSelection<br />
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top; font-family: monospace;">primitiveOp1(),
+primitiveOp2()<br />
+      </td>
+      <td style="vertical-align: top; font-family: monospace;">translate,
+draw<br />
+      </td>
+    </tr>
+  </tbody>
+</table>
+<br />
+<h2>Formes composées</h2>
+<ul>
+  <li>GeneralPath: séquence de formes<br />
+    <pre>GeneralPath path = new GeneralPath(); <br />path.append(new Rectangle(...), false); <br />path.append(new Triangle(...), false); <br />g2.draw(path); </pre>
+  </li>
+  <li>Avantage : Facile de vérifier si la séquence de formes contient 
+	un point<br />
+  <tt>path.contains(aPoint);</tt></li>
+  <li><a href="code/scene3/CompoundShape.java.html">Ch6/scene3/CompoundShape.java</a></li>
+  <li><a href="code/scene3/HouseShape.java.html">Ch6/scene3/HouseShape.java</a></li>
+</ul>
+<h2>Formes composées</h2>
+<img src="images/Ch6_10.jpg" title="" alt="."
+ style="width: 166px; height: 794px;" />
+<h2>Acc&egrave;s aux &eacute;l&eacute;ments d'une superclasse</h2>
+<ul>
+  <li>Pourquoi le constructeur de <tt>HouseShape</tt> appelle <tt>add </tt>?<br />
+    <pre>public HouseShape()<br />{<br />   add(new Rectangle(...));<br />   add(new Triangle(...));<br />}<br /></pre>
+  </li>
+  <li>Pourquoi ne pas  faire seulement<br />
+  <tt>path.append(new Rectangle(...));</tt></li>
+  <li><tt>HouseShape</tt> hérite de l'attribut <tt>path</tt></li>
+  <li><tt>HouseShape</tt> ne peut pas accéder à <tt>path</tt></li>
+  <li><tt>path</tt> est privé à la superclasse</li>
+</ul>
+<h2>Accès protégé</h2>
+<ul>
+  <li>Faire de <tt>CompoundShape.add</tt> une méthode <i>protégée</i></li>
+  <li>Protège <tt>HouseShape </tt>: les autres classes ne peuvent pas ajouter
+    des graffitis</li>
+  <li>Les &eacute;l&eacute;ments protégés peuvent être accédés par les méthodes
+    des  sous classes...</li>
+  <li>...et par les méthodes situées dans le même paquetage </li>
+  <li>Mauvaise idée de protéger les attributs<br />
+  <tt>protected GeneralPath path; // DON'T</tt></li>
+  <li>Mais ça va pour les méthodes<br />
+    <tt>protected void add(Shape s) // GOOD</tt></li>
+  <li>Interface protégée séparée de l'interface publique</li>
+</ul>
+<h2>Hiérarchie des composants de Swing</h2>
+<ul>
+  <li>Base de la hiérarchie : <tt>Component</tt></li>
+  <li>Un nombre important de méthodes communes :<br />
+    <pre>int getWidth()<br />int getHeight()<br />Dimension getPreferredSize()<br />void setBackground(Color c)<br />. . .</pre>
+  </li>
+  <li>La sous classe la plus importante : <tt>Container</tt></li>
+</ul>
+<h2>Hiérarchie des composants de Swing</h2>
+<img src="images/Ch6_12.jpg" title="" alt="."
+ style="width: 932px; height: 815px;" /><br />
+<br />
+<h2>Hiérarchie des composants de Swing</h2>
+<ul>
+  <li>Historique : AWT fut le premier, Abstract Window Toolkit</li>
+  <li>Utilisait les composants <i>natifs</i></li>
+  <li>Il y avait des incoh&eacute;rences subtiles entre les plateformes</li>
+  <li>Écrire une fois, exécuter partout -&gt;<br />
+	Écrire une fois, déverminer partout</li>
+  <li>Swing dessine les composants sur des fenêtres blanches</li>
+  <li>Supporte de multiple implémentations de <i>l'aspect et la convivialit&eacute;
+      (&laquo;&nbsp;look and feel&nbsp;&raquo;)</i></li>
+</ul>
+<h2>L'aspect et la convivialit&eacute; (&laquo;&nbsp;look and feel&nbsp;&raquo;)</h2>
+<img alt="" src="images/Ch6_11.png" height="480" width="732" /><br />
+<br />
+<h2>Hiérarchie des composants de Swing</h2>
+<ul>
+  <li>Base des composants Swing : <tt>JComponent</tt></li>
+  <li>Sous classe de <tt>Container</tt></li>
+  <li><i>Quelques</i> composants Swing sont des containers</li>
+  <li>Java n'a pas d'héritage multiple</li>
+  <li><tt>JLabel</tt>, <tt>JButton</tt>, ... sont des sous classes de<tt> JComponent</tt></li>
+  <li>Classes intermédiaires <tt>AbstractButton</tt>, <tt>JTextComponent</tt></li>
+</ul>
+<h2>Hiérarchie des formes géométriques</h2>
+<ul>
+  <li>Première version de Java : peu de formes, coordonnées entières<br />
+    <pre>Point<br />Rectangle<br />Polygon</pre>
+  </li>
+  <li>Java 2: formes sophistiquées, coordonnées réelles<br />
+    <pre>Point2D<br />Rectangle2D<br />RoundRectangle2D<br />Line2D<br />Ellipse2D<br />Arc2D<br />QuadCurve2D<br />CubicCurve2D<br />GeneralPath<br />Area</pre>
+  </li>
+  <li>Tous sauf <tt>Point2D</tt> implémentent le type interface <tt>Shape</tt><br />
+  </li>
+</ul>
+<h2>Hiérarchie des formes géométriques</h2>
+<img src="images/Ch6_15.jpg" title="" alt="."
+ style="width: 974px; height: 814px;" /><br />
+<h2>Formes rectangulaires</h2>
+<ul>
+  <li>Sous classes de <tt>RectangularShape</tt>:<br />
+    <pre>Rectangle2D<br />RoundRectangle2D<br />Ellipse2D<br />Arc2D</pre>
+  </li>
+  <li><tt>RectangularShape</tt> a des méthodes utiles<br />
+    <pre>getCenterX/getCenterY<br />getMinX/getMinY<br />getMaxX/getMaxY<br />getWidth/getHeight<br />setFrameFromCenter/setFrameFromDiagonal</pre>
+  </li>
+</ul>
+<h2>Classes Float/Double</h2>
+<ul>
+  <li>Chaque classe a deux sous classes<br />
+    <pre>Rectangle2D.Double<br />Rectangle2D.Float</pre>
+  </li>
+  <li>Ce sont des classes imbriquées (inner classes) !<br />
+(Juste pour éviter des noms de classe trop longs)</li>
+  <li>Les implémentations ont les attributs <tt>double</tt>/<tt>float</tt></li>
+  <li>La plupart des méthodes ont comme paramètres et valeur de retour un <tt>double</tt></li>
+</ul>
+<h2>Classes Float/Double</h2>
+<img src="images/Ch6_16.jpg" title="" alt="."
+ style="width: 493px; height: 331px;" /><br />
+<br />
+<h2>Classes Float/Double</h2>
+<pre>public class Rectangle2D <br />{ <br />   public static class Float extends Rectangle2D <br />   { <br />      public double getX() { return x; } <br />      public double getY() { return y; }<br />      public double getWidth() { return width; }<br />      public double getHeight() { return height;} <br />      public void setRect(float x, float y, float w, float h) <br />      { <br />         this.x = x; this.y = y; <br />         this.width = w; this.height = h; <br />      } <br />      public void setRect(double x, double y, <br />         double w, double h) <br />      { <br />         this.x = (float)x; this.y = (float)y; <br />         this.width = (float)w; this.height = (float)h; <br />      } <br />      ... <br />      public float x; <br />      public float y; <br />      public float width; <br />      public float height; <br />   } <br />   . . .<br /></pre>
+<h2>Classes Float/Double</h2>
+<pre>   . . .<br />   public static class Double extends Rectangle2D <br />      public double getX() { return x; } <br />      public double getY() { return y; }<br />      public double getWidth() { return width; }<br />      public double getHeight() { return height;} <br />      public void setRect(double x, double y, <br />         double w, double h) <br />      { <br />         this.x = x; this.y = y; <br />         this.width = w; this.height = h; <br />      } <br />      ... <br />      public double x; <br />      public double y; <br />      public double width; <br />      public double height; <br />   }<br />   ...<br />}<br /></pre>
+<h2>Float/Double Classes</h2>
+<ul>
+  <li>La classe <tt>Rectangle2D</tt> n'a pas de variables d'instance</li>
+  <li>Le patron Template Method au travail :<br />
+    <pre>public boolean contains(double x, double y)<br />{<br />   double x0 = getX();<br />   double y0 = getY();<br />   return x &gt;= x0 &amp;&amp; y &gt;= y0 &amp;&amp;<br />      x &lt; x0 + getWidth() &amp;&amp;<br />      y &lt; y0 + getHeight();<br />}<br /></pre>
+  </li>
+  <li>Pas besoin d'utiliser une classe imbriquée après la construction<br />
+    <tt><b>Rectangle2D</b> rect<br />
+&nbsp;&nbsp;&nbsp;= new <b>Rectangle2D.Double</b>(5, 10, 20, 30);</tt><br />
+  </li>
+</ul>
+<h2>Le pattern TEMPLATE METHOD</h2>
+<table style="text-align: left; width: 100%;" border="1" cellpadding="2"
+ cellspacing="2">
+  <tbody>
+    <tr>
+      <td style="vertical-align: top; font-weight: bold;">Nom dans le patron de 
+		conception<br />
+      </td>
+      <td style="vertical-align: top; font-weight: bold;">Vrai nom  (Rectangles)</td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top; font-family: monospace;">AbstractClass<br />
+      </td>
+      <td style="vertical-align: top; font-family: monospace;">Rectangle<br />
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top; font-family: monospace;">ConcreteClass<br />
+      </td>
+      <td style="vertical-align: top; font-family: monospace;">Rectangle2D.Double<br />
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top; font-family: monospace;">templateMethod()<br />
+      </td>
+      <td style="vertical-align: top; font-family: monospace;">contains<br />
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top; font-family: monospace;">primitiveOp<i>n</i>()<br />
+      </td>
+      <td style="vertical-align: top; font-family: monospace;">getX,
+getY, getWidth, getHeight</td>
+    </tr>
+  </tbody>
+</table>
+<br />
+<h2>Hiérarchie des classes d'exception</h2>
+<ul>
+  <li>Base de la hiérarchie : <tt>Throwable</tt></li>
+  <li>Deux sous classes : <tt>Error</tt>, <tt>Exception</tt></li>
+  <li>Sous classes de <tt>Error </tt>: fatal<br />
+(m&eacute;moire satur&eacute;e, &eacute;chec d'assertion)</li>
+  <li>Sous classes de <tt>Exception :</tt>
+    <ul>
+      <li>Beaucoup d'exceptions vérifiées (&laquo;&nbsp;checked exceptions&nbsp;&raquo;)<br />
+    (I/O, class not found)</li>
+        <li><tt>RuntimeException </tt>-- Ces sous classes ne sont pas vérifiées<br />
+    (null pointer, index out of bounds)</li>
+    </ul>
+  </li>
+</ul>
+<h2>Hiérarchie des classes d'exception</h2>
+<img src="images/Ch6_14.jpg" title="" alt="."
+ style="width: 871px; height: 641px;" /><br />
+<br />
+<h2>Traiter les exceptions</h2>
+<ul>
+  <li>On peut avoir plusieurs clauses <tt>catch</tt> :<br />
+    <pre>try<br />{<br /><i>      code that may throw exceptions</i>
+}
+catch (<i>ExceptionType1 exception1</i>)<br />{<br />   <i>handler for ExceptionType1</i>
+}
+catch (<i>ExceptionType2 exception1</i>)<br />{<br />   <i>handler for ExceptionType2</i>
+}
+. . .
+    </pre>
+  </li>
+  <li>On peut la traiter dans la superclasse:<br />
+    <tt>catch (IOException exception)<br />
+    </tt>traite <tt> FileNotFoundException</tt></li>
+</ul>
+<h2>Définir des classes d'exception</h2>
+<ul>
+  <li>Décider que l'exception devrait être vérifiée</li>
+  <li>Sous classe de <tt>Exception</tt> ou de <tt>RuntimeException</tt></li>
+  <li>D&eacute;finir deux constructeurs<br />
+    <pre>public class IllegalFormatException extends Exception<br />{ <br />   public IllegalFormatException() {} <br />   public IllegalFormatException(String reason) <br />   { super(reason); } <br />}</pre>
+  </li>
+  <li>Lever l'exception lorsque nécessaire :<br />
+  <tt>throw new</tt> <tt>IllegalFormat</tt><tt
+ style="font-family: monospace;">Exception("number expected");</tt></li>
+</ul>
+<h2>Quand ne pas utiliser l'héritage</h2>
+<ul>
+  <li>Provenant d'un tutoriel pour un compilateur C++ :</li>
+</ul>
+<pre>public class Point <br />{ <br />   public Point(int anX, int aY) { ... } <br />   public void translate(int dx, int dy) { ... } <br />   private int x; <br />   private int y; <br />} <br /><br />public class Circle extends Point // DON'T <br />{ <br />   public Circle(Point center, int radius) { ... } <br />   public void draw(Graphics g) { ... } <br />   private int radius; <br />}</pre>
+<h2>Quand ne pas utiliser l'héritage</h2>
+<ul>
+  <li>Hein ?&nbsp; Un cercle n'est pas un point!</li>
+  <li>Par accident, la m&eacute;thode h&eacute;rit&eacute;e <tt>translate</tt> fonctionne
+    pour les cercles</li>
+  <li>Le même tutoriel propose un <tt>Rectangle</tt> comme une sous classe de <tt>Point</tt>:<br />
+    <pre>public class Rectangle extends Point // DON'T <br />{<br />   public Rectangle(Point corner1, Point corner2) { ... } <br />   public void draw(Graphics g) { ... } <br />   public void translate(int dx, int dy) { ... } <br />   private Point other; <br />}</pre>
+  </li>
+</ul>
+<h2>Quand ne pas utiliser l'héritage</h2>
+<ul>
+  <li>Ceci est encore plus bizarre :<br />
+    <pre>public void translate(int dx, int dy)<br />{<br />   super.translate(dx, dy);<br />   other.translate(dx, dy);<br />}<br /></pre>
+  </li>
+  <li>Pourquoi ont-ils fait ça ?</li>
+  <li>Ils voulaient éviter la classe abstraite <tt>Shape</tt></li>
+  <li>Solution : utiliser l'agrégation.</li>
+  <li>Les classes Cercle et Rectanble <em>ont</em> des points</li>
+</ul>
+<h2>Quand ne pas utiliser l'héritage</h2>
+<ul>
+  <li>Librairie standard Java :<br />
+    <pre>public class Stack&lt;T&gt; extends Vector&lt;T&gt; // DON'T<br />{<br />   T pop() { ... }<br />   void push(T item) { ... }<br />   ...<br />}</pre>
+  </li>
+  <li>Mauvaise idée : Hérite de toutes les méthodes de <tt>Vector</tt></li>
+  <li>On peut insérer et supprimer au milieu d'une pile</li>
+  <li>Solution : utiliser l'agrégation<br />
+    <pre>public class Stack&lt;T&gt;<br />{<br />   ...<br />   private ArrayList&lt;T&gt; elements;<br />}<br /></pre>
+  </li>
+</ul>
+</body>
+</html>
