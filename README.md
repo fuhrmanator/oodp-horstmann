@@ -4,3 +4,5 @@ Traduction française des diapositives en HTML pour le livre [Object-Oriented De
 French translation of the HTML slides for the book [Object-Oriented Design & Patterns](http://www.horstmann.com/design_and_patterns.html) by Cay Horstmann.
 
 Cette traduction est loin d'être parfaite. Vous êtes les bienvenus de faire des améliorations à travers GitHub (fork + pull request). 
+
+Pour voir les diapos, https://fuhrmanator.github.io/oodp-horstmann/
